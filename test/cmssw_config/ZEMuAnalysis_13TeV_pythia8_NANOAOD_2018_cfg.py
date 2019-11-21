@@ -52,7 +52,8 @@ process.NANOAODSIMoutput = cms.OutputModule("NanoAODOutputModule",
         filterName = cms.untracked.string('')
     ),
     fileName = cms.untracked.string('file:ZEMuAnalysis_pythia8_NANOAOD_2018.root'),
-    outputCommands = process.NANOAODSIMEventContent.outputCommands
+    outputCommands = process.NANOAODSIMEventContent.outputCommands,
+    fakeNameForCrab =cms.untracked.bool(True)
 )
 
 # Additional output definition
