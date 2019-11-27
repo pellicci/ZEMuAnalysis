@@ -27,13 +27,21 @@ class exampleProducer(Module):
             return False
 
         if len(muons) == 2 :
-            if ( (muons[0].p4() + muons[1].p4()).M() < 30. or (muons[0].p4() + muons[1].p4()).M() > 150.) :
+            if ( (muons[0].p4() + muons[1].p4()).M() < 40. or (muons[0].p4() + muons[1].p4()).M() > 120.) :
                 return False
+            if ( muons[0].charge * muons[1].charge > 0 ) :
+                return False
+
         elif len(electrons) == 2 :
-            if ( (electrons[0].p4() + electrons[1].p4()).M() < 30. or (electrons[0].p4() + electrons[1].p4()).M() > 150.) :
+            if ( (electrons[0].p4() + electrons[1].p4()).M() < 40. or (electrons[0].p4() + electrons[1].p4()).M() > 120.) :
                 return False
+            if ( electrons[0].charge * electrons[1].charge > 0 ) :
+                return False
+
         else :
-            if ( (muons[0].p4() + electrons[0].p4()).M() < 30. or (muons[0].p4() + electrons[0].p4()).M() > 150.) :
+            if ( (muons[0].p4() + electrons[0].p4()).M() < 40. or (muons[0].p4() + electrons[0].p4()).M() > 120.) :
+                return False
+            if ( muons[0].charge * electrons[0].charge > 0 ) :
                 return False
 
         if (HLT.IsoMu27 or HLT.Mu50 or HLT.Ele32_WPTight_Gsf or HLT.Ele32_WPTight_Gsf_L1DoubleEG) :

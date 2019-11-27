@@ -13,7 +13,7 @@ config.JobType.pluginName = 'Analysis'
 config.JobType.allowUndistributedCMSSW = True
 
 config.section_('Data')
-config.Data.inputDataset = '/ZEMuAnalysis_GENSIM_10218/pellicci-HPhiGamma_HLT_10218V2-561697a7e1ccc674784d5e0d3e6ef789/USER'
+config.Data.inputDataset = '/ZEMuAnalysis_10218V2/pellicci-ZEMuAnalysis_HLT_10218V1-561697a7e1ccc674784d5e0d3e6ef789/USER'
 config.Data.inputDBS = 'phys03'
 config.Data.splitting = 'FileBased'
 config.Data.unitsPerJob = 1

@@ -1,12 +1,10 @@
-from WMCore.Configuration import Configuration
 from CRABClient.UserUtilities import config, getUsernameFromSiteDB
-config = Configuration()
+config = config()
  
 config.section_('General')
-config.General.transferOutputs = True
-config.General.transferLogs=True
-config.General.requestName = 'ZEMuAnalysis_Signal'
-config.General.workArea = 'crab_projects/Signal'
+config.General.transferLogs = True
+config.General.requestName = '2018_ZEMuAnalysis_Signal'
+config.General.workArea = 'crab_projects/samples_MC_2018/'
 
 config.section_('JobType')
 config.JobType.pluginName = 'Analysis'
@@ -18,9 +16,11 @@ config.JobType.sendPythonFolder	 = True
 config.JobType.allowUndistributedCMSSW = True
 
 config.section_('Data')
-config.Data.inputDataset = '/ZEMuAnalysis_GENSIM_10218/pellicci-ZEMuAnalysis_NANOAOD_10218V2-a7880b551d3b12f0ed185e04212304eb/USER'
+config.Data.inputDataset = '/ZEMuAnalysis_10218V2/pellicci-ZEMuAnalysis_NANOAOD_10218V1-a7880b551d3b12f0ed185e04212304eb/USER'
 config.Data.inputDBS = 'phys03'
-config.Data.splitting = 'Automatic'
+config.Data.splitting = 'FileBased'
+config.Data.unitsPerJob = 10
+
 config.Data.outLFNDirBase = '/store/user/%s/' % (getUsernameFromSiteDB())
 config.Data.publication = False
 
