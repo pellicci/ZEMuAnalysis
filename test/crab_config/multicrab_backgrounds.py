@@ -25,7 +25,7 @@ if runningEra == 2:
 
 config.section_('Data')
 config.Data.splitting = 'FileBased'
-config.Data.unitsPerJob = 2
+config.Data.unitsPerJob = 1
 config.Data.outLFNDirBase = '/store/user/%s/' % (getUsernameFromSiteDB())
 config.Data.publication = False
 
@@ -96,18 +96,6 @@ if __name__ == '__main__':
         
         # config.General.requestName = '2016_ZEMuAnalysis_WJetsToLNu_2'
         # config.Data.inputDataset = '/WJetsToLNu_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext2-v1/MINIAODSIM'
-        # p = Process(target=submit, args=(config,))
-        # p.start()
-        # p.join()
-        
-        # config.General.requestName = '2016_ZEMuAnalysis_DY10to50_1' 
-        # config.Data.inputDataset = '/DYJetsToLL_M-10to50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM'
-        # p = Process(target=submit, args=(config,))
-        # p.start()
-        # p.join()
-        
-        # config.General.requestName = '2016_ZEMuAnalysis_DY10to50_2'
-        # config.Data.inputDataset = '/DYJetsToLL_M-10to50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext1-v2/MINIAODSIM'
         # p = Process(target=submit, args=(config,))
         # p.start()
         # p.join()
@@ -270,12 +258,6 @@ if __name__ == '__main__':
         # p.start()
         # p.join()
         
-        # config.General.requestName = '2017_ZEMuAnalysis_DY10to50'
-        # config.Data.inputDataset = '/DYJetsToLL_M-10to50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext1-v2/MINIAODSIM'
-        # p = Process(target=submit, args=(config,))
-        # p.start()
-        # p.join()
-        
         # config.General.requestName = '2017_ZEMuAnalysis_DY50_1'
         # config.Data.inputDataset = '/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/MINIAODSIM'
         # p = Process(target=submit, args=(config,))
@@ -393,25 +375,7 @@ if __name__ == '__main__':
         p.start()
         p.join()
         
-        config.General.requestName = '2018_ZEMuAnalysis_DY10to50_1'
-        config.Data.inputDataset = '/DYJetsToLL_M-10to50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIAutumn18NanoAODv6-Nano25Oct2019_102X_upgrade2018_realistic_v20_ext1-v1/NANOAODSIM'
-        p = Process(target=submit, args=(config,))
-        p.start()
-        p.join()
-
-        config.General.requestName = '2018_ZEMuAnalysis_DY10to50_2'
-        config.Data.inputDataset = '/DYJetsToLL_M-10to50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIAutumn18NanoAODv6-Nano25Oct2019_102X_upgrade2018_realistic_v20-v1/NANOAODSIM'
-        p = Process(target=submit, args=(config,))
-        p.start()
-        p.join()
-        
-        config.General.requestName = '2018_ZEMuAnalysis_DY50_1'
-        config.Data.inputDataset = '/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIIAutumn18NanoAODv6-Nano25Oct2019_102X_upgrade2018_realistic_v20-v1/NANOAODSIM'
-        p = Process(target=submit, args=(config,))
-        p.start()
-        p.join()
-
-        config.General.requestName = '2018_ZEMuAnalysis_DY50_2'
+        config.General.requestName = '2018_ZEMuAnalysis_DY50'
         config.Data.inputDataset = '/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIIAutumn18NanoAODv6-Nano25Oct2019_102X_upgrade2018_realistic_v20_ext2-v1/NANOAODSIM'
         p = Process(target=submit, args=(config,))
         p.start()

@@ -19,10 +19,11 @@ config.section_('Data')
 config.Data.inputDataset = '/ZEMuAnalysis_10218V2/pellicci-ZEMuAnalysis_NANOAOD_10218V1-a7880b551d3b12f0ed185e04212304eb/USER'
 config.Data.inputDBS = 'phys03'
 config.Data.splitting = 'FileBased'
-config.Data.unitsPerJob = 10
+config.Data.unitsPerJob = 5
 
 config.Data.outLFNDirBase = '/store/user/%s/' % (getUsernameFromSiteDB())
 config.Data.publication = False
 
 config.section_('Site')
-config.Site.storageSite = 'T2_IT_Bari'
+config.Site.storageSite = 'T2_IT_Legnaro'
+#config.Site.storageSite = 'T2_IT_Bari'

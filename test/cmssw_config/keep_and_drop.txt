@@ -3,6 +3,10 @@ drop * # start with all
 keep Electron*
 keep Muon*
 keep Jet*
-keep HLT*
-keep Gen*
-keep MET*
+keep Tau*
+keep HLT_IsoMu2*
+keep HLT_Mu50*
+keep HLT_Ele32*
+keep genWeight*
+keep PuppiMET*
+keep PV_npvs*
