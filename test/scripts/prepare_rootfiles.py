@@ -3,7 +3,6 @@ import os
 import subprocess
 import argparse
 
-
 #---------------------------------#
 p = argparse.ArgumentParser(description='Select whether to download MC or data')
 p.add_argument('isData_option', help='Type <<MC>> or <<data>>')
@@ -19,22 +18,30 @@ if args.isData_option == "data":
 year = args.year_option
 #---------------------------------#
 
+if not os.path.exists("rootfiles"):
+    os.makedirs("rootfiles")
+if not os.path.exists("rootfiles/latest_production"):
+    os.makedirs("rootfiles/latest_production")
+if not os.path.exists("rootfiles/latest_production/MC"):
+    os.makedirs("rootfiles/latest_production/MC")
+if not os.path.exists("rootfiles/latest_production/dataprocess"):
+    os.makedirs("rootfiles/latest_production/dataprocess")
+
 print "Processing ", args.isData_option, " for year ", year
 
-if not isData:
+if not isData :
     dir_input = "crab_projects/samples_MC_" + year + "/"
     dir_output_bkg = "rootfiles/latest_production/MC/backgrounds/"
     dir_output_sig = "rootfiles/latest_production/MC/signals/"  
-
-if isData:
+else :
     dir_input = "crab_projects/samples_data_" + year + "/"
     dir_output_data = "rootfiles/latest_production/dataprocess/"
 
 list_dirs = os.listdir(dir_input)
 
-complementary_samples_list_2016 = ["ttbarWlnu","ttbarZlnu","WJetsToLNu","DY10to50","QCDHT200to300","QCDHT300to500","QCDHT500to700","QCDHT700to1000","QCDHT1000to1500","QCDHT1500to2000","QCDHT2000toInf","WZ","TTGJets"]
+complementary_samples_list_2016 = ["ttbarWlnu","ttbarZlnu","WJetsToLNu","QCDHT200to300","QCDHT300to500","QCDHT500to700","QCDHT700to1000","QCDHT1000to1500","QCDHT1500to2000","QCDHT2000toInf","WZ","TTGJets"]
 complementary_samples_list_2017 = ["WJetsToLNu1J","WJetsToLNu2J","DY50","TTGJets"]
-complementary_samples_list_2018 = ["ttbarZQQ","DY10to50","DY50"]
+complementary_samples_list_2018 = ["NOTHING"]
 
 if year == "2016":
     complementary_samples_list = complementary_samples_list_2016
@@ -43,18 +50,11 @@ if year == "2017":
 if year == "2018":
     complementary_samples_list = complementary_samples_list_2018
 
-
-if not os.path.exists("rootfiles"):
-    os.makedirs("rootfiles")
-
 if not isData and not os.path.exists(dir_output_bkg):
     os.makedirs(dir_output_bkg)
 
 if not isData and not os.path.exists(dir_output_sig):
     os.makedirs(dir_output_sig)
-
-if isData and not os.path.exists(dir_output_data):
-    os.makedirs(dir_output_data)
 
 for dirname in list_dirs:
 
@@ -83,10 +83,10 @@ for dirname in list_dirs:
 if not isData:
 
     for sample in complementary_samples_list:
-        hadd_command = "./scripts/haddnano.py -b -q " + dir_output_bkg + "ZEMuAnalysis_" + sample + "_" + year + ".root " + dir_output_bkg + "ZEMuAnalysis_" + sample + "_*_" + year + ".root "
-        rm_command = "rm -rf " + dir_output_bkg + "ZEMuAnalysis_" + sample + "_*" + "_" + year + ".root "
+        hadd_command = "../scripts/haddnano.py " + dir_output_bkg + "ZEMuAnalysis_" + sample + "_" + year + ".root " + dir_output_bkg + "ZEMuAnalysis_" + sample + "_*_" + year + ".root "
+        rm_command = "rm -rf " + dir_output_bkg + "ZEMuAnalysis_" + sample + "_?_" + year + ".root "
 
         os.system(hadd_command)
-        os.system(rm_command)        
+        os.system(rm_command)
 
 print "All done!"
