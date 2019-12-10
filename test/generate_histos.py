@@ -1,6 +1,7 @@
 import ROOT
 import math
 import argparse
+import numpy as np
 from Simplified_Workflow_Handler import Simplified_Workflow_Handler
 
 ############################################################################
@@ -18,8 +19,7 @@ runningEra = int(args.runningEra_option)
 input_filename = args.inputfile_option
 output_filename = args.outputfile_option
 
-reducedLoop = True #Only process part of the MC root files (for speeding up)
-
+doFullSel = True #only do preselection cuts or full selection
 
 #-------------------------#
 myWF = Simplified_Workflow_Handler(runningEra)
@@ -34,9 +34,8 @@ if runningEra == 0:
     luminosity_norm = 35.86
 if runningEra == 1:
     luminosity_norm = 41.529
-    #luminosity_norm = 27.13 #lumi for Ele32_WPTight only
 if runningEra == 2:
-    luminosity_norm = 59.69
+    luminosity_norm = 59.74
 
 ############################################################################
 #                                                                          #
@@ -49,8 +48,9 @@ sample_name = input_filename.split("_")[2]
 
 #Understand if this is data or MC
 isData = False
-if "Data" in sample_name:
+if "Single" in sample_name:
     isData = True
+    print "Analyzing a data sample..."
 
 # Get the normalization
 Norm_Map = myWF.get_normalizations_map(runningEra)
@@ -61,30 +61,59 @@ Norm_Map = myWF.get_normalizations_map(runningEra)
 #                                                                          #
 ############################################################################
 
-#Here's the list of histos to plot
-h_PUdistrib = ROOT.TH1F("pile up", "pile up",75,0,75)
-h_PUdistrib.Sumw2()
-
 ##Get the handlers for all the histos and graphics
 h_base  = dict()
 
-list_histos = ["h_Mmumu", "h_Mee","h_Mmue", "h_lep1pt", "h_lep2pt", "h_lep1eta", "h_lep2eta", "h_lep1phi", "h_lep2phi", "h_njets25", "h_nbjets25","h_met_sumEt","h_met_pt","h_jetptmax","h_ntau"]
+list_histos = ["h_Mmumu", "h_Mee","h_Mmue", "h_lep1pt", "h_lep2pt", "h_lep1eta", "h_lep2eta", "h_lep1phi", "h_lep2phi", "h_njets25", "h_met_sumEt", "h_met_pt", "h_jetptmax", "h_npvs"]
 
-h_base[list_histos[0]]  = ROOT.TH1F(list_histos[0], "M_{#mu#mu}", 60, 50., 120.)
-h_base[list_histos[1]]  = ROOT.TH1F(list_histos[1], "M_{ee}", 60, 50., 120.)
-h_base[list_histos[2]]  = ROOT.TH1F(list_histos[2], "M_{#mu e}", 50, 50., 120.)
-h_base[list_histos[3]]  = ROOT.TH1F(list_histos[3], "p_{T} of the 1st lepton", 50, 20., 100.)
-h_base[list_histos[4]]  = ROOT.TH1F(list_histos[4], "p_{T} of the 2nd lepton", 50, 20., 100.)
+h_base[list_histos[0]]  = ROOT.TH1F(list_histos[0], "M_{#mu#mu}", 60, 60., 120.)
+h_base[list_histos[1]]  = ROOT.TH1F(list_histos[1], "M_{ee}", 60, 60., 120.)
+h_base[list_histos[2]]  = ROOT.TH1F(list_histos[2], "M_{#mu e}", 50, 60., 120.)
+h_base[list_histos[3]]  = ROOT.TH1F(list_histos[3], "p_{T} of the 1st lepton", 40, 25., 80.)
+h_base[list_histos[4]]  = ROOT.TH1F(list_histos[4], "p_{T} of the 2nd lepton", 40, 25., 80.)
 h_base[list_histos[5]]  = ROOT.TH1F(list_histos[5], "#eta of the 1st lepton", 50, -2.6, 2.6)
 h_base[list_histos[6]]  = ROOT.TH1F(list_histos[6], "#eta of the 2nd lepton", 50, -2.6, 2.6)
 h_base[list_histos[7]]  = ROOT.TH1F(list_histos[7], "#phi of the 1st lepton", 30, -3.15, 3.15)
 h_base[list_histos[8]]  = ROOT.TH1F(list_histos[8], "#phi of the 2nd lepton", 30, -3.15, 3.15)
 h_base[list_histos[9]]  = ROOT.TH1F(list_histos[9], "N_{jets} above 25 GeV", 10, 0, 10.)
-h_base[list_histos[10]] = ROOT.TH1F(list_histos[10], "N_{bjets} above 25 GeV", 4, 0, 4.)
-h_base[list_histos[11]] = ROOT.TH1F(list_histos[11], "MET sumEt puppi", 100, 0., 1000.)
-h_base[list_histos[12]] = ROOT.TH1F(list_histos[12], "MET pt puppi", 30, 0., 60.)
-h_base[list_histos[13]] = ROOT.TH1F(list_histos[13], "p_{T} of the hardest jet", 50, 25., 150.)
-h_base[list_histos[14]] = ROOT.TH1F(list_histos[14], "N_{#tau}", 10, 0., 10.)
+h_base[list_histos[10]] = ROOT.TH1F(list_histos[10], "MET sumEt puppi", 100, 0., 1000.)
+h_base[list_histos[11]] = ROOT.TH1F(list_histos[11], "MET pt puppi", 30, 0., 50.)
+h_base[list_histos[12]] = ROOT.TH1F(list_histos[12], "p_{T} of the hardest jet", 50, 25., 100.)
+h_base[list_histos[13]] = ROOT.TH1F(list_histos[13], "pile up",75,0,75)
+
+##Open the output
+fOut = ROOT.TFile(output_filename,"RECREATE")
+fOut.cd()
+
+############################################################################
+#                                                                          #
+#------------------------------ Create output root files  -----------------#
+#                                                                          #
+############################################################################
+
+#Variables to go in the tree
+_FourlepMass = np.zeros(1, dtype=float)
+_met         = np.zeros(1, dtype=float)
+_jetptmax    = np.zeros(1, dtype=float)
+_mcweight    = np.zeros(1, dtype=float)
+
+tree_signalreg = ROOT.TTree('signaltree','tree with branches')
+tree_signalreg.Branch('M_ll',_FourlepMass,'M_ll/D')
+tree_signalreg.Branch('met',_met,'met/D')
+tree_signalreg.Branch('jetptmax',_jetptmax,'jetptmax/D')
+tree_signalreg.Branch('mcweight',_mcweight,'mcweight/D')
+
+tree_mumureg = ROOT.TTree('mumutree','tree with branches')
+tree_mumureg.Branch('M_ll',_FourlepMass,'M_ll/D')
+tree_mumureg.Branch('met',_met,'met/D')
+tree_mumureg.Branch('jetptmax',_jetptmax,'jetptmax/D')
+tree_mumureg.Branch('mcweight',_mcweight,'mcweight/D')
+
+tree_eereg = ROOT.TTree('eetree','tree with branches')
+tree_eereg.Branch('M_ll',_FourlepMass,'M_ll/D')
+tree_eereg.Branch('met',_met,'met/D')
+tree_eereg.Branch('jetptmax',_jetptmax,'jetptmax/D')
+tree_eereg.Branch('mcweight',_mcweight,'mcweight/D')
 
 ##Loop on events
 if not isData:
@@ -111,28 +140,20 @@ for jentry in xrange(nentries):
     if nb <= 0:
         continue
 
-    if nentries > 1000000 and reducedLoop and not isData :
-        if jentry > nentries/40.:
-            break
-
     Nevts_per_sample = Nevts_per_sample + 1
 
-    if (Nevts_per_sample/20000.).is_integer() :
+    if (Nevts_per_sample/50000.).is_integer() :
         print "Processed ", Nevts_per_sample, " events..."
 
-    nPV = mytree.PV_npvs
+    if not (mytree.HLT_IsoMu24 or mytree.HLT_Mu50 or mytree.HLT_Ele32_WPTight_Gsf) :
+        continue
 
     if mytree.nMuon == 2 :
 
-        if not mytree.Muon_tightId[0] :
-            continue
-        if not mytree.Muon_tightId[1] :
-            continue
-
-        if mytree.Muon_pfRelIso03_all[0] > 0.2 : #medium
-            continue
-        if mytree.Muon_pfRelIso03_all[1] > 0.2 : #medium
-            continue
+        #if mytree.Muon_pfRelIso03_all[0] > 0.2 : #medium
+        #    continue
+        #if mytree.Muon_pfRelIso03_all[1] > 0.2 : #medium
+        #    continue
 
         lep1_pt = mytree.Muon_pt[0]
         lep1_eta = mytree.Muon_eta[0]
@@ -156,10 +177,8 @@ for jentry in xrange(nentries):
         lep2_mass = mytree.Electron_mass[1]
     else :
 
-        if not mytree.Muon_tightId[0] :
-            continue
-        if mytree.Muon_pfRelIso03_all[0] > 0.2 : #medium
-            continue
+        #if mytree.Muon_pfRelIso03_all[0] > 0.2 : #medium
+        #    continue
 
         lep1_pt = mytree.Muon_pt[0]
         lep1_eta = mytree.Muon_eta[0]
@@ -175,32 +194,28 @@ for jentry in xrange(nentries):
     lep1_FourMom.SetPtEtaPhiM(lep1_pt,lep1_eta,lep1_phi,lep1_mass)
     lep2_FourMom = ROOT.TLorentzVector()
     lep2_FourMom.SetPtEtaPhiM(lep2_pt,lep2_eta,lep2_phi,lep2_mass)
-
     Zcand_FourMom = lep1_FourMom + lep2_FourMom
 
-    if Zcand_FourMom.M() < 50. :  #FIXWITHNEXTPROD
+    if Zcand_FourMom.M() < 70. or lep2_pt < 33.:   #FIXWITHNEXTPROD
         continue
 
-    met_sumEt_puppi = mytree.PuppiMET_sumEt
-    met_pt_puppi = mytree.PuppiMET_pt
-
     njets_25 = 0
-    nbjets_25 = 0
     jetptmax = -1.
     for jetcount in xrange(mytree.nJet) :
         if mytree.Jet_pt[jetcount] > jetptmax :
             jetptmax = mytree.Jet_pt[jetcount]
         if mytree.Jet_pt[jetcount] > 25. :
-            njets_25 = njets_25 + 1
-            if mytree.Jet_btagDeepB[jetcount] > 0.4184 :   #medium
-                nbjets_25 = nbjets_25 + 1
-    
-    ntau = 0
-    for taucount in xrange(mytree.nTau) :
-        if mytree.Tau_pt[taucount] > 20. and mytree.Tau_idMVAoldDM2017v2[taucount] > 15:
-            ntau = ntau + 1
+            njets_25 = njets_25 + 1    
+
+    met_pt_puppi = mytree.PuppiMET_pt
+    met_sumEt_puppi = mytree.PuppiMET_sumEt
+
+    if doFullSel and (jetptmax > 75. or lep1_pt < 26. or lep2_pt < 26. or met_pt_puppi > 30.) :
+        continue
 
     Nevts_selected = Nevts_selected + 1
+
+    nPV = mytree.PV_npvs
 
     ############################################################################
     #                                                                          #
@@ -218,7 +233,7 @@ for jentry in xrange(nentries):
         lep1_weight = myWF.get_muon_scale(lep1_pt,lep1_eta,isSingleMuTrigger_LOW,runningEra)
         lep2_weight = myWF.get_muon_scale(lep2_pt,lep2_eta,isSingleMuTrigger_LOW,runningEra)
 
-    ############## ELECTRON SFs ##############
+    ############### ELECTRON SFs ##############
     elif mytree.nElectron == 2 and not isData:
         lep1_weight = myWF.get_ele_scale(lep1_pt, lep1_eta + mytree.Electron_deltaEtaSC[0],runningEra)
         lep2_weight = myWF.get_ele_scale(lep2_pt, lep2_eta + mytree.Electron_deltaEtaSC[1],runningEra)
@@ -232,6 +247,7 @@ for jentry in xrange(nentries):
 
     ############### Multiply weights and SFs for MC. Set weight to 1 for data ###############
 
+    MC_Weight = 1.0
     if not isData:
         MC_Weight = mytree.genWeight
         PU_Weight = mytree.puWeight # Add Pile Up weight
@@ -239,16 +255,14 @@ for jentry in xrange(nentries):
         Event_Weight = norm_factor*MC_Weight*PU_Weight/math.fabs(MC_Weight) # Just take the sign of the gen weight
         Event_Weight = Event_Weight*lep1_weight*lep2_weight
 
-        if nentries > 1000000 and reducedLoop :
-            Event_Weight = Event_Weight*40.
     else:
         Event_Weight = 1.
 
-
-    # Remove QCD events with abnormal weight
-    if "QCD" in sample_name and Event_Weight >= 2000:
-        print "QCD event removed!!!"
-        continue
+    #Fill the tree variables
+    _FourlepMass[0] = Zcand_FourMom.M()
+    _met[0]         = met_pt_puppi
+    _jetptmax[0]    = jetptmax
+    _mcweight[0]    = Event_Weight
 
     if mytree.nMuon == 1 :
         Nevts_expected += Event_Weight # Increment the number of events survived in the analyzed sample
@@ -260,10 +274,13 @@ for jentry in xrange(nentries):
     ############################################################################
     if mytree.nMuon == 2 :
         h_base["h_Mmumu"].Fill(Zcand_FourMom.M(),Event_Weight)
+        tree_mumureg.Fill()
     elif mytree.nElectron == 2 :
         h_base["h_Mee"].Fill(Zcand_FourMom.M(),Event_Weight)
+        tree_eereg.Fill()
     else :
-        h_base["h_Mmue"].Fill(Zcand_FourMom.M(),Event_Weight)
+        if not isData or (Zcand_FourMom.M() < 84. or Zcand_FourMom.M() > 101.) :
+            h_base["h_Mmue"].Fill(Zcand_FourMom.M(),Event_Weight)
 
         h_base["h_lep1pt"].Fill(lep1_pt,Event_Weight)
         h_base["h_lep1eta"].Fill(lep1_eta,Event_Weight)
@@ -273,20 +290,21 @@ for jentry in xrange(nentries):
         h_base["h_lep2phi"].Fill(lep2_phi,Event_Weight)
 
         h_base["h_njets25"].Fill(njets_25,Event_Weight)
-        h_base["h_nbjets25"].Fill(nbjets_25,Event_Weight)
         h_base["h_jetptmax"].Fill(jetptmax,Event_Weight)
 
         h_base["h_met_sumEt"].Fill(met_sumEt_puppi,Event_Weight)
         h_base["h_met_pt"].Fill(met_pt_puppi,Event_Weight)
 
-        h_base["h_ntau"].Fill(ntau,Event_Weight)
+        h_base["h_npvs"].Fill(nPV,Event_Weight)
 
-        h_PUdistrib.Fill(nPV,Event_Weight)      
+        tree_signalreg.Fill()
 
-fOut = ROOT.TFile(output_filename,"RECREATE")
 fOut.cd()
 for hist_name in list_histos:
     h_base[hist_name].Write()
+tree_signalreg.Write()
+tree_mumureg.Write()
+tree_eereg.Write()
 fOut.Close()
 
 print "Number of expected events for ", luminosity_norm, " in fb-1, for sample " , sample_name

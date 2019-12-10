@@ -25,28 +25,33 @@ class exampleProducer(Module):
         jets = Collection(event, "Jet")
         PuppiMET = Object(event, "PuppiMET")
 
+        if PuppiMET.pt > 45. :
+            return False
+
+        if not (HLT.IsoMu24 or HLT.IsoMu27 or HLT.Mu50 or HLT.Ele32_WPTight_Gsf or HLT.Ele32_WPTight_Gsf_L1DoubleEG) :
+            return False
+
         if (len(electrons) + len(muons) != 2) :
             return False
 
-        if PuppiMET.pt > 60. :
-            return False
-
         if len(muons) == 2 :
-            if ( (muons[0].p4() + muons[1].p4()).M() < 50. or (muons[0].p4() + muons[1].p4()).M() > 120.) :
+            lep_mass = (muons[0].p4() + muons[1].p4()).M() 
+            if (lep_mass < 70. or lep_mass > 120.) :
                 return False
             if ( muons[0].charge * muons[1].charge > 0 ) :
                 return False
-            if not muons[0].mediumId :
+            if not muons[0].tightId :
                 return False
-            if not muons[1].mediumId :
+            if not muons[1].tightId :
                 return False
-            if muons[0].pfRelIso03_all > 0.4 or muons[1].pfRelIso03_all > 0.4 : #loose
+            if muons[0].pfRelIso03_all > 0.2 or muons[1].pfRelIso03_all > 0.2 : #medium
                 return False
-            if muons[0].pt < 24. or muons[1].pt < 24. :
+            if muons[0].pt < 25. or muons[1].pt < 25. :
                 return False
 
         elif len(electrons) == 2 :
-            if ( (electrons[0].p4() + electrons[1].p4()).M() < 50. or (electrons[0].p4() + electrons[1].p4()).M() > 120.) :
+            lep_mass = (electrons[0].p4() + electrons[1].p4()).M()
+            if (lep_mass < 70. or lep_mass > 120.) :
                 return False
             if ( electrons[0].charge * electrons[1].charge > 0 ) :
                 return False
@@ -54,34 +59,35 @@ class exampleProducer(Module):
                 return False
             if not electrons[1].mvaFall17V2Iso_WP80 :
                 return False
-            if electrons[0].pt < 24. or electrons[1].pt < 24. :
+            if electrons[0].pt < 25. or electrons[1].pt < 25. :
                 return False
         else :
-            if ( (muons[0].p4() + electrons[0].p4()).M() < 50. or (muons[0].p4() + electrons[0].p4()).M() > 120.) :
+            lep_mass = (muons[0].p4() + electrons[0].p4()).M()
+            if (lep_mass < 70. or lep_mass > 120.) :
                 return False
             if ( muons[0].charge * electrons[0].charge > 0 ) :
                 return False
-            if not muons[0].mediumId :
+            if not muons[0].tightId :
                 return False
-            if muons[0].pfRelIso03_all > 0.4 : #loose
+            if muons[0].pfRelIso03_all > 0.2 : #medium
                 return False
             if not electrons[0].mvaFall17V2Iso_WP80 :
                 return False
-            if muons[0].pt < 24. or electrons[0].pt < 24. :
+            if muons[0].pt < 25. or electrons[0].pt < 25. :
                 return False
 
         nbjets_25 = 0
+        jetptmax = -1.
         for jetcount in xrange(len(jets)) :
-            if jets[jetcount].pt > 25. :
-                if jets[jetcount].btagDeepB > 0.4184 :   #medium
-                    nbjets_25 = nbjets_25 + 1
-        if nbjets_25 > 1 :
+            pt_of_jet = jets[jetcount].pt
+            if pt_of_jet > jetptmax :
+                jetptmax = pt_of_jet
+            if pt_of_jet > 25. and jets[jetcount].btagDeepB > 0.4184 :   #medium
+                nbjets_25 = nbjets_25 + 1
+        if nbjets_25 > 0 or jetptmax > 100.:
             return False
 
-        if (HLT.IsoMu27 or HLT.Mu50 or HLT.Ele32_WPTight_Gsf or HLT.Ele32_WPTight_Gsf_L1DoubleEG) :
-            return True
-
-        return False
+        return True
 
 # define modules using the syntax 'name = lambda : constructor' to avoid having them loaded when not needed
 leptonConstr = lambda : exampleProducer()

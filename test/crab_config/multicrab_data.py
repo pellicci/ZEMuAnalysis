@@ -28,16 +28,17 @@ if runningEra == 1:
 
 if runningEra == 2:
     config.General.workArea = 'crab_projects/samples_data_2018/'
-    config.Data.lumiMask = 'json/Cert_314472-325175_13TeV_PromptReco_Collisions18_JSON.txt'
+    config.Data.lumiMask = 'json/Cert_314472-325175_13TeV_17SeptEarlyReReco2018ABC_PromptEraD_Collisions18_JSON.txt'
 
 config.Data.inputDBS = 'global'
-config.Data.splitting = 'FileBased'
-config.Data.unitsPerJob = 1
+config.Data.splitting = 'EventBased'
+config.Data.unitsPerJob = 1800000
 config.Data.outLFNDirBase = '/store/user/%s/' % (getUsernameFromSiteDB())
 config.Data.publication = False
 
 config.section_('Site')
 config.Site.storageSite = 'T2_IT_Legnaro'
+config.Site.blacklist = ['T2_DE_DESY']
 
 if __name__ == '__main__':
 

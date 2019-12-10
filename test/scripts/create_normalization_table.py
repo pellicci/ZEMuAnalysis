@@ -13,23 +13,12 @@ year = args.year_option
 
 #xsec lookup in pb
 secs_table = dict()
-secs_table["ttbarToHadronic"] = 377.96
 secs_table["ttbarToSemiLeptonic"] = 365.34 # accounting for the 2 possible charge signs of the W
 secs_table["ttbarlnu"] = 88.29 #NNLO-2018
 secs_table["ttbarWlnu"] = 0.2149
-secs_table["ttbarZlnu"] = 0.2432
 secs_table["SingleToptW"] = 34.91
 secs_table["SingleAntiToptW"] = 34.97
 secs_table["DY50"] = 2075.14*3 #amcatnlo 2017
-secs_table["QCDHT100to200"] = 27540000.0
-secs_table["QCDHT200to300"] = 1717000.0
-secs_table["QCDHT300to500"] = 351300.0
-secs_table["QCDHT500to700"] = 31630.0
-secs_table["QCDHT700to1000"] = 6802.0
-secs_table["QCDHT1000to1500"] = 1206.0
-secs_table["QCDHT1500to2000"] = 120.4
-secs_table["QCDHT2000toInf"] = 25.25
-secs_table["ZZ"] = 6.912
 secs_table["WW"] = 12.178
 secs_table["WZ"] = 27.6
 secs_table["Signal"] = 2075.14*0.000001/0.0337 #Assume BR of 10-6
@@ -41,23 +30,12 @@ secs_table["Signal"] = 2075.14*0.000001/0.0337 #Assume BR of 10-6
 #######################################
 #fraction of negative-weighted events in NLO samples (2016)
 frac_table_2016 = dict()
-frac_table_2016["ttbarToHadronic"] = 0.
 frac_table_2016["ttbarToSemiLeptonic"] = 0.
 frac_table_2016["ttbarlnu"] = 0.
 frac_table_2016["ttbarWlnu"] = 0.2419
-frac_table_2016["ttbarZlnu"] = 0.2687
 frac_table_2016["SingleToptW"] = 0.003708
 frac_table_2016["SingleAntiToptW"] = 0.00369
 frac_table_2016["DY50"] = 0.1661
-frac_table_2016["QCDHT100to200"] = 0.
-frac_table_2016["QCDHT200to300"] = 0.
-frac_table_2016["QCDHT300to500"] = 0.
-frac_table_2016["QCDHT500to700"] = 0.
-frac_table_2016["QCDHT700to1000"] = 0.
-frac_table_2016["QCDHT1000to1500"] = 0.
-frac_table_2016["QCDHT1500to2000"] = 0.
-frac_table_2016["QCDHT2000toInf"] = 0.
-frac_table_2016["ZZ"] = 0.1894
 frac_table_2016["WW"] = 0.1866
 frac_table_2016["WZ"] = 0.
 frac_table_2016["Signal"] = 0.
@@ -69,23 +47,12 @@ frac_table_2016["Signal"] = 0.
 #######################################
 #fraction of negative-weighted events in NLO samples (2017)
 frac_table_2017 = dict()
-frac_table_2017["ttbarToHadronic"] = 0.
 frac_table_2017["ttbarToSemiLeptonic"] = 0.
 frac_table_2017["ttbarlnu"] = 0.
 frac_table_2017["ttbarWlnu"] = 0.2268
-frac_table_2017["ttbarZlnu"] = 0.2652
 frac_table_2017["SingleToptW"] = 0.003758
 frac_table_2017["SingleAntiToptW"] = 0.0034
 frac_table_2017["DY50"] = 0.1624
-frac_table_2017["QCDHT100to200"] = 0.0001588
-frac_table_2017["QCDHT200to300"] = 0.000598
-frac_table_2017["QCDHT300to500"] = 0.0009162
-frac_table_2017["QCDHT500to700"] = 0.001485
-frac_table_2017["QCDHT700to1000"] = 0.002061
-frac_table_2017["QCDHT1000to1500"] = 0.003427
-frac_table_2017["QCDHT1500to2000"] = 0.005569
-frac_table_2017["QCDHT2000toInf"] = 0.009878
-frac_table_2017["ZZ"] = 0.1894
 frac_table_2017["WW"] = 0.001755
 frac_table_2017["WZ"] = 0.
 frac_table_2017["Signal"] = 0.
@@ -97,32 +64,21 @@ frac_table_2017["Signal"] = 0.
 #######################################
 #fraction of negative-weighted events in NLO samples (2018)
 frac_table_2018 = dict()
-frac_table_2018["ttbarToHadronic"] = 0.
 frac_table_2018["ttbarToSemiLeptonic"] = 0.
 frac_table_2018["ttbarlnu"] = 0.
 frac_table_2018["ttbarWlnu"] = 0.2268
-frac_table_2018["ttbarZlnu"] = 0.2652
 frac_table_2018["SingleToptW"] = 0.003758
 frac_table_2018["SingleAntiToptW"] = 0.0034
-frac_table_2018["DY50"] = 0.1624
-frac_table_2018["QCDHT100to200"] = 0.0001588 #No info on XSDB
-frac_table_2018["QCDHT200to300"] = 0.000598
-frac_table_2018["QCDHT300to500"] = 0.0009162
-frac_table_2018["QCDHT500to700"] = 0.001485
-frac_table_2018["QCDHT700to1000"] = 0.002061
-frac_table_2018["QCDHT1000to1500"] = 0.003427
-frac_table_2018["QCDHT1500to2000"] = 0.005569
-frac_table_2018["QCDHT2000toInf"] = 0.009878
-frac_table_2018["ZZ"] = 0.1894
+frac_table_2018["DY50"] = 0.163
 frac_table_2018["WW"] = 0.001755
 frac_table_2018["WZ"] = 0.
 frac_table_2018["Signal"] = 0.
 
 frac_table = dict()
 
-complementary_samples_list_2016 = ["ttbarWlnu","ttbarZlnu","WJetsToLNu","QCDHT200to300","QCDHT300to500","QCDHT500to700","QCDHT700to1000","QCDHT1000to1500","QCDHT1500to2000","QCDHT2000toInf","WZ","TTGJets"]
+complementary_samples_list_2016 = ["ttbarWlnu","WJetsToLNu","WZ","TTGJets"]
 complementary_samples_list_2017 = ["DY50","TTGJets","WJetsToLNu1J","WJetsToLNu2J"]
-complementary_samples_list_2018 = ["NOTHING"]
+complementary_samples_list_2018 = []
 
 if year == "2016":
     complementary_samples_list = complementary_samples_list_2016

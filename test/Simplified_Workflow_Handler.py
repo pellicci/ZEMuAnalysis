@@ -14,7 +14,7 @@ from array import array
 
 #------------------------------- Scale factors 2018 ------------------------------#
 
-el_ID_scale_name_2018  = "scale_factors/2018_ElectronMVA90.root"
+el_ID_scale_name_2018  = "scale_factors/2018_ElectronMVA80.root"
 el_ID_scale_file_2018  = ROOT.TFile(el_ID_scale_name_2018)
 el_ID_scale_histo_2018 = ROOT.TH2F()
 el_ID_scale_histo_2018 = el_ID_scale_file_2018.Get("EGamma_SF2D")

@@ -1,12 +1,20 @@
 # this is a comment
 drop * # start with all
-keep Electron*
-keep Muon*
-keep Jet*
-keep Tau*
-keep HLT_IsoMu2*
-keep HLT_Mu50*
-keep HLT_Ele32*
+keep Electron_pt
+keep Electron_eta
+keep Electron_phi
+keep Electron_mass
+keep Electron_deltaEtaSC
+keep Muon_pt
+keep Muon_eta
+keep Muon_phi
+keep Muon_mass
+keep Muon_pfRelIso03_all
+keep Jet_pt
+keep HLT_IsoMu24
+keep HLT_IsoMu27
+keep HLT_Mu50
+keep HLT_Ele32_WPTight_Gsf*
 keep genWeight*
 keep PuppiMET*
 keep PV_npvs*

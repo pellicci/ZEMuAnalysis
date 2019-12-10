@@ -1,7 +1,48 @@
 import ROOT
-import os
+import os, sys
 import subprocess
 import argparse
+from importlib import import_module
+
+from PhysicsTools.NanoAODTools.postprocessing.framework.postprocessor import PostProcessor
+
+from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection
+from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Object
+from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
+
+ROOT.PyConfig.IgnoreCommandLineOptions = True
+
+class HLTElectronFilter(Module):
+    def __init__(self):
+	self.writeHistFile=True
+
+    def beginJob(self,histFile=None,histDirName=None):
+	Module.beginJob(self,histFile,histDirName)
+
+    def analyze(self, event):
+
+        HLT = Object(event, "HLT") 
+
+        if (HLT.IsoMu24 or HLT.IsoMu27 or HLT.Mu50) :
+            return False
+
+        return True
+
+class SignalFilter(Module):
+    def __init__(self):
+        self.writeHistFile=True
+
+    def beginJob(self,histFile=None,histDirName=None):
+        Module.beginJob(self,histFile,histDirName)
+
+    def analyze(self, event):
+
+        muons = Collection(event, "Muon")
+
+        if (len(muons) != 1) :
+            return False
+
+        return True
 
 #---------------------------------#
 p = argparse.ArgumentParser(description='Select whether to download MC or data')
@@ -39,17 +80,6 @@ else :
 
 list_dirs = os.listdir(dir_input)
 
-complementary_samples_list_2016 = ["ttbarWlnu","ttbarZlnu","WJetsToLNu","QCDHT200to300","QCDHT300to500","QCDHT500to700","QCDHT700to1000","QCDHT1000to1500","QCDHT1500to2000","QCDHT2000toInf","WZ","TTGJets"]
-complementary_samples_list_2017 = ["WJetsToLNu1J","WJetsToLNu2J","DY50","TTGJets"]
-complementary_samples_list_2018 = ["NOTHING"]
-
-if year == "2016":
-    complementary_samples_list = complementary_samples_list_2016
-if year == "2017":
-    complementary_samples_list = complementary_samples_list_2017
-if year == "2018":
-    complementary_samples_list = complementary_samples_list_2018
-
 if not isData and not os.path.exists(dir_output_bkg):
     os.makedirs(dir_output_bkg)
 
@@ -79,14 +109,35 @@ for dirname in list_dirs:
 
     os.system(hadd_command)
 
+    if not "Signal" in dirname and not isData :
+        p_Signal=PostProcessor(".",[dir_output_bkg + "ZEMuAnalysis_" + samplename[1] + "_" + year + ".root "],modules=[SignalFilter()],haddFileName=dir_output_bkg + "ZEMuAnalysis_" + samplename[1] + "_SigRegion_" + year + ".root ")
+        p_Signal.run()
+
+
 # Now add samples with different names but same xsec
-if not isData:
+if isData:
+    hadd_command = "../scripts/haddnano.py " + dir_output_data + "ZEMuAnalysis_SingleMu_" + year + ".root " + dir_output_data + "ZEMuAnalysis_SingleMu_?_" + year + ".root"
+    rm_command = "rm -rf " + dir_output_data + "ZEMuAnalysis_SingleMu_?_" + year + ".root"
 
-    for sample in complementary_samples_list:
-        hadd_command = "../scripts/haddnano.py " + dir_output_bkg + "ZEMuAnalysis_" + sample + "_" + year + ".root " + dir_output_bkg + "ZEMuAnalysis_" + sample + "_*_" + year + ".root "
-        rm_command = "rm -rf " + dir_output_bkg + "ZEMuAnalysis_" + sample + "_?_" + year + ".root "
+    os.system(hadd_command)
+    os.system(rm_command)
 
-        os.system(hadd_command)
-        os.system(rm_command)
+    hadd_command = "../scripts/haddnano.py " + dir_output_data + "ZEMuAnalysis_SingleEle_DoubleTrig_" + year + ".root " + dir_output_data + "ZEMuAnalysis_SingleEle_?_" + year + ".root"
+    rm_command = "rm -rf " + dir_output_data + "ZEMuAnalysis_SingleEle_?_" + year + ".root"
+
+    os.system(hadd_command)
+    os.system(rm_command)
+
+    p_HLT=PostProcessor(".",[dir_output_data + "ZEMuAnalysis_SingleEle_DoubleTrig_" + year + ".root "],modules=[HLTElectronFilter()],haddFileName=dir_output_data + "ZEMuAnalysis_SingleEle_" + year + ".root ")
+    p_HLT.run()
+
+    rm_command = "rm -rf " + dir_output_data + "ZEMuAnalysis_SingleEle_DoubleTrig_" + year + ".root "
+    os.system(rm_command)
+
+    p_Signal_mu=PostProcessor(".",[dir_output_data + "ZEMuAnalysis_SingleMu_" + year + ".root "],modules=[SignalFilter()],haddFileName=dir_output_data + "ZEMuAnalysis_SingleMu_SigRegion_" + year + ".root ")
+    p_Signal_mu.run()
+
+    p_Signal_ele=PostProcessor(".",[dir_output_data + "ZEMuAnalysis_SingleEle_" + year + ".root "],modules=[SignalFilter()],haddFileName=dir_output_data + "ZEMuAnalysis_SingleEle_SigRegion_" + year + ".root ")
+    p_Signal_ele.run()
 
 print "All done!"
