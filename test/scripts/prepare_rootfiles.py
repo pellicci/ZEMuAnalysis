@@ -114,7 +114,7 @@ for dirname in list_dirs:
         p_Signal.run()
 
 
-# Now add samples with different names but same xsec
+# Now treat and merge samples
 if isData:
     hadd_command = "../scripts/haddnano.py " + dir_output_data + "ZEMuAnalysis_SingleMu_" + year + ".root " + dir_output_data + "ZEMuAnalysis_SingleMu_?_" + year + ".root"
     rm_command = "rm -rf " + dir_output_data + "ZEMuAnalysis_SingleMu_?_" + year + ".root"

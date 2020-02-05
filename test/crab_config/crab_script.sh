@@ -31,5 +31,5 @@ echo Found Proxy in: $X509_USER_PROXY
 
 echo "This is where it begins"
 
-python crab_script.py $1
+python crab_script.py $1 $2 $3
 fi

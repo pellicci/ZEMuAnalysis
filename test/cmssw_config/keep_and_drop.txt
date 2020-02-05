@@ -11,9 +11,13 @@ keep Muon_phi
 keep Muon_mass
 keep Muon_pfRelIso03_all
 keep Jet_pt
+keep Jet_eta
+keep Jet_phi
+keep Jet_mass
 keep HLT_IsoMu24
 keep HLT_IsoMu27
 keep HLT_Mu50
+keep HLT_Ele27_WPTight_Gsf*
 keep HLT_Ele32_WPTight_Gsf*
 keep genWeight*
 keep PuppiMET*
