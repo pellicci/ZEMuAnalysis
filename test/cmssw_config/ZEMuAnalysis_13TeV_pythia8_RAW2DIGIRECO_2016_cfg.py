@@ -53,7 +53,7 @@ process.AODSIMoutput = cms.OutputModule("PoolOutputModule",
         filterName = cms.untracked.string('')
     ),
     eventAutoFlushCompressedSize = cms.untracked.int32(15728640),
-    fileName = cms.untracked.string('file:WPiGamma_pythia8_RECO_2016.root'),
+    fileName = cms.untracked.string('file:ZEMuAnalysis_pythia8_RECO_2016.root'),
     outputCommands = process.AODSIMEventContent.outputCommands
 )
 
