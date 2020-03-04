@@ -1,6 +1,6 @@
 import ROOT
 
-fInput = ROOT.TFile("workspaces/fit_Mll_Backgroundonly_2018.root")
+fInput = ROOT.TFile("workspaces/fit_Mll_Backgroundonly_Combined.root")
 fInput.cd()
 ws = fInput.Get("ws")
 
@@ -96,6 +96,6 @@ canvas.cd()
 freq_plot.Draw("EXP")
 # freq_plot.GetYaxis().SetRangeUser(0.,0.8)
 # freq_plot.GetXaxis().SetRange(0.,0.0000107)
-canvas.SaveAs("plots/latest_production/2018/UL_CLs.pdf")
+canvas.SaveAs("plots/latest_production/2016_2017_2018/UL_CLs.pdf")
 
 del fc

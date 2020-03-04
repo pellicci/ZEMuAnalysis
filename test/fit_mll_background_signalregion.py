@@ -4,25 +4,18 @@ import argparse
 #Suppress the opening of many Canvas's
 ROOT.gROOT.SetBatch(True) 
 
-#---------------------------------#
-p = argparse.ArgumentParser(description='Select the year')
-p.add_argument('year_option', help='Type <<2016>>, <<2017>> or <<2018>>')
-args = p.parse_args()
-
-year = args.year_option
-
 #Get all the inputs
-fBkg = ROOT.TFile("trees/ZEMuAnalysis_Background_" + year + ".root")
+fBkg = ROOT.TFile("trees/ZEMuAnalysis_Background_2018.root")
 signaltree = fBkg.Get("signaltree")
 
 M_ll = ROOT.RooRealVar("M_ll","M_ll",70.,110.)
 mcweight = ROOT.RooRealVar("mcweight","mcweight",1.,-100.,100.)
 dataset = ROOT.RooDataSet("dataset","dataset",ROOT.RooArgSet(M_ll,mcweight),ROOT.RooFit.Import(signaltree),ROOT.RooFit.WeightVar(mcweight))
 
-fInput_mumu = ROOT.TFile("histos/latest_production/ZEMuHistos_Data_SameSign_Muon_" + year + ".root")
+fInput_mumu = ROOT.TFile("histos/latest_production/ZEMuHistos_Data_SameSign_Muon_2018.root")
 histo_mu = fInput_mumu.Get("htemp")
 
-fInput_elel = ROOT.TFile("histos/latest_production/ZEMuHistos_Data_SameSign_Electron_" + year + ".root")
+fInput_elel = ROOT.TFile("histos/latest_production/ZEMuHistos_Data_SameSign_Electron_2018.root")
 histo_el = fInput_elel.Get("htemp")
 
 N_mumu = histo_mu.GetEntries()
@@ -69,10 +62,10 @@ totPDF.plotOn(xframe)
 
 c1 = ROOT.TCanvas()
 xframe.Draw()
-c1.SaveAs("plots/latest_production/" + year + "/fit_bkgonly.pdf")
+c1.SaveAs("plots/latest_production/2016_2017_2018/fit_bkgonly.pdf")
 
 #Save the fit result
-fOut = ROOT.TFile("workspaces/fit_Mll_Backgroundonly_" + year + ".root","RECREATE")
+fOut = ROOT.TFile("workspaces/fit_Mll_Backgroundonly_2018.root","RECREATE")
 fOut.cd()
 
 bkg_data = bkgPDF.generate(ROOT.RooArgSet(M_ll),N_bkg.getVal())

@@ -27,24 +27,25 @@ class exampleProducer(Module):
         jets = Collection(event, "Jet")
         PuppiMET = Object(event, "PuppiMET")
 
-        minmupt = 25.
-        minelept = 28.
-        if self.runningEra == 2 :
-            minelept = 33.
+        minmupt = 28.
+        minelept = 33.
+        jetIdflag = 2
 
+        if self.runningEra == 0 :
+            jetIdflag = 3
 
-        if PuppiMET.pt > 50. :
+        if PuppiMET.pt > 40. :
             return False
 
-        if runningEra == 0 :
-            if not (HLT.IsoMu24 or HLT.Mu50 or HLT.Ele27_WPTight_Gsf) :
+        if self.runningEra == 0 :
+            if not (HLT.IsoMu24 or HLT.Mu50 or HLT.Ele27_WPTight_Gsf ) :
                 return False
 
-        elif runningEra == 1 :
-            if not (HLT.IsoMu27 or HLT.Mu50 or HLT.Ele32_WPTight_Gsf or HLT.Ele32_WPTight_Gsf_L1DoubleEG) :
+        elif self.runningEra == 1 :
+            if not (HLT.IsoMu27 or HLT.Mu50 or HLT.Ele32_WPTight_Gsf or HLT.Ele32_WPTight_Gsf_L1DoubleEG ) :
                 return False
 
-        elif runningEra == 2 :
+        elif self.runningEra == 2 :
             if not (HLT.IsoMu24 or HLT.Mu50 or HLT.Ele32_WPTight_Gsf) :
                 return False
 
@@ -92,23 +93,25 @@ class exampleProducer(Module):
                 return False
             if not electrons[0].mvaFall17V2Iso_WP80 :
                 return False
-            if muons[0].pt < minelept or electrons[0].pt < minelept :
+            if muons[0].pt < minmupt or electrons[0].pt < minelept :
                 return False
 
         nbjets_25 = 0
         jetptmax = -1.
         for jetcount in xrange(len(jets)) :
+            if jets[jetcount].jetId < jetIdflag :
+                continue
             pt_of_jet = jets[jetcount].pt
             if pt_of_jet > jetptmax :
                 jetptmax = pt_of_jet
             if pt_of_jet > 25. and jets[jetcount].btagDeepB > 0.4184 :   #medium
                 nbjets_25 = nbjets_25 + 1
-        if nbjets_25 > 0 or jetptmax > 100.:
+        if nbjets_25 > 0 or jetptmax > 90.:
             return False
 
         #it it's the same flavor channel, just save the full selection to spare space and CPU
         if len(muons) == 2 or len(electrons) == 2 :
-            if jetptmax > 78 or PuppiMET.pt > 28. :
+            if jetptmax > 78. or PuppiMET.pt > 28. :
                 return False
 
 

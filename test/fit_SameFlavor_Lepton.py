@@ -1,17 +1,10 @@
 import ROOT
-import argparse
 
 #Suppress the opening of many Canvas's
 ROOT.gROOT.SetBatch(True) 
 
-#---------------------------------#
-p = argparse.ArgumentParser(description='Select the year')
-p.add_argument('year_option', help='Type <<2016>>, <<2017>> or <<2018>>')
-args = p.parse_args()
 
-year = args.year_option
-
-fInput = ROOT.TFile("histos/latest_production/ZEMuHistos_Data_SameSign_Muon_" + year + ".root")
+fInput = ROOT.TFile("histos/latest_production/ZEMuHistos_Data_SameSign_Electron_Combined.root")
 histo = fInput.Get("htemp")
 
 #Define the observable
@@ -21,17 +14,17 @@ data = ROOT.RooDataHist("data","data",ROOT.RooArgList(M_ll),histo)
 
 print "Number of events to fit ", data.numEntries()
 
-mean = ROOT.RooRealVar("mean","mean",90.,85.,95.)
+mean = ROOT.RooRealVar("mean","mean",91.,85.,95.)
 width = ROOT.RooRealVar("width","width",2.5,0.1,5.)
 sigma = ROOT.RooRealVar("sigma","sigma",2.,0.1,5.)
 alpha = ROOT.RooRealVar("alpha","alpha",1.,0.1,10.)
 enne = ROOT.RooRealVar("enne","enne",2.,0.1,10.)
 
-mean2 = ROOT.RooRealVar("mean2","mean2",85.,70.,95.)
+mean2 = ROOT.RooRealVar("mean2","mean2",91.,70.,95.)
 sigma2 = ROOT.RooRealVar("sigma2","sigma2",2.,0.1,10.)
 
 sigpdf1 = ROOT.RooCBShape("sigpdf1","sigpdf1",M_ll,mean,sigma,alpha,enne)
-sigpdf2 = ROOT.RooVoigtian("sigpdf2","sigpdf2",M_ll,mean,sigma2,width)
+sigpdf2 = ROOT.RooVoigtian("sigpdf2","sigpdf2",M_ll,mean2,sigma2,width)
 
 fracsig = ROOT.RooRealVar("fracsig","fracsig",0.9,0.,1.)
 
@@ -55,14 +48,13 @@ sigpdf.plotOn(xframe)
 
 c1 = ROOT.TCanvas()
 xframe.Draw()
-c1.SaveAs("plots/latest_production/" + year + "/fit_mll_SameSign_Muon.pdf")
+c1.SaveAs("plots/latest_production/2016_2017_2018/fit_mll_SameSign_Electron.pdf")
 
-fOut = ROOT.TFile("workspaces/fit_Mll_SameSign_Muon_" + year + ".root","RECREATE")
+fOut = ROOT.TFile("workspaces/fit_Mll_SameSign_Electron_Combined.root","RECREATE")
 fOut.cd()
 
 ws = ROOT.RooWorkspace("ws")
 getattr(ws,'import')(sigpdf)
-getattr(ws,'import')(data)
 
 ws.Write()
 fOut.Close()

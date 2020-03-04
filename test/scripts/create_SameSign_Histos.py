@@ -15,7 +15,7 @@ muon_tree.Draw("M_ll","nMuon==2")
 
 histo_mu = muon_tree.GetHistogram()
 
-fOut = ROOT.TFile("histos/latest_production/ZEMuHistos_Data_SameSign_Muon_" + year ".root","RECREATE")
+fOut = ROOT.TFile("histos/latest_production/ZEMuHistos_Data_SameSign_Muon_" + year + ".root","RECREATE")
 fOut.cd()
 histo_mu.Write()
 fOut.Close()

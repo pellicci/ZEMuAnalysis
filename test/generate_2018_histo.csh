@@ -12,6 +12,9 @@ python generate_histos.py 2 1 rootfiles/latest_production/MC/backgrounds/ZEMuAna
 python generate_histos.py 2 1 rootfiles/latest_production/MC/backgrounds/ZEMuAnalysis_ttbarlnu_SigRegion_2018.root histos/latest_production/ZEMuHistos_ttbarlnu_2018.root
 python generate_histos.py 2 1 rootfiles/latest_production/MC/backgrounds/ZEMuAnalysis_ttbarToSemiLeptonic_SigRegion_2018.root histos/latest_production/ZEMuHistos_ttbar_2018.root
 python generate_histos.py 2 1 rootfiles/latest_production/MC/backgrounds/ZEMuAnalysis_Wlnu_SigRegion_2018.root histos/latest_production/ZEMuHistos_Wlnu_2018.root
+python generate_histos.py 2 1 rootfiles/latest_production/MC/backgrounds/ZEMuAnalysis_GammaJets20to40_SigRegion_2018.root histos/latest_production/ZEMuHistos_GammaJets20to40_2018.root
+python generate_histos.py 2 1 rootfiles/latest_production/MC/backgrounds/ZEMuAnalysis_GammaJets20toInf_SigRegion_2018.root histos/latest_production/ZEMuHistos_GammaJets20toInf_2018.root
+python generate_histos.py 2 1 rootfiles/latest_production/MC/backgrounds/ZEMuAnalysis_GammaJets40toInf_SigRegion_2018.root histos/latest_production/ZEMuHistos_GammaJets40toInf_2018.root
 
 hadd -f trees/ZEMuAnalysis_Background_2018.root histos/latest_production/*2018*.root
 
@@ -22,6 +25,9 @@ cp histos/latest_production/ZEMuHistos_Signal_2018.root trees/ZEMuAnalysis_Signa
 # #Merge samples
 hadd histos/latest_production/ZEMuHistos_STtW_2018.root histos/latest_production/ZEMuHistos_Single*ToptW_2018.root
 rm histos/latest_production/ZEMuHistos_Single*ToptW_2018.root
+
+hadd histos/latest_production/ZEMuHistos_GammaJets_2018.root histos/latest_production/ZEMuHistos_GammaJets*to*_2018.root
+rm histos/latest_production/ZEMuHistos_GammaJets*to*_2018.root
 
 #Now do the data
 

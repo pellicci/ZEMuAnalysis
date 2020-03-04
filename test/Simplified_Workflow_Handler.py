@@ -12,6 +12,52 @@ from array import array
 #                                                                                 #
 ###################################################################################
 
+#------------------------------- Scale factors 2016 ------------------------------#
+
+el_ID_scale_name_2016  = "scale_factors/2016LegacyReReco_ElectronMVAwp80.root"
+el_ID_scale_file_2016  = ROOT.TFile(el_ID_scale_name_2016)
+el_ID_scale_histo_2016 = ROOT.TH2F()
+el_ID_scale_histo_2016 = el_ID_scale_file_2016.Get("EGamma_SF2D")
+
+el_reco_scale_name_2016  = "scale_factors/EGM2D_BtoH_GT20GeV_RecoSF_Legacy2016.root"
+el_reco_scale_file_2016  = ROOT.TFile(el_reco_scale_name_2016)
+el_reco_scale_histo_2016 = ROOT.TH2F()
+el_reco_scale_histo_2016 = el_reco_scale_file_2016.Get("EGamma_SF2D")
+
+mu_ID_scale_name_BCDEF_2016  = "scale_factors/RunBCDEF_SF_ID_muon_2016.root"
+mu_ID_scale_file_BCDEF_2016  = ROOT.TFile(mu_ID_scale_name_BCDEF_2016)
+mu_ID_scale_histo_BCDEF_2016 = ROOT.TH2F()
+mu_ID_scale_histo_BCDEF_2016 = mu_ID_scale_file_BCDEF_2016.Get("NUM_MediumID_DEN_genTracks_eta_pt")
+
+mu_ID_scale_name_GH_2016  = "scale_factors/RunGH_SF_ID_muon_2016.root"
+mu_ID_scale_file_GH_2016  = ROOT.TFile(mu_ID_scale_name_GH_2016)
+mu_ID_scale_histo_GH_2016 = ROOT.TH2F()
+mu_ID_scale_histo_GH_2016 = mu_ID_scale_file_GH_2016.Get("NUM_MediumID_DEN_genTracks_eta_pt")
+
+mu_Iso_scale_name_BCDEF_2016  = "scale_factors/RunBCDEF_SF_ISO_muon_2016.root"
+mu_Iso_scale_file_BCDEF_2016  = ROOT.TFile(mu_Iso_scale_name_BCDEF_2016)
+mu_Iso_scale_histo_BCDEF_2016 = ROOT.TH2F()
+mu_Iso_scale_histo_BCDEF_2016 = mu_Iso_scale_file_BCDEF_2016.Get("NUM_LooseRelIso_DEN_MediumID_eta_pt")
+
+mu_Iso_scale_name_GH_2016  = "scale_factors/RunGH_SF_ISO_muon_2016.root"
+mu_Iso_scale_file_GH_2016  = ROOT.TFile(mu_Iso_scale_name_GH_2016)
+mu_Iso_scale_histo_GH_2016 = ROOT.TH2F()
+mu_Iso_scale_histo_GH_2016 = mu_Iso_scale_file_GH_2016.Get("NUM_LooseRelIso_DEN_MediumID_eta_pt")
+
+mu_Trigger_scale_name_BCDEF_2016       = "scale_factors/EfficienciesAndSF_RunBtoF_muon_2016.root"
+mu_Trigger_scale_file_BCDEF_2016       = ROOT.TFile(mu_Trigger_scale_name_BCDEF_2016)
+mu_Trigger_scale_histo_BCDEF_Mu24_2016 = ROOT.TH2F()
+mu_Trigger_scale_histo_BCDEF_Mu24_2016 = mu_Trigger_scale_file_BCDEF_2016.Get("IsoMu24_OR_IsoTkMu24_PtEtaBins/abseta_pt_ratio")
+mu_Trigger_scale_histo_BCDEF_Mu50_2016 = ROOT.TH2F()
+mu_Trigger_scale_histo_BCDEF_Mu50_2016 = mu_Trigger_scale_file_BCDEF_2016.Get("Mu50_OR_TkMu50_PtEtaBins/abseta_pt_ratio")
+
+mu_Trigger_scale_name_GH_2016       = "scale_factors/EfficienciesAndSF_Period4_muonTrigger_2016.root"
+mu_Trigger_scale_file_GH_2016       = ROOT.TFile(mu_Trigger_scale_name_GH_2016)
+mu_Trigger_scale_histo_GH_Mu24_2016 = ROOT.TH2F()
+mu_Trigger_scale_histo_GH_Mu24_2016 = mu_Trigger_scale_file_GH_2016.Get("IsoMu24_OR_IsoTkMu24_PtEtaBins/abseta_pt_ratio")
+mu_Trigger_scale_histo_GH_Mu50_2016 = ROOT.TH2F()
+mu_Trigger_scale_histo_GH_Mu50_2016 = mu_Trigger_scale_file_GH_2016.Get("Mu50_OR_TkMu50_PtEtaBins/abseta_pt_ratio")
+
 #------------------------------- Scale factors 2018 ------------------------------#
 
 el_ID_scale_name_2018  = "scale_factors/2018_ElectronMVA80.root"

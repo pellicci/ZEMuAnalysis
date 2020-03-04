@@ -2,7 +2,7 @@ from WMCore.Configuration import Configuration
 from CRABClient.UserUtilities import config, getUsernameFromSiteDB
 config = Configuration()
 
-runningEra = 2 # 0 = 2016, 1 = 2017, 2 = 2018
+runningEra = 0 # 0 = 2016, 1 = 2017, 2 = 2018
 
 config.section_('General')
 config.General.transferLogs = True
@@ -111,6 +111,25 @@ if __name__ == '__main__':
         p = Process(target=submit, args=(config,))
         p.start()
         p.join()
+
+        config.General.requestName = '2016_ZEMuAnalysis_GammaJets20to40'
+        config.Data.inputDataset = '/GJet_Pt-20to40_DoubleEMEnriched_MGG-80toInf_TuneCUETP8M1_13TeV_Pythia8/RunIISummer16NanoAODv6-PUMoriond17_Nano25Oct2019_backup_102X_mcRun2_asymptotic_v7-v1/NANOAODSIM'
+        p = Process(target=submit, args=(config,))
+        p.start()
+        p.join()
+        
+        config.General.requestName = '2016_ZEMuAnalysis_GammaJets20toInf'
+        config.Data.inputDataset = '/GJet_Pt-20toInf_DoubleEMEnriched_MGG-40to80_TuneCUETP8M1_13TeV_Pythia8/RunIISummer16NanoAODv6-PUMoriond17_Nano25Oct2019_102X_mcRun2_asymptotic_v7-v1/NANOAODSIM'
+        p = Process(target=submit, args=(config,))
+        p.start()
+        p.join()
+
+        config.General.requestName = '2016_ZEMuAnalysis_GammaJets40toInf'
+        config.Data.inputDataset = '/GJet_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCUETP8M1_13TeV_Pythia8/RunIISummer16NanoAODv6-PUMoriond17_Nano25Oct2019_102X_mcRun2_asymptotic_v7-v1/NANOAODSIM'
+        p = Process(target=submit, args=(config,))
+        p.start()
+        p.join()
+
         
     #################################################
     #                                               #
@@ -172,49 +191,67 @@ if __name__ == '__main__':
     if runningEra == 2:
 
         config.General.requestName = '2018_ZEMuAnalysis_ttbarToSemiLeptonic'
-        config.Data.inputDataset = '/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18NanoAODv5-Nano1June2019_102X_upgrade2018_realistic_v19_ext3-v1/NANOAODSIM'
+        config.Data.inputDataset = '/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18NanoAODv6-Nano25Oct2019_102X_upgrade2018_realistic_v20_ext3-v1/NANOAODSIM'
         p = Process(target=submit, args=(config,))
         p.start()
         p.join()
 
         config.General.requestName = '2018_ZEMuAnalysis_ttbarlnu'
-        config.Data.inputDataset = '/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18NanoAODv5-Nano1June2019_102X_upgrade2018_realistic_v19-v1/NANOAODSIM'
+        config.Data.inputDataset = '/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18NanoAODv6-Nano25Oct2019_102X_upgrade2018_realistic_v20-v1/NANOAODSIM'
         p = Process(target=submit, args=(config,))
         p.start()
         p.join()
 
         config.General.requestName = '2018_ZEMuAnalysis_SingleToptW'
-        config.Data.inputDataset = '/ST_tW_top_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18NanoAODv5-Nano1June2019_102X_upgrade2018_realistic_v19_ext1-v1/NANOAODSIM'
+        config.Data.inputDataset = '/ST_tW_top_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18NanoAODv6-Nano25Oct2019_102X_upgrade2018_realistic_v20_ext1-v1/NANOAODSIM'
         p = Process(target=submit, args=(config,))
         p.start()
         p.join()
         
         config.General.requestName = '2018_ZEMuAnalysis_SingleAntiToptW'
-        config.Data.inputDataset = '/ST_tW_antitop_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18NanoAODv5-Nano1June2019_102X_upgrade2018_realistic_v19_ext1-v1/NANOAODSIM'
+        config.Data.inputDataset = '/ST_tW_antitop_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18NanoAODv6-Nano25Oct2019_102X_upgrade2018_realistic_v20_ext1-v1/NANOAODSIM'
         p = Process(target=submit, args=(config,))
         p.start()
         p.join()
         
         config.General.requestName = '2018_ZEMuAnalysis_DY50'
-        config.Data.inputDataset = '/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIIAutumn18NanoAODv5-Nano1June2019_102X_upgrade2018_realistic_v19_ext2-v1/NANOAODSIM'
+        config.Data.inputDataset = '/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIIAutumn18NanoAODv6-Nano25Oct2019_102X_upgrade2018_realistic_v20_ext2-v1/NANOAODSIM'
         p = Process(target=submit, args=(config,))
         p.start()
         p.join()
 
         config.General.requestName = '2018_ZEMuAnalysis_WW'
-        config.Data.inputDataset = '/WWTo2L2Nu_NNPDF31_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18NanoAODv5-Nano1June2019_102X_upgrade2018_realistic_v19-v1/NANOAODSIM'
+        config.Data.inputDataset = '/WWTo2L2Nu_NNPDF31_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18NanoAODv6-Nano25Oct2019_102X_upgrade2018_realistic_v20-v1/NANOAODSIM'
         p = Process(target=submit, args=(config,))
         p.start()
         p.join()
         
         config.General.requestName = '2018_ZEMuAnalysis_WZ'
-        config.Data.inputDataset = '/WZ_TuneCP5_13TeV-pythia8/RunIIAutumn18NanoAODv5-Nano1June2019_102X_upgrade2018_realistic_v19-v1/NANOAODSIM'
+        config.Data.inputDataset = '/WZ_TuneCP5_13TeV-pythia8/RunIIAutumn18NanoAODv6-Nano25Oct2019_102X_upgrade2018_realistic_v20-v1/NANOAODSIM'
         p = Process(target=submit, args=(config,))
         p.start()
         p.join()
 
         config.General.requestName = '2018_ZEMuAnalysis_Wlnu'
         config.Data.inputDataset = '/WJetsToLNu_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIAutumn18NanoAODv5-Nano1June2019_102X_upgrade2018_realistic_v19-v1/NANOAODSIM'
+        p = Process(target=submit, args=(config,))
+        p.start()
+        p.join()
+
+        config.General.requestName = '2018_ZEMuAnalysis_GammaJets20to40'
+        config.Data.inputDataset = '/GJet_Pt-20to40_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8/RunIIAutumn18NanoAODv6-Nano25Oct2019_102X_upgrade2018_realistic_v20_ext1-v1/NANOAODSIM'
+        p = Process(target=submit, args=(config,))
+        p.start()
+        p.join()
+        
+        config.General.requestName = '2018_ZEMuAnalysis_GammaJets20toInf'
+        config.Data.inputDataset = '/GJet_Pt-20toInf_DoubleEMEnriched_MGG-40to80_TuneCP5_13TeV_Pythia8/RunIIAutumn18NanoAODv6-Nano25Oct2019_102X_upgrade2018_realistic_v20_ext1-v1/NANOAODSIM'
+        p = Process(target=submit, args=(config,))
+        p.start()
+        p.join()
+
+        config.General.requestName = '2018_ZEMuAnalysis_GammaJets40toInf'
+        config.Data.inputDataset = '/GJet_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8/RunIIAutumn18NanoAODv6-Nano25Oct2019_102X_upgrade2018_realistic_v20-v1/NANOAODSIM'
         p = Process(target=submit, args=(config,))
         p.start()
         p.join()

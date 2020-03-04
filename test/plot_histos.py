@@ -42,6 +42,7 @@ colors_mask["STtW"]                = ROOT.kMagenta+1
 colors_mask["WZ"]                  = ROOT.kBlue-7
 colors_mask["WW"]                  = ROOT.kPink+1
 colors_mask["Wlnu"]                = ROOT.kCyan-7
+colors_mask["GammaJets"]           = ROOT.kCyan-1
 colors_mask["ZZ"]                  = ROOT.kOrange-3
 colors_mask["QCD"]                 = 12
 

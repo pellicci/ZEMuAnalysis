@@ -32,10 +32,13 @@ myWF = Simplified_Workflow_Handler(runningEra)
 #Normalize to this luminsity, in fb-1
 if runningEra == 0:
     luminosity_norm = 35.86
+    jetIdflag = 3
 if runningEra == 1:
     luminosity_norm = 41.529
+    jetIdflag = 2
 if runningEra == 2:
     luminosity_norm = 59.74
+    jetIdflag = 2
 
 ############################################################################
 #                                                                          #
@@ -69,15 +72,15 @@ list_histos = ["h_Mmumu", "h_Mee","h_Mmue", "h_lep1pt", "h_lep2pt", "h_lep1eta",
 h_base[list_histos[0]]  = ROOT.TH1F(list_histos[0], "M_{#mu#mu}", 60, 60., 110.)
 h_base[list_histos[1]]  = ROOT.TH1F(list_histos[1], "M_{ee}", 60, 60., 110.)
 h_base[list_histos[2]]  = ROOT.TH1F(list_histos[2], "M_{#mu e}", 50, 60., 110.)
-h_base[list_histos[3]]  = ROOT.TH1F(list_histos[3], "p_{T} of the 1st lepton", 40, 25., 80.)
-h_base[list_histos[4]]  = ROOT.TH1F(list_histos[4], "p_{T} of the 2nd lepton", 40, 25., 80.)
+h_base[list_histos[3]]  = ROOT.TH1F(list_histos[3], "p_{T} of the 1st lepton", 40, 27., 80.)
+h_base[list_histos[4]]  = ROOT.TH1F(list_histos[4], "p_{T} of the 2nd lepton", 40, 32., 80.)
 h_base[list_histos[5]]  = ROOT.TH1F(list_histos[5], "#eta of the 1st lepton", 30, -2.6, 2.6)
 h_base[list_histos[6]]  = ROOT.TH1F(list_histos[6], "#eta of the 2nd lepton", 30, -2.6, 2.6)
 h_base[list_histos[7]]  = ROOT.TH1F(list_histos[7], "#phi of the 1st lepton", 30, -3.15, 3.15)
 h_base[list_histos[8]]  = ROOT.TH1F(list_histos[8], "#phi of the 2nd lepton", 30, -3.15, 3.15)
 h_base[list_histos[9]]  = ROOT.TH1F(list_histos[9], "N_{jets} above 25 GeV", 10, 0, 10.)
 h_base[list_histos[10]] = ROOT.TH1F(list_histos[10], "MET sumEt puppi", 100, 0., 1000.)
-h_base[list_histos[11]] = ROOT.TH1F(list_histos[11], "MET pt puppi", 30, 0., 50.)
+h_base[list_histos[11]] = ROOT.TH1F(list_histos[11], "MET pt puppi", 30, 0., 40.)
 h_base[list_histos[12]] = ROOT.TH1F(list_histos[12], "p_{T} of the hardest jet", 50, 25., 100.)
 h_base[list_histos[13]] = ROOT.TH1F(list_histos[13], "pile up",75,0,75)
 
@@ -150,14 +153,8 @@ for jentry in xrange(nentries):
 
     Nevts_per_sample = Nevts_per_sample + 1
 
-    #if jentry > 1000000 :
-    #    break
-
     if (Nevts_per_sample/100000.).is_integer() :
         print "Processed ", Nevts_per_sample, " events..."
-
-    if not (mytree.HLT_IsoMu24 or mytree.HLT_Mu50 or mytree.HLT_Ele32_WPTight_Gsf) :
-        continue
 
     if mytree.nMuon == 2 :
 
@@ -170,6 +167,7 @@ for jentry in xrange(nentries):
         lep2_eta = mytree.Muon_eta[1]
         lep2_phi = mytree.Muon_phi[1]
         lep2_mass = mytree.Muon_mass[1]
+
     elif mytree.nElectron == 2 :
 
         lep1_pt = mytree.Electron_pt[0]
@@ -181,9 +179,6 @@ for jentry in xrange(nentries):
         lep2_eta = mytree.Electron_eta[1]
         lep2_phi = mytree.Electron_phi[1]
         lep2_mass = mytree.Electron_mass[1]
-
-        if lep1_pt < 33. or lep2_pt < 33. :   #FIXWITHNEXTPROD
-            continue
 
     else :
 
@@ -197,10 +192,6 @@ for jentry in xrange(nentries):
         lep2_phi = mytree.Electron_phi[0]
         lep2_mass = mytree.Electron_mass[0]
 
-        if lep2_pt < 33.:   #FIXWITHNEXTPROD
-            continue
-
-
     lep1_FourMom.SetPtEtaPhiM(lep1_pt,lep1_eta,lep1_phi,lep1_mass)
     lep2_FourMom.SetPtEtaPhiM(lep2_pt,lep2_eta,lep2_phi,lep2_mass)
     Zcand_FourMom = lep1_FourMom + lep2_FourMom
@@ -208,6 +199,9 @@ for jentry in xrange(nentries):
     njets_25 = 0
     jetptmax = 26.
     for jetcount in xrange(mytree.nJet) :
+
+        if mytree.Jet_jetId < jetIdflag :
+            continue
 
         delta_R1 = math.sqrt( (mytree.Jet_phi[jetcount]-lep1_phi)**2 + (mytree.Jet_eta[jetcount]-lep1_eta)**2 )
         delta_R2 = math.sqrt( (mytree.Jet_phi[jetcount]-lep2_phi)**2 + (mytree.Jet_eta[jetcount]-lep2_eta)**2 )
@@ -223,7 +217,7 @@ for jentry in xrange(nentries):
     met_pt_puppi = mytree.PuppiMET_pt
     met_sumEt_puppi = mytree.PuppiMET_sumEt
 
-    if doFullSel and (jetptmax > 78. or lep1_pt < 26. or met_pt_puppi > 28.) :
+    if doFullSel and (jetptmax > 78. or met_pt_puppi > 28.) :
         continue
 
     Nevts_selected = Nevts_selected + 1

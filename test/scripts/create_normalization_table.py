@@ -24,6 +24,9 @@ secs_table["WW"] = 12.178
 secs_table["WZ"] = 27.6
 secs_table["Wlnu"] = 52850.0
 secs_table["Signal"] = 2075.14*0.000001/0.0337 #Assume BR of 10-6
+secs_table["GammaJets20to40"] = 219.2
+secs_table["GammaJets20toInf"] = 3255.0
+secs_table["GammaJets40toInf"] = 862.4
 
 #######################################
 #                                     #
@@ -41,6 +44,9 @@ frac_table_2016["WW"] = 0.1866
 frac_table_2016["WZ"] = 0.
 frac_table_2016["Wlnu"] = 0.
 frac_table_2016["Signal"] = 0.
+frac_table_2016["GammaJets20to40"] = 0.
+frac_table_2016["GammaJets20toInf"] = 0.
+frac_table_2016["GammaJets40toInf"] = 0.
 
 #######################################
 #                                     #
@@ -76,6 +82,9 @@ frac_table_2018["WW"] = 0.001755
 frac_table_2018["WZ"] = 0.
 frac_table_2018["Wlnu"] = 0.0003866
 frac_table_2018["Signal"] = 0.
+frac_table_2018["GammaJets20to40"] = 0.
+frac_table_2018["GammaJets20toInf"] = 0.
+frac_table_2018["GammaJets40toInf"] = 0.
 
 frac_table = dict()
 
@@ -125,7 +134,7 @@ def main():
 
         print "Processing sample dir " + dirname
         crab_command = "crab report -d " + dir_input + dirname + " | grep read | awk '{print $5}'"
-        print crab_command
+        #print crab_command
 
         event_string = os.popen(crab_command).read()
         number_events = float(event_string)

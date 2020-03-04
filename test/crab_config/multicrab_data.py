@@ -2,7 +2,7 @@ from WMCore.Configuration import Configuration
 from CRABClient.UserUtilities import config, getUsernameFromSiteDB
 config = Configuration()
 
-runningEra = 2 # 0 = 2016, 1 = 2017, 2 = 2018
+runningEra = 0 # 0 = 2016, 1 = 2017, 2 = 2018
 
 config.section_('General')
 config.General.transferLogs = True
