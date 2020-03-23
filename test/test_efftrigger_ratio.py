@@ -13,8 +13,8 @@ for i in xrange(19) :
 	for j in xrange(19) :
 		eff_ele_temp = eff_ele + j*0.01
 
-		numerator = math.sqrt(1. - (1.-eff_mu_temp) * (1.-eff_ele_temp) * 0.3)
-		denominator = math.sqrt(1. - 0.3* (1-eff_mu_temp)**2.) * math.sqrt(1. - 0.3* (1.-eff_ele_temp)**2.)
+		numerator = 1. - (1.-eff_mu_temp) * (1.-eff_ele_temp)
+		denominator = math.sqrt(1. - (1-eff_mu_temp)**2.) * math.sqrt(1. - (1.-eff_ele_temp)**2.)
 
 		ratio = numerator/denominator
 

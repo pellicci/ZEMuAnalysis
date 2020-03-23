@@ -4,8 +4,9 @@ fInput = ROOT.TFile("workspaces/fit_Mll_Backgroundonly_Combined.root")
 fInput.cd()
 ws = fInput.Get("ws")
 
+#ws.var("br_emu").setVal(0.0000001)
+#ws.var("br_emu").setRange(0.,0.000001)
 br_emu = ws.var("br_emu")
-br_emu.setRange(-0.00001,0.000001)
 poi_list = ROOT.RooArgSet(br_emu)
 obs_list = ROOT.RooArgSet(ws.var("M_ll"))
 data = ws.data("bkgPDFData")
@@ -15,17 +16,25 @@ getattr(ws,'import')(data_binned)
 
 ws.Print()
 
-ws.var("a_bkg").setConstant(1)
-ws.var("b_bkg").setConstant(1)
-ws.var("c_bkg").setConstant(1)
-ws.var("d_bkg").setConstant(1)
+nuisance_params = ROOT.RooArgSet()
+nuisance_params.add(ws.var("a_bkg"))
+nuisance_params.add(ws.var("b_bkg"))
+nuisance_params.add(ws.var("c_bkg"))
+nuisance_params.add(ws.var("d_bkg"))
+nuisance_params.add(ws.var("N_bkg"))
+nuisance_params.add(ws.var("beta_eff"))
+
+glb_list = ROOT.RooArgSet()
+glb_list.add(ws.var("global_eff"))
 
 #Set the RooModelConfig and let it know what the content of the workspace is about
 model = ROOT.RooStats.ModelConfig()
 model.SetWorkspace(ws)
-model.SetPdf("totPDF")
+model.SetPdf("totPDF_constr")
 model.SetParametersOfInterest(poi_list)
 model.SetObservables(obs_list)
+model.SetNuisanceParameters(nuisance_params)
+model.SetGlobalObservables(glb_list)
 model.SetName("S+B Model")
 model.SetProtoData(data_binned)
 
@@ -35,6 +44,91 @@ oldval = poi_list.find("br_emu").getVal()
 poi_list.find("br_emu").setVal(0) #BEWARE that the range of the POI has to contain zero!
 bModel.SetSnapshot(poi_list)
 poi_list.find("br_emu").setVal(oldval)
+
+fc = ROOT.RooStats.AsymptoticCalculator(data_binned, bModel, model)
+fc.SetOneSided(1)
+#Create hypotest inverter passing desired calculator
+calc = ROOT.RooStats.HypoTestInverter(fc)
+calc.SetConfidenceLevel(0.95)
+
+#Use CLs
+calc.UseCLs(1)
+calc.SetVerbose(0)
+#Configure ToyMC sampler
+toymc = fc.GetTestStatSampler()
+#Set profile likelihood test statistics
+profl = ROOT.RooStats.ProfileLikelihoodTestStat(model.GetPdf())
+#For CLs (bounded intervals) use one-sided profile likelihood
+profl.SetOneSided(1)
+#Set the test statistic to use
+toymc.SetTestStatistic(profl)
+
+npoints = 100 #Number of points to scan
+# min and max for the scan (better to choose smaller intervals)
+poimin = poi_list.find("br_emu").getMin()
+poimax = poi_list.find("br_emu").getMax()
+
+min_scan = 0.000000001
+max_scan = 0.000001
+print "Doing a fixed scan  in interval : ",min_scan, " , ", max_scan
+calc.SetFixedScan(npoints,min_scan,max_scan)
+#calc.SetAutoScan()
+
+# In order to use PROOF, one should install the test statistic on the workers
+# pc = ROOT.RooStats.ProofConfig(workspace, 0, "workers=6",0)
+# toymc.SetProofConfig(pc)
+
+result = calc.GetInterval() #This is a HypoTestInveter class object
+
+upperLimit = result.UpperLimit()
+
+print "################"
+print "The observed CLs upper limit is: ", upperLimit
+
+##################################################################
+
+#Compute expected limit
+print "Expected upper limits, using the B (alternate) model : "
+print " expected limit (median) ", result.GetExpectedUpperLimit(0)
+print " expected limit (-1 sig) ", result.GetExpectedUpperLimit(-1)
+print " expected limit (+1 sig) ", result.GetExpectedUpperLimit(1)
+print "################"
+
+
+"""
+fc = ROOT.RooStats.FeldmanCousins(data_binned,model)
+fc.UseAdaptiveSampling(1)
+fc.FluctuateNumDataEntries(1)
+fc.SetNBins(10)
+fc.SetTestSize(.05)
+
+result = fc.GetInterval() 
+
+upperLimit = result.UpperLimit()
+
+print "################"
+print "The observed CLs upper limit is: ", upperLimit
+
+##################################################################
+
+#Compute expected limit
+print "Expected upper limits, using the B (alternate) model : "
+print " expected limit (median) ", result.GetExpectedUpperLimit(0)
+print " expected limit (-1 sig) ", result.GetExpectedUpperLimit(-1)
+print " expected limit (+1 sig) ", result.GetExpectedUpperLimit(1)
+print "################"
+
+
+
+mcmc = ROOT.MCMCCalculator(data_binned,model);
+mcmc.SetConfidenceLevel(0.95)
+sp = ROOT.SequentialProposal(0.1)
+mcmc.SetProposalFunction(sp)
+mcmc.SetNumIters(1000000)  #Metropolis-Hastings algorithm iterations
+mcmc.SetNumBurnInSteps(50) #first N steps to be ignored as burn-in
+mcmc.SetLeftSideTailFraction(0.)
+
+interval = mcmc.GetInterval()
 
 fc = ROOT.RooStats.FrequentistCalculator(data_binned, bModel, model)
 fc.SetToys(350,350)
@@ -64,7 +158,8 @@ poimax = poi_list.find("br_emu").getMax()
 min_scan = 0.000000001
 max_scan = 0.000001
 print "Doing a fixed scan  in interval : ",min_scan, " , ", max_scan
-calc.SetFixedScan(npoints,min_scan,max_scan)
+#calc.SetFixedScan(npoints,min_scan,max_scan)
+calc.SetAutoScan()
 
 # In order to use PROOF, one should install the test statistic on the workers
 # pc = ROOT.RooStats.ProofConfig(workspace, 0, "workers=6",0)
@@ -97,5 +192,7 @@ freq_plot.Draw("EXP")
 # freq_plot.GetYaxis().SetRangeUser(0.,0.8)
 # freq_plot.GetXaxis().SetRange(0.,0.0000107)
 canvas.SaveAs("plots/latest_production/2016_2017_2018/UL_CLs.pdf")
+
+"""
 
 del fc

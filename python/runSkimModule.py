@@ -28,7 +28,7 @@ class exampleProducer(Module):
         PuppiMET = Object(event, "PuppiMET")
 
         minmupt = 28.
-        minelept = 33.
+        minelept = 35.
         jetIdflag = 2
 
         if self.runningEra == 0 :
@@ -54,7 +54,7 @@ class exampleProducer(Module):
 
         if len(muons) == 2 :
             lep_mass = (muons[0].p4() + muons[1].p4()).M() 
-            if (lep_mass < 70. or lep_mass > 110.) :
+            if (lep_mass < 75. or lep_mass > 110.) :
                 return False
             if ( muons[0].charge * muons[1].charge > 0 ) :
                 return False
@@ -69,7 +69,7 @@ class exampleProducer(Module):
 
         elif len(electrons) == 2 :
             lep_mass = (electrons[0].p4() + electrons[1].p4()).M()
-            if (lep_mass < 70. or lep_mass > 110.) :
+            if (lep_mass < 75. or lep_mass > 110.) :
                 return False
             if ( electrons[0].charge * electrons[1].charge > 0 ) :
                 return False
@@ -83,7 +83,7 @@ class exampleProducer(Module):
 
         else :
             lep_mass = (muons[0].p4() + electrons[0].p4()).M()
-            if (lep_mass < 70. or lep_mass > 110.) :
+            if (lep_mass < 75. or lep_mass > 110.) :
                 return False
             if ( muons[0].charge * electrons[0].charge > 0 ) :
                 return False

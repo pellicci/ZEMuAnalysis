@@ -24,9 +24,6 @@ secs_table["WW"] = 12.178
 secs_table["WZ"] = 27.6
 secs_table["Wlnu"] = 52850.0
 secs_table["Signal"] = 2075.14*0.000001/0.0337 #Assume BR of 10-6
-secs_table["GammaJets20to40"] = 219.2
-secs_table["GammaJets20toInf"] = 3255.0
-secs_table["GammaJets40toInf"] = 862.4
 
 #######################################
 #                                     #
@@ -44,9 +41,6 @@ frac_table_2016["WW"] = 0.1866
 frac_table_2016["WZ"] = 0.
 frac_table_2016["Wlnu"] = 0.
 frac_table_2016["Signal"] = 0.
-frac_table_2016["GammaJets20to40"] = 0.
-frac_table_2016["GammaJets20toInf"] = 0.
-frac_table_2016["GammaJets40toInf"] = 0.
 
 #######################################
 #                                     #
@@ -60,7 +54,7 @@ frac_table_2017["ttbarlnu"] = 0.
 frac_table_2017["SingleToptW"] = 0.003758
 frac_table_2017["SingleAntiToptW"] = 0.0034
 frac_table_2017["DY50"] = 0.1624
-frac_table_2017["WW"] = 0.001755
+frac_table_2017["WW"] = 0.
 frac_table_2017["WZ"] = 0.
 frac_table_2017["Signal"] = 0.
 
@@ -82,14 +76,11 @@ frac_table_2018["WW"] = 0.001755
 frac_table_2018["WZ"] = 0.
 frac_table_2018["Wlnu"] = 0.0003866
 frac_table_2018["Signal"] = 0.
-frac_table_2018["GammaJets20to40"] = 0.
-frac_table_2018["GammaJets20toInf"] = 0.
-frac_table_2018["GammaJets40toInf"] = 0.
 
 frac_table = dict()
 
 complementary_samples_list_2016 = []
-complementary_samples_list_2017 = ["DY50","TTGJets","WJetsToLNu1J","WJetsToLNu2J"]
+complementary_samples_list_2017 = []
 complementary_samples_list_2018 = []
 
 if year == "2016":

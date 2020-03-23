@@ -130,16 +130,12 @@ for histo_name in list_histos:
 
     if histo_name == "h_Mmumu" :
         hstack[histo_name].GetXaxis().SetTitle("m_{#mu#mu} (GeV)")
-        hstack[histo_name].GetXaxis().SetRangeUser(70.,120.)
-        #hstack[histo_name].SetMaximum(max(hstack[histo_name].GetHistogram().GetMaximum(),220.))
 
     if histo_name == "h_Mee":
         hstack[histo_name].GetXaxis().SetTitle("m_{ee} (GeV)")
-        hstack[histo_name].GetXaxis().SetRangeUser(70.,120.)
 
     if histo_name == "h_Mmue":
         hstack[histo_name].GetXaxis().SetTitle("m_{#mu e} (GeV)")
-        hstack[histo_name].GetXaxis().SetRangeUser(70.,120.)
     
     if histo_name == "h_lep1pt":
         hstack[histo_name].GetXaxis().SetTitle("p_{T,l1} (GeV)")
@@ -149,9 +145,11 @@ for histo_name in list_histos:
 
     if histo_name == "h_lep1eta":
         hstack[histo_name].GetXaxis().SetTitle("#eta_{l1}")
+        hstack[histo_name].SetMaximum(1500.)
 
     if histo_name == "h_lep2eta":
         hstack[histo_name].GetXaxis().SetTitle("#eta_{l2}")
+        hstack[histo_name].SetMaximum(1500.)
 
     if histo_name == "h_lep1phi":
         hstack[histo_name].GetXaxis().SetTitle("#phi_{l1}")
