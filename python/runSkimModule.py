@@ -1,4 +1,6 @@
 import ROOT
+import math
+
 ROOT.PyConfig.IgnoreCommandLineOptions = True
 
 from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection 
@@ -28,13 +30,14 @@ class exampleProducer(Module):
         PuppiMET = Object(event, "PuppiMET")
 
         minmupt = 28.
-        minelept = 35.
-        jetIdflag = 2
+        minelept = 33.
+        jetIdflag = 4
+        jetPUIdflag = 6
 
         if self.runningEra == 0 :
-            jetIdflag = 3
+            jetIdflag = 7
 
-        if PuppiMET.pt > 40. :
+        if PuppiMET.pt > 50. :
             return False
 
         if self.runningEra == 0 :
@@ -46,7 +49,7 @@ class exampleProducer(Module):
                 return False
 
         elif self.runningEra == 2 :
-            if not (HLT.IsoMu24 or HLT.Mu50 or HLT.Ele32_WPTight_Gsf) :
+            if not (HLT.IsoMu24 or HLT.Mu50 or HLT.Ele32_WPTight_Gsf ) :
                 return False
 
         if (len(electrons) + len(muons) != 2) :
@@ -73,9 +76,14 @@ class exampleProducer(Module):
                 return False
             if ( electrons[0].charge * electrons[1].charge > 0 ) :
                 return False
-            if not electrons[0].mvaFall17V2Iso_WP80 :
+            if not electrons[0].mvaFall17V2Iso_WP90 :
                 return False
-            if not electrons[1].mvaFall17V2Iso_WP80 :
+            if not electrons[1].mvaFall17V2Iso_WP90 :
+                return False
+            if math.fabs(electrons[0].eta + electrons[0].deltaEtaSC) > 1.442 and math.fabs(electrons[0].eta + electrons[0].deltaEtaSC) < 1.566 :
+                return False
+
+            if math.fabs(electrons[1].eta + electrons[1].deltaEtaSC) > 1.442 and math.fabs(electrons[1].eta + electrons[1].deltaEtaSC) < 1.566 :
                 return False
 
             if electrons[0].pt < minelept or electrons[1].pt < minelept :
@@ -91,8 +99,12 @@ class exampleProducer(Module):
                 return False
             if muons[0].pfRelIso03_all > 0.2 : #medium
                 return False
-            if not electrons[0].mvaFall17V2Iso_WP80 :
+            if not electrons[0].mvaFall17V2Iso_WP90 :
                 return False
+
+            if math.fabs(electrons[0].eta + electrons[0].deltaEtaSC) > 1.442 and math.fabs(electrons[0].eta + electrons[0].deltaEtaSC) < 1.566 :
+                return False
+
             if muons[0].pt < minmupt or electrons[0].pt < minelept :
                 return False
 
@@ -102,11 +114,16 @@ class exampleProducer(Module):
             if jets[jetcount].jetId < jetIdflag :
                 continue
             pt_of_jet = jets[jetcount].pt
+
+            if pt_of_jet < 50. :
+                if jets[jetcount].puId < jetPUIdflag :
+                    continue
+
             if pt_of_jet > jetptmax :
                 jetptmax = pt_of_jet
             if pt_of_jet > 25. and jets[jetcount].btagDeepB > 0.4184 :   #medium
                 nbjets_25 = nbjets_25 + 1
-        if nbjets_25 > 0 or jetptmax > 90.:
+        if nbjets_25 > 0 or jetptmax > 100.:
             return False
 
         #it it's the same flavor channel, just save the full selection to spare space and CPU

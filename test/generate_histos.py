@@ -32,13 +32,16 @@ myWF = Simplified_Workflow_Handler(runningEra)
 #Normalize to this luminsity, in fb-1
 if runningEra == 0:
     luminosity_norm = 35.86
-    jetIdflag = 3
+    jetIdflag = 7
+    jetPUIdflag = 6
 if runningEra == 1:
     luminosity_norm = 41.529
-    jetIdflag = 2
+    jetIdflag = 4
+    jetPUIdflag = 6
 if runningEra == 2:
     luminosity_norm = 59.74
-    jetIdflag = 2
+    jetIdflag = 4
+    jetPUIdflag = 6
 
 ############################################################################
 #                                                                          #
@@ -80,8 +83,8 @@ h_base[list_histos[7]]  = ROOT.TH1F(list_histos[7], "#phi of the 1st lepton", 30
 h_base[list_histos[8]]  = ROOT.TH1F(list_histos[8], "#phi of the 2nd lepton", 30, -3.15, 3.15)
 h_base[list_histos[9]]  = ROOT.TH1F(list_histos[9], "N_{jets} above 25 GeV", 10, 0, 10.)
 h_base[list_histos[10]] = ROOT.TH1F(list_histos[10], "MET sumEt puppi", 100, 0., 1000.)
-h_base[list_histos[11]] = ROOT.TH1F(list_histos[11], "MET pt puppi", 30, 0., 40.)
-h_base[list_histos[12]] = ROOT.TH1F(list_histos[12], "p_{T} of the hardest jet", 40, 30., 90.)
+h_base[list_histos[11]] = ROOT.TH1F(list_histos[11], "MET pt puppi", 30, 0., 50.)
+h_base[list_histos[12]] = ROOT.TH1F(list_histos[12], "p_{T} of the hardest jet", 40, 30., 100.)
 h_base[list_histos[13]] = ROOT.TH1F(list_histos[13], "pile up",75,0,75)
 
 ##Open the output
@@ -200,22 +203,20 @@ for jentry in xrange(nentries):
     jetptmax = 26.
     for jetcount in xrange(mytree.nJet) :
 
-        if mytree.Jet_jetId < jetIdflag :
+        if mytree.Jet_jetId[jetcount] < jetIdflag :
             continue
 
-        delta_R1 = math.sqrt( (mytree.Jet_phi[jetcount]-lep1_phi)**2 + (mytree.Jet_eta[jetcount]-lep1_eta)**2 )
-        delta_R2 = math.sqrt( (mytree.Jet_phi[jetcount]-lep2_phi)**2 + (mytree.Jet_eta[jetcount]-lep2_eta)**2 )
+        pt_of_jet = mytree.Jet_pt[jetcount]
 
-        if delta_R1 < 0.3 or delta_R1 < 0.3 :
-            continue
+        if pt_of_jet < 50. :
+            if mytree.Jet_puId[jetcount] < jetPUIdflag :
+                continue
 
-        if mytree.Jet_pt[jetcount] > jetptmax :
-            jetptmax = mytree.Jet_pt[jetcount]
-        if mytree.Jet_pt[jetcount] > 25. :
+        if pt_of_jet > jetptmax :
+            jetptmax = pt_of_jet
+        if pt_of_jet > 25. :
             njets_25 = njets_25 + 1    
 
-    if lep2_pt < 35.:    #FIXME
-        continue
     met_pt_puppi = mytree.PuppiMET_pt
     met_sumEt_puppi = mytree.PuppiMET_sumEt
 

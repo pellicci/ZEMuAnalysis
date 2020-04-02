@@ -31,25 +31,18 @@ ws_signal = fWSSignal.Get("ws")
 sigPDF = ws_signal.pdf("morph_pdf_binned")
 
 #Background PDF
-a_bkg = ROOT.RooRealVar("a_bkg","a_bkg",3.28640,-10.,10.)
-b_bkg = ROOT.RooRealVar("b_bkg","b_bkg",-0.290163,-10.,10.)
-c_bkg = ROOT.RooRealVar("c_bkg","c_bkg",0.558070,-10.,10.)
-d_bkg = ROOT.RooRealVar("d_bkg","d_bkg",0.264009,-10.,10.)
+a_bkg = ROOT.RooRealVar("a_bkg","a_bkg",3.28640,-50.,50.)
+b_bkg = ROOT.RooRealVar("b_bkg","b_bkg",-0.290163,-50.,50.)
+c_bkg = ROOT.RooRealVar("c_bkg","c_bkg",0.558070,-50.,50.)
+d_bkg = ROOT.RooRealVar("d_bkg","d_bkg",0.264009,-50.,50.)
 
 bkgPDF = ROOT.RooBernstein("bkgPDF","Background PDF",M_ll,ROOT.RooArgList(a_bkg,b_bkg,c_bkg,d_bkg))
 
-#Alternate background function
-tau_bkg = ROOT.RooRealVar("tau_bkg","tau_bkg",-0.0583634,-5000.,0.)
-bkgPDF_exp = ROOT.RooExponential("bkgPDF_exp","bkgPDF_exp",M_ll,tau_bkg)
-
 #Compose the total PDF
-
 br_emu = ROOT.RooRealVar("br_emu","br_emu",0.,-0.00001,0.1)
 br_ll = ROOT.RooRealVar("br_ll","br_ll",0.033632)
 N_mumu_var = ROOT.RooRealVar("N_mumu_var","N_mumu_var",N_mumu)
 N_ee_var = ROOT.RooRealVar("N_ee_var","N_ee_var",N_ee)
-
-br_emu.setConstant(1)
 
 #Add lognormal systematics
 eff_nominal   = ROOT.RooRealVar("eff_nominal","eff_nominal",1.)
@@ -65,10 +58,14 @@ N_sig = ROOT.RooFormulaVar("N_sig","@0*@4*sqrt((@1*@2)/(@3*@3))",ROOT.RooArgList
 N_bkg = ROOT.RooRealVar("N_bkg","N_bkg",500.,0.,100000.)
 
 totPDF = ROOT.RooAddPdf("totPDF","totPDF",ROOT.RooArgList(sigPDF,bkgPDF),ROOT.RooArgList(N_sig,N_bkg))
-
 totPDF_constr = ROOT.RooProdPdf("totPDF_constr","totPDF_constr",ROOT.RooArgList(totPDF,constrain_eff))
 
-bkgPDF_exp.fitTo(dataset)
+#Alternate background function
+tau_bkg = ROOT.RooRealVar("tau_bkg","tau_bkg",-0.0583634,-5000.,0.)
+bkgPDF_exp = ROOT.RooExponential("bkgPDF_exp","bkgPDF_exp",M_ll,tau_bkg)
+totPDF_alt = ROOT.RooAddPdf("totPDF_alt","totPDF_alt",ROOT.RooArgList(sigPDF,bkgPDF_exp),ROOT.RooArgList(N_sig,N_bkg))
+totPDF_constr_alt = ROOT.RooProdPdf("totPDF_constr_alt","totPDF_constr_alt",ROOT.RooArgList(totPDF_alt,constrain_eff))
+totPDF_constr_alt.fitTo(dataset)
 
 #Fit, plot, etc
 totPDF_constr.fitTo(dataset,ROOT.RooFit.Extended(1))
@@ -90,7 +87,7 @@ bkg_data = bkgPDF.generate(ROOT.RooArgSet(M_ll),N_bkg.getVal())
 
 ws = ROOT.RooWorkspace("ws")
 getattr(ws,'import')(totPDF_constr)
-getattr(ws,'import')(bkgPDF_exp)
+getattr(ws,'import')(totPDF_constr_alt,ROOT.RooFit.RecycleConflictNodes())
 getattr(ws,'import')(bkg_data)
 
 ws.Print()

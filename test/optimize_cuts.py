@@ -36,8 +36,8 @@ for jentry in xrange(nentries_sig):
     if tree_signal.M_ll < 80. or tree_signal.M_ll > 100. :
         continue
 
-    if tree_signal.lep1pt < 26. or tree_signal.met > 28.:
-        continue 
+    #if tree_signal.met > 28.:
+    #    continue 
 
     var1 = tree_signal.jetptmax
     weight = tree_signal.mcweight
@@ -63,8 +63,8 @@ for jentry in xrange(nentries_bkg):
     if tree_background.M_ll < 80. or tree_background.M_ll > 100. :
         continue
 
-    if tree_background.lep1pt < 26. or tree_background.met > 28. :
-        continue
+    #if tree_background.met > 28. :
+    #    continue
     
     var1 = tree_background.jetptmax
     weight = tree_background.mcweight
@@ -88,6 +88,7 @@ iter_max = significance.index(max_signif)
 
 print "The maximum value for the significance corresponds to a cut of ", var_min + iter_max*(var_max-var_min)/N_cuts
 
+"""
 #Now do the graph
 xvalue_array = np.array(cut_xaxis)
 yvalue_array = np.array(significance)
@@ -100,3 +101,73 @@ sign_graph.SetMarkerStyle(20)
 sign_graph.Draw("AP")
 
 c1.SaveAs("cut_significance.pdf")
+"""
+
+upperlimit = []
+for i in xrange(N_cuts) :
+    ws = ROOT.RooWorkspace()
+
+    sig = ROOT.RooRealVar("sig","sig",N_sig_pass[i],0.,1000.)
+    sig_eff = ROOT.RooRealVar("sig_eff","sig_eff",N_sig_pass[i]/max(N_sig_pass))
+    b = ROOT.RooRealVar("b","b",N_bkg_pass[i])
+    b_eff = ROOT.RooRealVar("b_eff","b_eff",1.)
+    obs = ROOT.RooRealVar("obs","obs",N_sig_pass[i] + N_bkg_pass[i],0.,5000.)
+    poi_list = ROOT.RooArgSet(sig)
+    obs_list = ROOT.RooArgSet(obs)
+
+    getattr(ws,'import')(sig)
+    getattr(ws,'import')(sig_eff)
+    getattr(ws,'import')(b)
+    getattr(ws,'import')(b_eff)
+    getattr(ws,'import')(obs)
+
+    data = ROOT.RooDataSet("data","data",obs_list)
+    data.add(obs_list)
+
+    getattr(ws,'import')(data)
+
+    ws.factory("Poisson::countingModel(obs, sum(sig*sig_eff,b*b_eff))")
+
+    ws.Print()
+
+    model = ROOT.RooStats.ModelConfig(ws)
+    model.SetPdf("countingModel")
+    model.SetParametersOfInterest(poi_list)
+    model.SetObservables(obs_list)
+    model.SetName("S+B Model")
+
+    print N_sig_pass[i], N_bkg_pass[i]
+
+    fc = ROOT.RooStats.FeldmanCousins(data,model)
+    fc.UseAdaptiveSampling(1)
+    fc.FluctuateNumDataEntries(0)
+    fc.SetNBins(100)
+    fc.SetTestSize(.05)
+    fcint = fc.GetInterval()
+    limit = fcint.UpperLimit(sig)
+    """
+    plc = ROOT.RooStats.ProfileLikelihoodCalculator(data,model)
+    plc.SetTestSize(0.05)
+
+    int = plc.GetInterval()
+    limit = int.UpperLimit(sig)
+    """
+    upperlimit.append(limit)
+
+min_UL = min(upperlimit)
+iter_min = upperlimit.index(min_UL)
+
+print "The value that optimizes the UL is ", var_min + iter_min*(var_max-var_min)/N_cuts
+
+#Now do the graph
+xvalue_array = np.array(cut_xaxis)
+yvalue_array = np.array(upperlimit)
+
+limit_graph = ROOT.TGraph(N_cuts,xvalue_array,yvalue_array)
+
+c1 = ROOT.TCanvas("c1","c1",800,500)
+c1.cd()
+limit_graph.SetMarkerStyle(20)
+limit_graph.Draw("AP")
+
+c1.SaveAs("cut_bestUL.pdf")

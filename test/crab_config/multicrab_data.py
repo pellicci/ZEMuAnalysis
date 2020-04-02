@@ -1,5 +1,5 @@
 from WMCore.Configuration import Configuration
-from CRABClient.UserUtilities import config, getUsernameFromSiteDB
+from CRABClient.UserUtilities import config
 config = Configuration()
 
 runningEra = 0 # 0 = 2016, 1 = 2017, 2 = 2018
@@ -36,7 +36,6 @@ if runningEra == 2:
 config.Data.inputDBS = 'global'
 config.Data.splitting = 'FileBased'
 config.Data.unitsPerJob = 1
-config.Data.outLFNDirBase = '/store/user/%s/' % (getUsernameFromSiteDB())
 config.Data.publication = False
 
 config.section_('Site')

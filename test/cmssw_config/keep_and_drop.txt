@@ -5,6 +5,7 @@ keep Electron_eta
 keep Electron_phi
 keep Electron_mass
 keep Electron_deltaEtaSC
+keep Electron_mvaFall17V2Iso_WP80
 keep Muon_pt
 keep Muon_eta
 keep Muon_phi
@@ -23,3 +24,4 @@ keep HLT_Ele32_WPTight_Gsf*
 keep genWeight*
 keep PuppiMET*
 keep PV_npvs*
+
