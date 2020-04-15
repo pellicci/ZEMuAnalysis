@@ -13,9 +13,9 @@ fBackground = ROOT.TFile("trees/ZEMuAnalysis_Background_2018.root")
 tree_background = fBackground.Get("signaltree")
 
 #Number of steps for optimization and var limits
-N_cuts = 30
-var_min = 50.
-var_max = 90.
+N_cuts = 20
+var_min = 33.
+var_max = 45.
 
 #Initialize the counters
 N_sig_pass = [0.0 for x in xrange(N_cuts)]
@@ -33,19 +33,22 @@ for jentry in xrange(nentries_sig):
     if nb <= 0:
         continue
     
-    if tree_signal.M_ll < 80. or tree_signal.M_ll > 100. :
+    if tree_signal.M_ll < 85. or tree_signal.M_ll > 95. :
         continue
 
-    #if tree_signal.met > 28.:
-    #    continue 
+    if tree_signal.jetptmax > 65.:
+        continue 
 
-    var1 = tree_signal.jetptmax
+    if tree_signal.met > 27.:
+        continue 
+
+    var1 = tree_signal.lep2pt
     weight = tree_signal.mcweight
 
     for i in xrange(N_cuts) :
         cut_val = var_min + i*(var_max - var_min)/N_cuts
 
-        if var1 < cut_val :
+        if var1 > cut_val :
             N_sig_pass[i] += weight
 
 #Loop over background and count the events passing the cut
@@ -60,19 +63,22 @@ for jentry in xrange(nentries_bkg):
     if nb <= 0:
         continue
 
-    if tree_background.M_ll < 80. or tree_background.M_ll > 100. :
+    if tree_background.M_ll < 85. or tree_background.M_ll > 95. :
         continue
 
-    #if tree_background.met > 28. :
-    #    continue
+    if tree_background.jetptmax > 65. :
+        continue
     
-    var1 = tree_background.jetptmax
+    if tree_background.met > 27. :
+        continue
+
+    var1 = tree_background.lep2pt
     weight = tree_background.mcweight
 
     for i in xrange(N_cuts) :
         cut_val = var_min + i*(var_max - var_min)/N_cuts
 
-        if var1 < cut_val :
+        if var1 > cut_val :
             N_bkg_pass[i] += weight
 
 #Now calculate the significance
@@ -88,7 +94,7 @@ iter_max = significance.index(max_signif)
 
 print "The maximum value for the significance corresponds to a cut of ", var_min + iter_max*(var_max-var_min)/N_cuts
 
-"""
+
 #Now do the graph
 xvalue_array = np.array(cut_xaxis)
 yvalue_array = np.array(significance)
@@ -101,17 +107,17 @@ sign_graph.SetMarkerStyle(20)
 sign_graph.Draw("AP")
 
 c1.SaveAs("cut_significance.pdf")
-"""
+
 
 upperlimit = []
 for i in xrange(N_cuts) :
     ws = ROOT.RooWorkspace()
 
-    sig = ROOT.RooRealVar("sig","sig",N_sig_pass[i],0.,1000.)
+    sig = ROOT.RooRealVar("sig","sig",1.,0.,200.)
     sig_eff = ROOT.RooRealVar("sig_eff","sig_eff",N_sig_pass[i]/max(N_sig_pass))
     b = ROOT.RooRealVar("b","b",N_bkg_pass[i])
     b_eff = ROOT.RooRealVar("b_eff","b_eff",1.)
-    obs = ROOT.RooRealVar("obs","obs",N_sig_pass[i] + N_bkg_pass[i],0.,5000.)
+    obs = ROOT.RooRealVar("obs","obs",N_bkg_pass[i],0.,5000.)
     poi_list = ROOT.RooArgSet(sig)
     obs_list = ROOT.RooArgSet(obs)
 
@@ -128,7 +134,7 @@ for i in xrange(N_cuts) :
 
     ws.factory("Poisson::countingModel(obs, sum(sig*sig_eff,b*b_eff))")
 
-    ws.Print()
+    #ws.Print()
 
     model = ROOT.RooStats.ModelConfig(ws)
     model.SetPdf("countingModel")
@@ -136,22 +142,40 @@ for i in xrange(N_cuts) :
     model.SetObservables(obs_list)
     model.SetName("S+B Model")
 
-    print N_sig_pass[i], N_bkg_pass[i]
+    """
+    bModel = model.Clone()
+    bModel.SetName("B model")
+    oldval = poi_list.find("sig").getVal()
+    poi_list.find("sig").setVal(0) #BEWARE that the range of the POI has to contain zero!
+    bModel.SetSnapshot(poi_list)
+    poi_list.find("sig").setVal(oldval)
+
 
     fc = ROOT.RooStats.FeldmanCousins(data,model)
     fc.UseAdaptiveSampling(1)
     fc.FluctuateNumDataEntries(0)
     fc.SetNBins(100)
-    fc.SetTestSize(.05)
+
+    fc.SetTestSize(.1)
     fcint = fc.GetInterval()
     limit = fcint.UpperLimit(sig)
-    """
-    plc = ROOT.RooStats.ProfileLikelihoodCalculator(data,model)
-    plc.SetTestSize(0.05)
 
-    int = plc.GetInterval()
-    limit = int.UpperLimit(sig)
+    plc = ROOT.RooStats.ProfileLikelihoodCalculator(data,model)
+    plc.SetTestSize(0.1)
+
+    interval = plc.GetInterval()
+    limit = interval.UpperLimit(sig)
     """
+
+    bc = ROOT.RooStats.BayesianCalculator(data, model)
+    bc.SetConfidenceLevel(0.9)
+    bc.SetLeftSideTailFraction(0.) #for upper limit
+    interval = bc.GetInterval()
+    limit = interval.UpperLimit()
+
+    print sig.getVal(), sig_eff.getVal(), N_bkg_pass[i]
+    print "This UL is ", limit
+
     upperlimit.append(limit)
 
 min_UL = min(upperlimit)
@@ -164,10 +188,14 @@ xvalue_array = np.array(cut_xaxis)
 yvalue_array = np.array(upperlimit)
 
 limit_graph = ROOT.TGraph(N_cuts,xvalue_array,yvalue_array)
+limit_graph.GetYaxis().SetTitle("Arbitrary units")
+limit_graph.GetXaxis().SetTitle("MET [GeV]")
 
-c1 = ROOT.TCanvas("c1","c1",800,500)
-c1.cd()
+c2 = ROOT.TCanvas("c2","c2",800,500)
+c2.cd()
 limit_graph.SetMarkerStyle(20)
 limit_graph.Draw("AP")
 
-c1.SaveAs("cut_bestUL.pdf")
+c2.SaveAs("cut_bestUL.pdf")
+
+del bc

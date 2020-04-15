@@ -1,4 +1,5 @@
 import ROOT
+import math
 import argparse
 
 #Suppress the opening of many Canvas's
@@ -41,10 +42,9 @@ bkgPDF = ROOT.RooBernstein("bkgPDF","Background PDF",M_ll,ROOT.RooArgList(a_bkg,
 #Compose the total PDF
 br_emu = ROOT.RooRealVar("br_emu","br_emu",0.,-0.00001,0.1)
 br_ll = ROOT.RooRealVar("br_ll","br_ll",0.033632)
-N_mumu_var = ROOT.RooRealVar("N_mumu_var","N_mumu_var",N_mumu)
-N_ee_var = ROOT.RooRealVar("N_ee_var","N_ee_var",N_ee)
 
 #Add lognormal systematics
+# First is direct systematics on N_emu
 eff_nominal   = ROOT.RooRealVar("eff_nominal","eff_nominal",1.)
 eff_kappa     = ROOT.RooRealVar("eff_kappa","eff_kappa",1.03)
 beta_eff      = ROOT.RooRealVar("beta_eff","beta_eff",0.,-5.,5.)
@@ -54,17 +54,33 @@ one           = ROOT.RooRealVar("one","one",1.)
 constrain_eff = ROOT.RooGaussian("constrain_eff","constrain_eff",global_eff,beta_eff,one)
 global_eff.setConstant(1)
 
+#N_ee and N_mumu systematics
+N_mumu_nominal = ROOT.RooRealVar("N_mumu_nominal","N_mumu_nominal",N_mumu)
+N_ee_nominal   = ROOT.RooRealVar("N_ee_nominal","N_ee_nominal",N_ee)
+N_mumu_kappa   = ROOT.RooRealVar("N_mumu_kappa","N_mumu_kappa",1.+1./math.sqrt(N_mumu))
+N_ee_kappa     = ROOT.RooRealVar("N_ee_kappa","N_ee_kappa",1.+1./math.sqrt(N_ee))
+beta_N_mumu    = ROOT.RooRealVar("beta_N_mumu","beta_N_mumu",0.,-5.,5.)
+beta_N_ee      = ROOT.RooRealVar("beta_N_ee","beta_N_ee",0.,-5.,5.)
+N_mumu_var     = ROOT.RooFormulaVar("N_mumu_var","@0 * pow(@1,@2)",ROOT.RooArgList(N_mumu_nominal,N_mumu_kappa,beta_N_mumu))
+N_ee_var       = ROOT.RooFormulaVar("N_ee_var","@0 * pow(@1,@2)",ROOT.RooArgList(N_ee_nominal,N_ee_kappa,beta_N_ee))
+global_N_mumu  = ROOT.RooRealVar("global_N_mumu","global_N_mumu",0.,-5.,5.)
+global_N_ee    = ROOT.RooRealVar("global_N_ee","global_N_ee",0.,-5.,5.)
+constr_N_mumu  = ROOT.RooGaussian("constr_N_mumu","constr_N_mumu",global_N_mumu,beta_N_mumu,one)
+constr_N_ee    = ROOT.RooGaussian("constr_N_ee","constr_N_ee",global_N_ee,beta_N_ee,one)
+global_N_mumu.setConstant(1)
+global_N_ee.setConstant(1)
+
 N_sig = ROOT.RooFormulaVar("N_sig","@0*@4*sqrt((@1*@2)/(@3*@3))",ROOT.RooArgList(br_emu,N_ee_var,N_mumu_var,br_ll,eff))
 N_bkg = ROOT.RooRealVar("N_bkg","N_bkg",500.,0.,100000.)
 
 totPDF = ROOT.RooAddPdf("totPDF","totPDF",ROOT.RooArgList(sigPDF,bkgPDF),ROOT.RooArgList(N_sig,N_bkg))
-totPDF_constr = ROOT.RooProdPdf("totPDF_constr","totPDF_constr",ROOT.RooArgList(totPDF,constrain_eff))
+totPDF_constr = ROOT.RooProdPdf("totPDF_constr","totPDF_constr",ROOT.RooArgList(totPDF,constrain_eff,constr_N_mumu,constr_N_ee))
 
 #Alternate background function
 tau_bkg = ROOT.RooRealVar("tau_bkg","tau_bkg",-0.0583634,-5000.,0.)
 bkgPDF_exp = ROOT.RooExponential("bkgPDF_exp","bkgPDF_exp",M_ll,tau_bkg)
 totPDF_alt = ROOT.RooAddPdf("totPDF_alt","totPDF_alt",ROOT.RooArgList(sigPDF,bkgPDF_exp),ROOT.RooArgList(N_sig,N_bkg))
-totPDF_constr_alt = ROOT.RooProdPdf("totPDF_constr_alt","totPDF_constr_alt",ROOT.RooArgList(totPDF_alt,constrain_eff))
+totPDF_constr_alt = ROOT.RooProdPdf("totPDF_constr_alt","totPDF_constr_alt",ROOT.RooArgList(totPDF_alt,constrain_eff,constr_N_mumu,constr_N_ee))
 totPDF_constr_alt.fitTo(dataset)
 
 #Fit, plot, etc

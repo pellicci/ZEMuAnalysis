@@ -31,11 +31,11 @@ myWF = Simplified_Workflow_Handler(runningEra)
 ############################################################################
 #Normalize to this luminsity, in fb-1
 if runningEra == 0:
-    luminosity_norm = 35.86
+    luminosity_norm = 35.92
     jetIdflag = 7
     jetPUIdflag = 6
 if runningEra == 1:
-    luminosity_norm = 41.529
+    luminosity_norm = 41.48
     jetIdflag = 4
     jetPUIdflag = 6
 if runningEra == 2:
@@ -113,18 +113,6 @@ tree_signalreg.Branch('mcweight',_mcweight,'mcweight/D')
 tree_signalreg.Branch('lep1pt',_lep1pt,'lep1pt/D')
 tree_signalreg.Branch('lep2pt',_lep2pt,'lep2pt/D')
 
-tree_mumureg = ROOT.TTree('mumutree','tree with branches')
-tree_mumureg.Branch('M_ll',_FourlepMass,'M_ll/D')
-tree_mumureg.Branch('met',_met,'met/D')
-tree_mumureg.Branch('jetptmax',_jetptmax,'jetptmax/D')
-tree_mumureg.Branch('mcweight',_mcweight,'mcweight/D')
-
-tree_eereg = ROOT.TTree('eetree','tree with branches')
-tree_eereg.Branch('M_ll',_FourlepMass,'M_ll/D')
-tree_eereg.Branch('met',_met,'met/D')
-tree_eereg.Branch('jetptmax',_jetptmax,'jetptmax/D')
-tree_eereg.Branch('mcweight',_mcweight,'mcweight/D')
-
 ##Loop on events
 if not isData:
     norm_factor = Norm_Map[sample_name]*luminosity_norm
@@ -199,6 +187,9 @@ for jentry in xrange(nentries):
     lep2_FourMom.SetPtEtaPhiM(lep2_pt,lep2_eta,lep2_phi,lep2_mass)
     Zcand_FourMom = lep1_FourMom + lep2_FourMom
 
+    if not mytree.Electron_mvaFall17V2Iso_WP80[0] :  #FIXME
+        continue
+
     njets_25 = 0
     jetptmax = 26.
     for jetcount in xrange(mytree.nJet) :
@@ -208,9 +199,9 @@ for jentry in xrange(nentries):
 
         pt_of_jet = mytree.Jet_pt[jetcount]
 
-        if pt_of_jet < 50. :
-            if mytree.Jet_puId[jetcount] < jetPUIdflag :
-                continue
+#        if pt_of_jet < 50. :    FIXME
+#            if mytree.Jet_puId[jetcount] < jetPUIdflag :
+#                continue
 
         if pt_of_jet > jetptmax :
             jetptmax = pt_of_jet
@@ -220,10 +211,12 @@ for jentry in xrange(nentries):
     met_pt_puppi = mytree.PuppiMET_pt
     met_sumEt_puppi = mytree.PuppiMET_sumEt
 
-    if doFullSel and (jetptmax > 78. or met_pt_puppi > 28.) :
-        continue
+    jetsel = jetptmax < 65.
+    metsel = met_pt_puppi < 27.
+    select_bool = (doFullSel and jetsel and metsel) or not doFullSel
 
-    Nevts_selected = Nevts_selected + 1
+    if select_bool :
+        Nevts_selected = Nevts_selected + 1
 
     nPV = mytree.PV_npvs
 
@@ -274,7 +267,7 @@ for jentry in xrange(nentries):
     _lep1pt[0]      = lep1_pt
     _lep2pt[0]      = lep2_pt
 
-    if mytree.nMuon == 1 :
+    if mytree.nMuon == 1 and select_bool:
         Nevts_expected += Event_Weight # Increment the number of events survived in the analyzed sample
    
     ############################################################################
@@ -282,39 +275,35 @@ for jentry in xrange(nentries):
     #------------------------------- Fill histos ------------------------------#
     #                                                                          #
     ############################################################################
-    if mytree.nMuon == 2 :
-        h_base["h_Mmumu"].Fill(Zcand_FourMom.M(),Event_Weight)
-        tree_mumureg.Fill()
-    elif mytree.nElectron == 2 :
-        h_base["h_Mee"].Fill(Zcand_FourMom.M(),Event_Weight)
-        tree_eereg.Fill()
-    else :
-        if not isData or (Zcand_FourMom.M() < 84. or Zcand_FourMom.M() > 101.) :
-            h_base["h_Mmue"].Fill(Zcand_FourMom.M(),Event_Weight)
+    if mytree.nMuon == 1 :
+        if select_bool :
+            if not isData or (Zcand_FourMom.M() < 84. or Zcand_FourMom.M() > 101.) :
+                h_base["h_Mmue"].Fill(Zcand_FourMom.M(),Event_Weight)
 
-        h_base["h_lep1pt"].Fill(lep1_pt,Event_Weight)
-        h_base["h_lep1eta"].Fill(lep1_eta,Event_Weight)
-        h_base["h_lep1phi"].Fill(lep1_phi,Event_Weight)
-        h_base["h_lep2pt"].Fill(lep2_pt,Event_Weight)
-        h_base["h_lep2eta"].Fill(lep2_eta,Event_Weight)
-        h_base["h_lep2phi"].Fill(lep2_phi,Event_Weight)
+            h_base["h_lep1pt"].Fill(lep1_pt,Event_Weight)
+            h_base["h_lep1eta"].Fill(lep1_eta,Event_Weight)
+            h_base["h_lep1phi"].Fill(lep1_phi,Event_Weight)
+            h_base["h_lep2pt"].Fill(lep2_pt,Event_Weight)
+            h_base["h_lep2eta"].Fill(lep2_eta,Event_Weight)
+            h_base["h_lep2phi"].Fill(lep2_phi,Event_Weight)
 
-        h_base["h_njets25"].Fill(njets_25,Event_Weight)
-        h_base["h_jetptmax"].Fill(jetptmax,Event_Weight)
+            h_base["h_njets25"].Fill(njets_25,Event_Weight)
+            h_base["h_met_sumEt"].Fill(met_sumEt_puppi,Event_Weight)
 
-        h_base["h_met_sumEt"].Fill(met_sumEt_puppi,Event_Weight)
-        h_base["h_met_pt"].Fill(met_pt_puppi,Event_Weight)
+            h_base["h_npvs"].Fill(nPV,Event_Weight)
 
-        h_base["h_npvs"].Fill(nPV,Event_Weight)
+            tree_signalreg.Fill()
 
-        tree_signalreg.Fill()
+        if select_bool or (metsel and not select_bool) :
+            h_base["h_jetptmax"].Fill(jetptmax,Event_Weight)
+        if select_bool or (jetsel and not select_bool) :
+            h_base["h_met_pt"].Fill(met_pt_puppi,Event_Weight)
+
 
 fOut.cd()
 for hist_name in list_histos:
     h_base[hist_name].Write()
 tree_signalreg.Write()
-tree_mumureg.Write()
-tree_eereg.Write()
 fOut.Close()
 
 print "Number of expected events for ", luminosity_norm, " in fb-1, for sample " , sample_name

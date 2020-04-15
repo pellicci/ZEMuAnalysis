@@ -2,7 +2,7 @@ from WMCore.Configuration import Configuration
 from CRABClient.UserUtilities import config
 config = Configuration()
 
-runningEra = 0 # 0 = 2016, 1 = 2017, 2 = 2018
+runningEra = 1 # 0 = 2016, 1 = 2017, 2 = 2018
 
 config.section_('General')
 config.General.transferLogs = True
@@ -124,35 +124,67 @@ if __name__ == '__main__':
     if runningEra == 1:
 
         config.General.requestName = '2017_ZEMuAnalysis_SingleMu_B'
-        config.Data.inputDataset = '/SingleMuon/Run2017B-31Mar2018-v1/MINIAOD'
+        config.Data.inputDataset = '/SingleMuon/Run2017B-Nano25Oct2019-v1/NANOAOD'
         p = Process(target=submit, args=(config,))
         p.start()
         p.join()
         
         config.General.requestName = '2017_ZEMuAnalysis_SingleMu_C'
-        config.Data.inputDataset = '/SingleMuon/Run2017C-31Mar2018-v1/MINIAOD'
+        config.Data.inputDataset = '/SingleMuon/Run2017C-Nano25Oct2019-v1/NANOAOD'
         p = Process(target=submit, args=(config,))
         p.start()
         p.join()
         
         config.General.requestName = '2017_ZEMuAnalysis_SingleMu_D'
-        config.Data.inputDataset = '/SingleMuon/Run2017D-31Mar2018-v1/MINIAOD'
+        config.Data.inputDataset = '/SingleMuon/Run2017D-Nano25Oct2019-v1/NANOAOD'
         p = Process(target=submit, args=(config,))
         p.start()
         p.join()
         
         config.General.requestName = '2017_ZEMuAnalysis_SingleMu_E'
-        config.Data.inputDataset = '/SingleMuon/Run2017E-31Mar2018-v1/MINIAOD'
+        config.Data.inputDataset = '/SingleMuon/Run2017E-Nano25Oct2019-v1/NANOAOD'
         p = Process(target=submit, args=(config,))
         p.start()
         p.join()
         
         config.General.requestName = '2017_ZEMuAnalysis_SingleMu_F'
-        config.Data.inputDataset = '/SingleMuon/Run2017F-31Mar2018-v1/MINIAOD'
+        config.Data.inputDataset = '/SingleMuon/Run2017F-Nano25Oct2019-v1/NANOAOD'
         p = Process(target=submit, args=(config,))
         p.start()
         p.join()
 
+        """
+
+        config.General.requestName = '2017_ZEMuAnalysis_SingleMu_B'
+        config.Data.inputDataset = '/SingleMuon/Run2017B-UL2017_02Dec2019-v1/NANOAOD'
+        p = Process(target=submit, args=(config,))
+        p.start()
+        p.join()
+        
+        config.General.requestName = '2017_ZEMuAnalysis_SingleMu_C'
+        config.Data.inputDataset = '/SingleMuon/Run2017C-UL2017_02Dec2019-v1/NANOAOD'
+        p = Process(target=submit, args=(config,))
+        p.start()
+        p.join()
+        
+        config.General.requestName = '2017_ZEMuAnalysis_SingleMu_D'
+        config.Data.inputDataset = '/SingleMuon/Run2017D-UL2017_02Dec2019-v1/NANOAOD'
+        p = Process(target=submit, args=(config,))
+        p.start()
+        p.join()
+        
+        config.General.requestName = '2017_ZEMuAnalysis_SingleMu_E'
+        config.Data.inputDataset = '/SingleMuon/Run2017E-UL2017_02Dec2019-v1/NANOAOD'
+        p = Process(target=submit, args=(config,))
+        p.start()
+        p.join()
+        
+        config.General.requestName = '2017_ZEMuAnalysis_SingleMu_F'
+        config.Data.inputDataset = '/SingleMuon/Run2017F-UL2017_02Dec2019-v1/NANOAOD'
+        p = Process(target=submit, args=(config,))
+        p.start()
+        p.join()
+        """
 
     ################################################
     #                                              #
@@ -248,31 +280,31 @@ if __name__ == '__main__':
     if runningEra == 1:
 
         config.General.requestName = '2017_ZEMuAnalysis_SingleEle_B'
-        config.Data.inputDataset = '/SingleElectron/Run2017B-31Mar2018-v1/MINIAOD'
+        config.Data.inputDataset = '/SingleElectron/Run2017B-Nano25Oct2019-v1/NANOAOD'
         p = Process(target=submit, args=(config,))
         p.start()
         p.join()
         
         config.General.requestName = '2017_ZEMuAnalysis_SingleEle_C'
-        config.Data.inputDataset = '/SingleElectron/Run2017C-31Mar2018-v1/MINIAOD'
+        config.Data.inputDataset = '/SingleElectron/Run2017C-Nano25Oct2019-v1/NANOAOD'
         p = Process(target=submit, args=(config,))
         p.start()
         p.join()
         
         config.General.requestName = '2017_ZEMuAnalysis_SingleEle_D'
-        config.Data.inputDataset = '/SingleElectron/Run2017D-31Mar2018-v1/MINIAOD'
+        config.Data.inputDataset = '/SingleElectron/Run2017D-Nano25Oct2019-v1/NANOAOD'
         p = Process(target=submit, args=(config,))
         p.start()
         p.join()
         
         config.General.requestName = '2017_ZEMuAnalysis_SingleEle_E'
-        config.Data.inputDataset = '/SingleElectron/Run2017E-31Mar2018-v1/MINIAOD'
+        config.Data.inputDataset = '/SingleElectron/Run2017E-Nano25Oct2019-v1/NANOAOD'
         p = Process(target=submit, args=(config,))
         p.start()
         p.join()
         
         config.General.requestName = '2017_ZEMuAnalysis_SingleEle_F'
-        config.Data.inputDataset = '/SingleElectron/Run2017F-31Mar2018-v1/MINIAOD'
+        config.Data.inputDataset = '/SingleElectron/Run2017F-Nano25Oct2019-v1/NANOAOD'
         p = Process(target=submit, args=(config,))
         p.start()
         p.join()

@@ -40,17 +40,32 @@ class exampleProducer(Module):
         if PuppiMET.pt > 50. :
             return False
 
+        mu_trigger = False
+        ele_trigger = False
+
         if self.runningEra == 0 :
-            if not (HLT.IsoMu24 or HLT.Mu50 or HLT.Ele27_WPTight_Gsf ) :
-                return False
+            if (HLT.IsoMu24 or HLT.Mu50) :
+                mu_trigger = True
+
+            if HLT.Ele27_WPTight_Gsf :
+                ele_trigger = True
 
         elif self.runningEra == 1 :
-            if not (HLT.IsoMu27 or HLT.Mu50 or HLT.Ele32_WPTight_Gsf or HLT.Ele32_WPTight_Gsf_L1DoubleEG ) :
-                return False
+            if (HLT.IsoMu27 or HLT.Mu50) :
+                mu_trigger = True
+
+            if (HLT.Ele32_WPTight_Gsf_L1DoubleEG) :
+                ele_trigger = True
 
         elif self.runningEra == 2 :
-            if not (HLT.IsoMu24 or HLT.Mu50 or HLT.Ele32_WPTight_Gsf ) :
-                return False
+            if (HLT.IsoMu24 or HLT.Mu50) :
+                mu_trigger = True
+
+            if HLT.Ele32_WPTight_Gsf :
+                ele_trigger = True
+
+        if not (mu_trigger or ele_trigger) :
+            return False
 
         if (len(electrons) + len(muons) != 2) :
             return False
@@ -76,9 +91,9 @@ class exampleProducer(Module):
                 return False
             if ( electrons[0].charge * electrons[1].charge > 0 ) :
                 return False
-            if not electrons[0].mvaFall17V2Iso_WP90 :
+            if not electrons[0].mvaFall17V2Iso_WP80 :
                 return False
-            if not electrons[1].mvaFall17V2Iso_WP90 :
+            if not electrons[1].mvaFall17V2Iso_WP80 :
                 return False
             if math.fabs(electrons[0].eta + electrons[0].deltaEtaSC) > 1.442 and math.fabs(electrons[0].eta + electrons[0].deltaEtaSC) < 1.566 :
                 return False
@@ -99,7 +114,7 @@ class exampleProducer(Module):
                 return False
             if muons[0].pfRelIso03_all > 0.2 : #medium
                 return False
-            if not electrons[0].mvaFall17V2Iso_WP90 :
+            if not electrons[0].mvaFall17V2Iso_WP80 :
                 return False
 
             if math.fabs(electrons[0].eta + electrons[0].deltaEtaSC) > 1.442 and math.fabs(electrons[0].eta + electrons[0].deltaEtaSC) < 1.566 :
@@ -128,7 +143,7 @@ class exampleProducer(Module):
 
         #it it's the same flavor channel, just save the full selection to spare space and CPU
         if len(muons) == 2 or len(electrons) == 2 :
-            if jetptmax > 78. or PuppiMET.pt > 28. :
+            if jetptmax > 65. or PuppiMET.pt > 27. :
                 return False
 
 

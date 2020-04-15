@@ -5,7 +5,6 @@ keep Electron_eta
 keep Electron_phi
 keep Electron_mass
 keep Electron_deltaEtaSC
-keep Electron_mvaFall17V2Iso_WP80
 keep Muon_pt
 keep Muon_eta
 keep Muon_phi
@@ -16,6 +15,7 @@ keep Jet_eta
 keep Jet_phi
 keep Jet_mass
 keep Jet_jetId
+keep Jet_puId
 keep HLT_IsoMu24
 keep HLT_IsoMu27
 keep HLT_Mu50

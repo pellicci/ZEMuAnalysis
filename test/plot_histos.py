@@ -168,7 +168,6 @@ for histo_name in list_histos:
 
     if histo_name == "h_met_pt":
         hstack[histo_name].GetXaxis().SetTitle("MET p_{T} (25 GeV/c)")
-        hstack[histo_name].GetXaxis().SetRangeUser(0.,30.)
         hstack[histo_name].SetMaximum(1300.)
 
     if histo_name == "h_jetptmax":

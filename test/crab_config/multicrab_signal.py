@@ -47,6 +47,14 @@ if __name__ == '__main__':
     p.start()
     p.join()
 
+    config.JobType.scriptArgs = ['isData=MC','year=2017']
+    config.General.workArea = 'crab_projects/samples_MC_2017/'
+    config.General.requestName = '2017_ZEMuAnalysis_Signal'
+    config.Data.inputDataset = '/ZEMuAnalysis_2017_1064V1/pellicci-ZEMuAnalysis_NANOAOD_2017_1064V1-b8e5db6dc58e02fa065eca4e059912ff/USER'
+    p = Process(target=submit, args=(config,))
+    p.start()
+    p.join()
+
     config.JobType.scriptArgs = ['isData=MC','year=2018']
     config.General.workArea = 'crab_projects/samples_MC_2018/'
     config.General.requestName = '2018_ZEMuAnalysis_Signal'

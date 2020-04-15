@@ -2,7 +2,7 @@ from WMCore.Configuration import Configuration
 from CRABClient.UserUtilities import config
 config = Configuration()
 
-runningEra = 0 # 0 = 2016, 1 = 2017, 2 = 2018
+runningEra = 2 # 0 = 2016, 1 = 2017, 2 = 2018
 
 config.section_('General')
 config.General.transferLogs = True
@@ -118,6 +118,57 @@ if __name__ == '__main__':
     #################################################
 
     if runningEra == 1:
+
+        config.General.requestName = '2017_ZEMuAnalysis_ttbarToSemiLeptonic'
+        config.Data.inputDataset = '/TTToSemiLeptonic_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIFall17NanoAODv6-PU2017_12Apr2018_Nano25Oct2019_102X_mc2017_realistic_v7-v1/NANOAODSIM'
+        p = Process(target=submit, args=(config,))
+        p.start()
+        p.join()
+
+        config.General.requestName = '2017_ZEMuAnalysis_ttbarlnu'
+        config.Data.inputDataset = '/TTTo2L2Nu_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIFall17NanoAODv6-PU2017_12Apr2018_Nano25Oct2019_new_pmx_102X_mc2017_realistic_v7-v1/NANOAODSIM'
+        p = Process(target=submit, args=(config,))
+        p.start()
+        p.join()
+
+        config.General.requestName = '2017_ZEMuAnalysis_SingleToptW'
+        config.Data.inputDataset = '/ST_tW_top_5f_inclusiveDecays_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIFall17NanoAODv6-PU2017_12Apr2018_Nano25Oct2019_new_pmx_102X_mc2017_realistic_v7-v1/NANOAODSIM'
+        p = Process(target=submit, args=(config,))
+        p.start()
+        p.join()
+        
+        config.General.requestName = '2017_ZEMuAnalysis_SingleAntiToptW'
+        config.Data.inputDataset = '/ST_tW_antitop_5f_inclusiveDecays_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIFall17NanoAODv6-PU2017_12Apr2018_Nano25Oct2019_102X_mc2017_realistic_v7-v1/NANOAODSIM'
+        p = Process(target=submit, args=(config,))
+        p.start()
+        p.join()
+
+        config.General.requestName = '2017_ZEMuAnalysis_DY50'
+        config.Data.inputDataset = '/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIIFall17NanoAODv6-PU2017_12Apr2018_Nano25Oct2019_102X_mc2017_realistic_v7_ext3-v1/NANOAODSIM'
+        p = Process(target=submit, args=(config,))
+        p.start()
+        p.join()
+
+        config.General.requestName = '2017_ZEMuAnalysis_WW'
+        config.Data.inputDataset = '/WW_TuneCP5_13TeV-pythia8/RunIIFall17NanoAODv6-PU2017_12Apr2018_Nano25Oct2019_102X_mc2017_realistic_v7-v1/NANOAODSIM'
+        p = Process(target=submit, args=(config,))
+        p.start()
+        p.join()
+        
+        config.General.requestName = '2017_ZEMuAnalysis_WZ'
+        config.Data.inputDataset = '/WZ_TuneCP5_13TeV-pythia8/RunIIFall17NanoAODv6-PU2017_12Apr2018_Nano25Oct2019_102X_mc2017_realistic_v7_ext1-v1/NANOAODSIM'
+        p = Process(target=submit, args=(config,))
+        p.start()
+        p.join()
+
+        config.General.requestName = '2017_ZEMuAnalysis_Wlnu'
+        config.Data.inputDataset = '/WJetsToLNu_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIFall17NanoAODv6-PU2017_12Apr2018_Nano25Oct2019_102X_mc2017_realistic_v7_ext1-v1/NANOAODSIM'
+        p = Process(target=submit, args=(config,))
+        p.start()
+        p.join()
+
+
+        """
         config.General.requestName = '2017_ZEMuAnalysis_ttbarToSemiLeptonic'
         config.Data.inputDataset = '/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/RunIISummer19UL17NanoAOD-106X_mc2017_realistic_v6-v1/NANOAODSIM'
         p = Process(target=submit, args=(config,))
@@ -153,6 +204,7 @@ if __name__ == '__main__':
         p = Process(target=submit, args=(config,))
         p.start()
         p.join()
+        """
 
     #################################################
     #                                               #
