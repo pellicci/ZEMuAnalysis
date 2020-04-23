@@ -40,32 +40,17 @@ class exampleProducer(Module):
         if PuppiMET.pt > 50. :
             return False
 
-        mu_trigger = False
-        ele_trigger = False
-
         if self.runningEra == 0 :
-            if (HLT.IsoMu24 or HLT.Mu50) :
-                mu_trigger = True
-
-            if HLT.Ele27_WPTight_Gsf :
-                ele_trigger = True
+            if not (HLT.IsoMu24 or HLT.Mu50 or HLT.Ele27_WPTight_Gsf) :
+                return False
 
         elif self.runningEra == 1 :
-            if (HLT.IsoMu27 or HLT.Mu50) :
-                mu_trigger = True
-
-            if (HLT.Ele32_WPTight_Gsf_L1DoubleEG) :
-                ele_trigger = True
+            if not (HLT.IsoMu27 or HLT.Mu50 or HLT.Ele32_WPTight_Gsf_L1DoubleEG) :
+                return False
 
         elif self.runningEra == 2 :
-            if (HLT.IsoMu24 or HLT.Mu50) :
-                mu_trigger = True
-
-            if HLT.Ele32_WPTight_Gsf :
-                ele_trigger = True
-
-        if not (mu_trigger or ele_trigger) :
-            return False
+            if not (HLT.IsoMu24 or HLT.Mu50or HLT.Ele32_WPTight_Gsf) :
+                return False
 
         if (len(electrons) + len(muons) != 2) :
             return False
