@@ -1,4 +1,4 @@
-
+from WMCore.Configuration import Configuration
 from CRABClient.UserUtilities import config
 config = Configuration()
 
