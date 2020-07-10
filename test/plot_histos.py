@@ -145,11 +145,11 @@ for histo_name in list_histos:
 
     if histo_name == "h_lep1eta":
         hstack[histo_name].GetXaxis().SetTitle("#eta_{l1}")
-        hstack[histo_name].SetMaximum(1500.)
+        #hstack[histo_name].SetMaximum(1500.)
 
     if histo_name == "h_lep2eta":
         hstack[histo_name].GetXaxis().SetTitle("#eta_{l2}")
-        hstack[histo_name].SetMaximum(1500.)
+        #hstack[histo_name].SetMaximum(1500.)
 
     if histo_name == "h_lep1phi":
         hstack[histo_name].GetXaxis().SetTitle("#phi_{l1}")
@@ -168,7 +168,7 @@ for histo_name in list_histos:
 
     if histo_name == "h_met_pt":
         hstack[histo_name].GetXaxis().SetTitle("MET p_{T} (25 GeV/c)")
-        hstack[histo_name].SetMaximum(1300.)
+        hstack[histo_name].SetMaximum(2500.)
 
     if histo_name == "h_jetptmax":
         hstack[histo_name].GetXaxis().SetTitle("p_{T} of hardest jet (25 GeV/c)")

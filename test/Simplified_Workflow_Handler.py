@@ -24,25 +24,30 @@ el_reco_scale_file_2016  = ROOT.TFile(el_reco_scale_name_2016)
 el_reco_scale_histo_2016 = ROOT.TH2F()
 el_reco_scale_histo_2016 = el_reco_scale_file_2016.Get("EGamma_SF2D")
 
+el_trigger_scale_name_2016  = "scale_factors/egammaTriggerEfficiency_2016.root"
+el_trigger_scale_file_2016  = ROOT.TFile(el_trigger_scale_name_2016)
+el_trigger_scale_histo_2016 = ROOT.TH2F()
+el_trigger_scale_histo_2016 = el_trigger_scale_file_2016.Get("EGamma_SF2D")
+
 mu_ID_scale_name_BCDEF_2016  = "scale_factors/RunBCDEF_SF_ID_muon_2016.root"
 mu_ID_scale_file_BCDEF_2016  = ROOT.TFile(mu_ID_scale_name_BCDEF_2016)
 mu_ID_scale_histo_BCDEF_2016 = ROOT.TH2F()
-mu_ID_scale_histo_BCDEF_2016 = mu_ID_scale_file_BCDEF_2016.Get("NUM_MediumID_DEN_genTracks_eta_pt")
+mu_ID_scale_histo_BCDEF_2016 = mu_ID_scale_file_BCDEF_2016.Get("NUM_TightID_DEN_genTracks_eta_pt")
 
 mu_ID_scale_name_GH_2016  = "scale_factors/RunGH_SF_ID_muon_2016.root"
 mu_ID_scale_file_GH_2016  = ROOT.TFile(mu_ID_scale_name_GH_2016)
 mu_ID_scale_histo_GH_2016 = ROOT.TH2F()
-mu_ID_scale_histo_GH_2016 = mu_ID_scale_file_GH_2016.Get("NUM_MediumID_DEN_genTracks_eta_pt")
+mu_ID_scale_histo_GH_2016 = mu_ID_scale_file_GH_2016.Get("NUM_TightID_DEN_genTracks_eta_pt")
 
 mu_Iso_scale_name_BCDEF_2016  = "scale_factors/RunBCDEF_SF_ISO_muon_2016.root"
 mu_Iso_scale_file_BCDEF_2016  = ROOT.TFile(mu_Iso_scale_name_BCDEF_2016)
 mu_Iso_scale_histo_BCDEF_2016 = ROOT.TH2F()
-mu_Iso_scale_histo_BCDEF_2016 = mu_Iso_scale_file_BCDEF_2016.Get("NUM_LooseRelIso_DEN_MediumID_eta_pt")
+mu_Iso_scale_histo_BCDEF_2016 = mu_Iso_scale_file_BCDEF_2016.Get("NUM_TightRelIso_DEN_TightIDandIPCut_eta_pt")
 
 mu_Iso_scale_name_GH_2016  = "scale_factors/RunGH_SF_ISO_muon_2016.root"
 mu_Iso_scale_file_GH_2016  = ROOT.TFile(mu_Iso_scale_name_GH_2016)
 mu_Iso_scale_histo_GH_2016 = ROOT.TH2F()
-mu_Iso_scale_histo_GH_2016 = mu_Iso_scale_file_GH_2016.Get("NUM_LooseRelIso_DEN_MediumID_eta_pt")
+mu_Iso_scale_histo_GH_2016 = mu_Iso_scale_file_GH_2016.Get("NUM_TightRelIso_DEN_TightIDandIPCut_eta_pt")
 
 mu_Trigger_scale_name_BCDEF_2016       = "scale_factors/EfficienciesAndSF_RunBtoF_muon_2016.root"
 mu_Trigger_scale_file_BCDEF_2016       = ROOT.TFile(mu_Trigger_scale_name_BCDEF_2016)
@@ -58,6 +63,42 @@ mu_Trigger_scale_histo_GH_Mu24_2016 = mu_Trigger_scale_file_GH_2016.Get("IsoMu24
 mu_Trigger_scale_histo_GH_Mu50_2016 = ROOT.TH2F()
 mu_Trigger_scale_histo_GH_Mu50_2016 = mu_Trigger_scale_file_GH_2016.Get("Mu50_OR_TkMu50_PtEtaBins/abseta_pt_ratio")
 
+
+#------------------------------- Scale factors 2017 ------------------------------#
+
+el_ID_scale_name_2017  = "scale_factors/2017_ElectronMVA80.root"
+el_ID_scale_file_2017  = ROOT.TFile(el_ID_scale_name_2017)
+el_ID_scale_histo_2017 = ROOT.TH2F()
+el_ID_scale_histo_2017 = el_ID_scale_file_2017.Get("EGamma_SF2D")
+
+el_reco_scale_name_2017  = "scale_factors/egammaEffi.txt_EGM2D_runBCDEF_passingRECO_electron_2017.root"
+el_reco_scale_file_2017  = ROOT.TFile(el_reco_scale_name_2017)
+el_reco_scale_histo_2017 = ROOT.TH2F()
+el_reco_scale_histo_2017 = el_reco_scale_file_2017.Get("EGamma_SF2D")
+
+el_trigger_scale_name_2017  = "scale_factors/egammaTriggerEfficiency_2017.root"
+el_trigger_scale_file_2017  = ROOT.TFile(el_trigger_scale_name_2017)
+el_trigger_scale_histo_2017 = ROOT.TH2F()
+el_trigger_scale_histo_2017 = el_trigger_scale_file_2017.Get("EGamma_SF2D")
+
+mu_ID_scale_name_2017  = "scale_factors/RunBCDEF_SF_ID_muon_2017.root"
+mu_ID_scale_file_2017  = ROOT.TFile(mu_ID_scale_name_2017)
+mu_ID_scale_histo_2017 = ROOT.TH2F()
+mu_ID_scale_histo_2017 = mu_ID_scale_file_2017.Get("NUM_TightID_DEN_genTracks_pt_abseta")
+
+mu_Iso_scale_name_2017  = "scale_factors/RunBCDEF_SF_ISO_muon_2017.root"
+mu_Iso_scale_file_2017  = ROOT.TFile(mu_Iso_scale_name_2017)
+mu_Iso_scale_histo_2017 = ROOT.TH2F()
+mu_Iso_scale_histo_2017 = mu_Iso_scale_file_2017.Get("NUM_TightRelIso_DEN_TightIDandIPCut_pt_abseta")
+
+mu_Trigger_scale_name_2017       = "scale_factors/EfficienciesAndSF_RunBtoF_Nov17Nov2017_muonTrigger.root"
+mu_Trigger_scale_file_2017       = ROOT.TFile(mu_Trigger_scale_name_2017)
+mu_Trigger_scale_histo_2017_Mu27 = ROOT.TH2F()
+mu_Trigger_scale_histo_2017_Mu27 = mu_Trigger_scale_file_2017.Get("IsoMu27_PtEtaBins/abseta_pt_ratio")
+mu_Trigger_scale_histo_2017_Mu50 = ROOT.TH2F()
+mu_Trigger_scale_histo_2017_Mu50 = mu_Trigger_scale_file_2017.Get("Mu50_PtEtaBins/abseta_pt_ratio")
+
+
 #------------------------------- Scale factors 2018 ------------------------------#
 
 el_ID_scale_name_2018  = "scale_factors/2018_ElectronMVA80.root"
@@ -70,15 +111,20 @@ el_reco_scale_file_2018  = ROOT.TFile(el_reco_scale_name_2018)
 el_reco_scale_histo_2018 = ROOT.TH2F()
 el_reco_scale_histo_2018 = el_reco_scale_file_2018.Get("EGamma_SF2D")
 
+el_trigger_scale_name_2018  = "scale_factors/egammaTriggerEfficiency_2018.root"
+el_trigger_scale_file_2018  = ROOT.TFile(el_trigger_scale_name_2018)
+el_trigger_scale_histo_2018 = ROOT.TH2F()
+el_trigger_scale_histo_2018 = el_trigger_scale_file_2018.Get("EGamma_SF2D")
+
 mu_ID_scale_name_2018  = "scale_factors/RunABCD_SF_ID_muon_2018.root"
 mu_ID_scale_file_2018  = ROOT.TFile(mu_ID_scale_name_2018)
 mu_ID_scale_histo_2018 = ROOT.TH2F()
-mu_ID_scale_histo_2018 = mu_ID_scale_file_2018.Get("NUM_MediumID_DEN_TrackerMuons_pt_abseta")
+mu_ID_scale_histo_2018 = mu_ID_scale_file_2018.Get("NUM_TightID_DEN_TrackerMuons_pt_abseta")
 
 mu_Iso_scale_name_2018  = "scale_factors/RunABCD_SF_ISO_muon_2018.root"
 mu_Iso_scale_file_2018  = ROOT.TFile(mu_Iso_scale_name_2018)
 mu_Iso_scale_histo_2018 = ROOT.TH2F()
-mu_Iso_scale_histo_2018 = mu_Iso_scale_file_2018.Get("NUM_LooseRelIso_DEN_MediumID_pt_abseta")
+mu_Iso_scale_histo_2018 = mu_Iso_scale_file_2018.Get("NUM_TightRelIso_DEN_TightIDandIPCut_pt_abseta")
 
 mu_Trigger_scale_name_BeforeHLTUpdate_2018       = "scale_factors/EfficienciesAndSF_2018Data_BeforeMuonHLTUpdate.root"
 mu_Trigger_scale_file_BeforeHLTUpdate_2018       = ROOT.TFile(mu_Trigger_scale_name_BeforeHLTUpdate_2018)
@@ -93,6 +139,7 @@ mu_Trigger_scale_histo_AfterHLTUpdate_2018_Mu24 = ROOT.TH2F()
 mu_Trigger_scale_histo_AfterHLTUpdate_2018_Mu24 = mu_Trigger_scale_file_AfterHLTUpdate_2018.Get("IsoMu24_PtEtaBins/abseta_pt_ratio")
 mu_Trigger_scale_histo_AfterHLTUpdate_2018_Mu50 = ROOT.TH2F()
 mu_Trigger_scale_histo_AfterHLTUpdate_2018_Mu50 = mu_Trigger_scale_file_AfterHLTUpdate_2018.Get("Mu50_OR_OldMu100_OR_TkMu100_PtEtaBins/abseta_pt_ratio")
+
 
 class Simplified_Workflow_Handler:
 
@@ -110,20 +157,16 @@ class Simplified_Workflow_Handler:
         self.dir_sig_input  = "rootfiles/latest_production/MC/signals/"
         self.dir_data_input = "rootfiles/latest_production/dataprocess/"
 
-        self.norm_filename_2016 = "rootfiles/latest_production/MC/normalizations/Normalizations_table_2016.txt"
-        self.norm_filename_2017 = "rootfiles/latest_production/MC/normalizations/Normalizations_table_2017.txt"
-        self.norm_filename_2018 = "rootfiles/latest_production/MC/normalizations/Normalizations_table_2018.txt"
-
     ###############################################################################################################################################
 
     def get_normalizations_map(self, runningEra):
         #list_dirs_norm = os.listdir(self.dir_norm_input)
         if runningEra == 0:
-            in_file = open(self.norm_filename_2016,"r")
+            in_file = open("rootfiles/latest_production/MC/normalizations/Normalizations_table_2016.txt","r")
         if runningEra == 1:
-            in_file = open(self.norm_filename_2017,"r")
+            in_file = open("rootfiles/latest_production/MC/normalizations/Normalizations_table_2017.txt","r")
         if runningEra == 2:
-            in_file = open(self.norm_filename_2018,"r")
+            in_file = open("rootfiles/latest_production/MC/normalizations/Normalizations_table_2018.txt","r")
         norm_map = dict()
 
         for line in in_file:
@@ -142,6 +185,10 @@ class Simplified_Workflow_Handler:
             if local_lep_pt > 150.: # This is because corrections are up to 150 GeV
                 local_lep_pt = 150.
 
+            local_lep_pt_4reco = lep_pt
+            if local_lep_pt_4reco > 499.:
+                local_lep_pt_4reco = 499.
+
             local_lep_eta = lep_eta
             if local_lep_eta >= 2.5:
                 local_lep_eta = 2.49
@@ -150,9 +197,10 @@ class Simplified_Workflow_Handler:
 
 
             scale_factor_ID   = el_ID_scale_histo_2016.GetBinContent( el_ID_scale_histo_2016.GetXaxis().FindBin(local_lep_eta), el_ID_scale_histo_2016.GetYaxis().FindBin(local_lep_pt) )
-            scale_factor = scale_factor_ID
-
-        elif runningEra == 1: # Scale factors for 2017
+            scale_factor_reco   = el_reco_scale_histo_2016.GetBinContent( el_reco_scale_histo_2016.GetXaxis().FindBin(local_lep_eta), el_reco_scale_histo_2016.GetYaxis().FindBin(local_lep_pt_4reco) )
+            scale_factor_trigger   = el_trigger_scale_histo_2016.GetBinContent( el_trigger_scale_histo_2016.GetXaxis().FindBin(local_lep_eta), el_trigger_scale_histo_2016.GetYaxis().FindBin(local_lep_pt_4reco) ) #trigger SFs have the same pT maximum of reco SFs
+            
+        if runningEra == 1: # Scale factors for 2017
 
             local_lep_pt = lep_pt
             if local_lep_pt > 499.: # This is because corrections are up to 499 GeV
@@ -164,12 +212,11 @@ class Simplified_Workflow_Handler:
             if local_lep_eta < -2.5: # Corrections reach down to eta = -2.5, but only up to eta = 2.49
                 local_lep_eta = -2.5
 
-            
             scale_factor_ID   = el_ID_scale_histo_2017.GetBinContent( el_ID_scale_histo_2017.GetXaxis().FindBin(local_lep_eta), el_ID_scale_histo_2017.GetYaxis().FindBin(local_lep_pt) )
             scale_factor_reco   = el_reco_scale_histo_2017.GetBinContent( el_reco_scale_histo_2017.GetXaxis().FindBin(local_lep_eta), el_reco_scale_histo_2017.GetYaxis().FindBin(local_lep_pt) )
-            scale_factor = scale_factor_ID * scale_factor_reco
+            scale_factor_trigger   = el_trigger_scale_histo_2017.GetBinContent( el_trigger_scale_histo_2017.GetXaxis().FindBin(local_lep_eta), el_trigger_scale_histo_2017.GetYaxis().FindBin(local_lep_pt) ) #trigger SFs have the same pT maximum of reco SFs
 
-        elif runningEra == 2: # Scale factors for 2018
+        if runningEra == 2: # Scale factors for 2018
 
             local_lep_pt = lep_pt
             if local_lep_pt > 499.: # This is because corrections are up to 499 GeV
@@ -180,13 +227,12 @@ class Simplified_Workflow_Handler:
                 local_lep_eta = 2.49
             if local_lep_eta < -2.5: # Corrections reach down to eta = -2.5, but only up to eta = 2.49
                 local_lep_eta = -2.5
-
             
             scale_factor_ID   = el_ID_scale_histo_2018.GetBinContent( el_ID_scale_histo_2018.GetXaxis().FindBin(local_lep_eta), el_ID_scale_histo_2018.GetYaxis().FindBin(local_lep_pt) )
             scale_factor_reco   = el_reco_scale_histo_2018.GetBinContent( el_reco_scale_histo_2018.GetXaxis().FindBin(local_lep_eta), el_reco_scale_histo_2018.GetYaxis().FindBin(local_lep_pt) )
-            scale_factor = scale_factor_ID * scale_factor_reco
-
-        return scale_factor
+            scale_factor_trigger   = el_trigger_scale_histo_2018.GetBinContent( el_trigger_scale_histo_2018.GetXaxis().FindBin(local_lep_eta), el_trigger_scale_histo_2018.GetYaxis().FindBin(local_lep_pt) ) #trigger SFs have the same pT maximum of reco SFs
+            
+        return scale_factor_ID #* scale_factor_reco
 
     ###############################################################################################################################################
 
@@ -233,8 +279,6 @@ class Simplified_Workflow_Handler:
 
                     scale_factor_Trigger = mu_Trigger_scale_histo_BCDEF_Mu24_2016.GetBinContent( mu_Trigger_scale_histo_BCDEF_Mu24_2016.GetXaxis().FindBin(math.fabs(local_lep_eta)), mu_Trigger_scale_histo_BCDEF_Mu24_2016.GetYaxis().FindBin(local_lep_pt_forTrigger) )
                     
-                    scale_factor         = scale_factor_ID * scale_factor_Iso * scale_factor_Trigger
-
                 else: # An event can have more than one trigger
 
                     local_lep_pt_forTrigger = lep_pt # Corrections related to this trigger start from 52 GeV
@@ -242,8 +286,7 @@ class Simplified_Workflow_Handler:
                         local_lep_pt_forTrigger = 52.
 
                     scale_factor_Trigger = mu_Trigger_scale_histo_BCDEF_Mu50_2016.GetBinContent( mu_Trigger_scale_histo_BCDEF_Mu50_2016.GetXaxis().FindBin(math.fabs(lep_eta)), mu_Trigger_scale_histo_BCDEF_Mu50_2016.GetYaxis().FindBin(local_lep_pt_forTrigger) )
-                    scale_factor         = scale_factor_ID * scale_factor_Iso * scale_factor_Trigger
-
+                    
             else: #Use GH SFs
 
                 scale_factor_ID       = mu_ID_scale_histo_GH_2016.GetBinContent( mu_ID_scale_histo_GH_2016.GetXaxis().FindBin(math.fabs(local_lep_eta)), mu_ID_scale_histo_GH_2016.GetYaxis().FindBin(local_lep_pt) )
@@ -257,8 +300,6 @@ class Simplified_Workflow_Handler:
 
                     scale_factor_Trigger = mu_Trigger_scale_histo_GH_Mu24_2016.GetBinContent( mu_Trigger_scale_histo_GH_Mu24_2016.GetXaxis().FindBin(math.fabs(local_lep_eta)), mu_Trigger_scale_histo_GH_Mu24_2016.GetYaxis().FindBin(local_lep_pt_forTrigger) )
 
-                    scale_factor         = scale_factor_ID * scale_factor_Iso * scale_factor_Trigger
-
                 else: # An event can have more than one trigger
 
                     local_lep_pt_forTrigger = lep_pt 
@@ -266,7 +307,9 @@ class Simplified_Workflow_Handler:
                         local_lep_pt_forTrigger = 52.
 
                     scale_factor_Trigger = mu_Trigger_scale_histo_GH_Mu50_2016.GetBinContent( mu_Trigger_scale_histo_GH_Mu50_2016.GetXaxis().FindBin(math.fabs(local_lep_eta)), mu_Trigger_scale_histo_GH_Mu50_2016.GetYaxis().FindBin(local_lep_pt_forTrigger) )
-                    scale_factor         = scale_factor_ID * scale_factor_Iso * scale_factor_Trigger
+
+            scale_factor = scale_factor_ID * scale_factor_Iso * scale_factor_Trigger
+
 
         ###############################################
         #                                             #
@@ -275,7 +318,7 @@ class Simplified_Workflow_Handler:
         ###############################################
 
 
-        elif runningEra == 1: # Get muon SFs for 2017. ID and ISO histos have pT and eta positions inverted wrt 2016 histos
+        if runningEra == 1: # Get muon SFs for 2017. ID and ISO histos have pT and eta positions inverted wrt 2016 histos
                               
             scale_factor_ID       = mu_ID_scale_histo_2017.GetBinContent( mu_ID_scale_histo_2017.GetXaxis().FindBin(local_lep_pt), mu_ID_scale_histo_2017.GetYaxis().FindBin(math.fabs(local_lep_eta)) )
             scale_factor_Iso      = mu_Iso_scale_histo_2017.GetBinContent( mu_Iso_scale_histo_2017.GetXaxis().FindBin(local_lep_pt), mu_Iso_scale_histo_2017.GetYaxis().FindBin(math.fabs(local_lep_eta)) )
@@ -295,6 +338,7 @@ class Simplified_Workflow_Handler:
                     local_lep_pt_forTrigger = 52.
 
                 scale_factor_Trigger = mu_Trigger_scale_histo_2017_Mu50.GetBinContent( mu_Trigger_scale_histo_2017_Mu50.GetXaxis().FindBin(math.fabs(local_lep_eta)), mu_Trigger_scale_histo_2017_Mu50.GetYaxis().FindBin(local_lep_pt_forTrigger) )
+                mu_Trigger_err       = mu_Trigger_scale_histo_2017_Mu50.GetBinError( mu_Trigger_scale_histo_2017_Mu50.GetXaxis().FindBin(math.fabs(local_lep_eta)), mu_Trigger_scale_histo_2017_Mu50.GetYaxis().FindBin(local_lep_pt_forTrigger) )
 
                 
             scale_factor         = scale_factor_ID * scale_factor_Iso * scale_factor_Trigger
@@ -305,9 +349,9 @@ class Simplified_Workflow_Handler:
         #                                             #
         ###############################################
 
-        elif runningEra == 2:
+        if runningEra == 2:
 
-            luminosity_norm = 59.69
+            luminosity_norm = 59.74
             luminosity_BeforeHLTUpdate = 8.98
             luminosity_AfterHLTUpdate = 50.71
 
@@ -353,7 +397,6 @@ class Simplified_Workflow_Handler:
                 
                     scale_factor_Trigger = mu_Trigger_scale_histo_AfterHLTUpdate_2018_Mu50.GetBinContent( mu_Trigger_scale_histo_AfterHLTUpdate_2018_Mu50.GetXaxis().FindBin(math.fabs(local_lep_eta)), mu_Trigger_scale_histo_AfterHLTUpdate_2018_Mu50.GetYaxis().FindBin(local_lep_pt_forTrigger) )
 
-
-            scale_factor         = scale_factor_ID * scale_factor_Iso * scale_factor_Trigger
+            scale_factor = scale_factor_ID * scale_factor_Iso * scale_factor_Trigger
 
         return scale_factor

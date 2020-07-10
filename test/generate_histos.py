@@ -35,7 +35,7 @@ if runningEra == 0:
     jetIdflag = 7
     jetPUIdflag = 6
 if runningEra == 1:
-    luminosity_norm = 41.48
+    luminosity_norm = 41.53
     jetIdflag = 4
     jetPUIdflag = 6
 if runningEra == 2:
@@ -72,9 +72,9 @@ h_base  = dict()
 
 list_histos = ["h_Mmumu", "h_Mee","h_Mmue", "h_lep1pt", "h_lep2pt", "h_lep1eta", "h_lep2eta", "h_lep1phi", "h_lep2phi", "h_njets25", "h_met_sumEt", "h_met_pt", "h_jetptmax", "h_npvs"]
 
-h_base[list_histos[0]]  = ROOT.TH1F(list_histos[0], "M_{#mu#mu}", 50, 75., 110.)
-h_base[list_histos[1]]  = ROOT.TH1F(list_histos[1], "M_{ee}", 50, 75., 110.)
-h_base[list_histos[2]]  = ROOT.TH1F(list_histos[2], "M_{#mu e}", 50, 75., 110.)
+h_base[list_histos[0]]  = ROOT.TH1F(list_histos[0], "M_{#mu#mu}", 60, 75., 160.)
+h_base[list_histos[1]]  = ROOT.TH1F(list_histos[1], "M_{ee}", 60, 75., 160.)
+h_base[list_histos[2]]  = ROOT.TH1F(list_histos[2], "M_{#mu e}", 60, 75., 160.)
 h_base[list_histos[3]]  = ROOT.TH1F(list_histos[3], "p_{T} of the 1st lepton", 40, 27., 80.)
 h_base[list_histos[4]]  = ROOT.TH1F(list_histos[4], "p_{T} of the 2nd lepton", 40, 32., 80.)
 h_base[list_histos[5]]  = ROOT.TH1F(list_histos[5], "#eta of the 1st lepton", 30, -2.6, 2.6)
@@ -177,6 +177,8 @@ for jentry in xrange(nentries):
         lep1_eta = mytree.Muon_eta[0]
         lep1_phi = mytree.Muon_phi[0]
         lep1_mass = mytree.Muon_mass[0]
+        if mytree.Muon_pfRelIso03_all[0] > 0.15 :  #FIXME
+            continue
 
         lep2_pt = mytree.Electron_pt[0]
         lep2_eta = mytree.Electron_eta[0]
@@ -187,9 +189,6 @@ for jentry in xrange(nentries):
     lep2_FourMom.SetPtEtaPhiM(lep2_pt,lep2_eta,lep2_phi,lep2_mass)
     Zcand_FourMom = lep1_FourMom + lep2_FourMom
 
-    if not mytree.Electron_mvaFall17V2Iso_WP80[0] :  #FIXME
-        continue
-
     njets_25 = 0
     jetptmax = 26.
     for jetcount in xrange(mytree.nJet) :
@@ -197,15 +196,26 @@ for jentry in xrange(nentries):
         if mytree.Jet_jetId[jetcount] < jetIdflag :
             continue
 
-        pt_of_jet = mytree.Jet_pt[jetcount]
+        jet_pt = mytree.Jet_pt[jetcount]
+        jet_eta = mytree.Jet_eta[jetcount]
+        jet_phi = mytree.Jet_phi[jetcount]
+        jet_mass = mytree.Jet_mass[jetcount]
 
-#        if pt_of_jet < 50. :    FIXME
-#            if mytree.Jet_puId[jetcount] < jetPUIdflag :
-#                continue
+        jet_FourMom = ROOT.TLorentzVector()
+        jet_FourMom.SetPtEtaPhiM(jet_pt,jet_eta,jet_phi,jet_mass)
 
-        if pt_of_jet > jetptmax :
-            jetptmax = pt_of_jet
-        if pt_of_jet > 25. :
+        if jet_pt < 50. and mytree.Jet_puId[jetcount] < jetPUIdflag :
+            continue
+
+        deltaR_lep1_jet = jet_FourMom.DeltaR(lep1_FourMom)
+        deltaR_lep2_jet = jet_FourMom.DeltaR(lep2_FourMom)
+
+        if deltaR_lep1_jet < 0.3 or deltaR_lep2_jet < 0.3 :
+            continue
+
+        if jet_pt > jetptmax :
+            jetptmax = jet_pt
+        if jet_pt > 25. :
             njets_25 = njets_25 + 1    
 
     met_pt_puppi = mytree.PuppiMET_pt
@@ -241,6 +251,7 @@ for jentry in xrange(nentries):
         elif mytree.nElectron == 2 :
             lep1_weight = myWF.get_ele_scale(lep1_pt, lep1_eta + mytree.Electron_deltaEtaSC[0],runningEra)
             lep2_weight = myWF.get_ele_scale(lep2_pt, lep2_eta + mytree.Electron_deltaEtaSC[1],runningEra)
+
         elif mytree.nMuon == 1 :
             isSingleMuTrigger_LOW = mytree.HLT_IsoMu24
             if runningEra == 1:

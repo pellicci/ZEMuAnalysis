@@ -17,8 +17,8 @@ from PhysicsTools.NanoAODTools.postprocessing.framework.crabhelper import inputF
 from StandardModel.ZEMuAnalysis.runSkimModule import *
 from PhysicsTools.NanoAODTools.postprocessing.modules.common.puWeightProducer import *
 
-#inputfile = ['/afs/cern.ch/user/p/pellicci/cernbox/ROOT/ZEMuAnalysis/NANOAOD/191120_10218V1/ZEMuAnalysis_pythia8_NANOAOD_2018_1.root']
-#p=PostProcessor(".",inputfile,"",modules=[leptonConstr(),puAutoWeight_2018()],provenance=True,fwkJobReport=True,jsonInput=runsAndLumis(),outputbranchsel="cmssw_config/keep_and_drop.txt")
+#inputfile = ['/afs/cern.ch/user/p/pellicci/work/ZEMuAnalysis/CMSSW_10_2_18/src/StandardModel/ZEMuAnalysis/test/ZEMuAnalysis_pythia8_NANOAOD_2017.root']
+#p=PostProcessor(".",inputfile,"",modules=[leptonConstr(1),puAutoWeight_2017()],provenance=True,fwkJobReport=True,outputbranchsel="cmssw_config/keep_and_drop.txt")
 
 if isData :
     if year == "2016" :

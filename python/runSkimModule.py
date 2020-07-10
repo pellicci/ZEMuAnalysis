@@ -49,31 +49,32 @@ class exampleProducer(Module):
                 return False
 
         elif self.runningEra == 2 :
-            if not (HLT.IsoMu24 or HLT.Mu50or HLT.Ele32_WPTight_Gsf) :
+            if not (HLT.IsoMu24 or HLT.Mu50 or HLT.Ele32_WPTight_Gsf) :
                 return False
 
         if (len(electrons) + len(muons) != 2) :
             return False
 
         if len(muons) == 2 :
-            lep_mass = (muons[0].p4() + muons[1].p4()).M() 
-            if (lep_mass < 75. or lep_mass > 110.) :
-                return False
+            lep1_4mom = muons[0].p4()
+            lep2_4mom = muons[1].p4()
+
             if ( muons[0].charge * muons[1].charge > 0 ) :
                 return False
             if not muons[0].tightId :
                 return False
             if not muons[1].tightId :
                 return False
-            if muons[0].pfRelIso03_all > 0.2 or muons[1].pfRelIso03_all > 0.2 : #medium
+            if muons[0].pfRelIso03_all > 0.15 or muons[1].pfRelIso03_all > 0.15 : #tight
                 return False
             if muons[0].pt < minmupt or muons[1].pt < minmupt :
                 return False
 
         elif len(electrons) == 2 :
-            lep_mass = (electrons[0].p4() + electrons[1].p4()).M()
-            if (lep_mass < 75. or lep_mass > 110.) :
-                return False
+
+            lep1_4mom = electrons[0].p4()
+            lep2_4mom = electrons[1].p4()
+
             if ( electrons[0].charge * electrons[1].charge > 0 ) :
                 return False
             if not electrons[0].mvaFall17V2Iso_WP80 :
@@ -90,14 +91,15 @@ class exampleProducer(Module):
                     return False
 
         else :
-            lep_mass = (muons[0].p4() + electrons[0].p4()).M()
-            if (lep_mass < 75. or lep_mass > 110.) :
-                return False
+
+            lep1_4mom = muons[0].p4()
+            lep2_4mom = electrons[0].p4()
+
             if ( muons[0].charge * electrons[0].charge > 0 ) :
                 return False
             if not muons[0].tightId :
                 return False
-            if muons[0].pfRelIso03_all > 0.2 : #medium
+            if muons[0].pfRelIso03_all > 0.15 : #tight
                 return False
             if not electrons[0].mvaFall17V2Iso_WP80 :
                 return False
@@ -108,6 +110,11 @@ class exampleProducer(Module):
             if muons[0].pt < minmupt or electrons[0].pt < minelept :
                 return False
 
+
+        lep_mass = (lep1_4mom + lep2_4mom).M() 
+        if (lep_mass < 75. or lep_mass > 160.) :
+            return False
+
         nbjets_25 = 0
         jetptmax = -1.
         for jetcount in xrange(len(jets)) :
@@ -115,9 +122,14 @@ class exampleProducer(Module):
                 continue
             pt_of_jet = jets[jetcount].pt
 
-            if pt_of_jet < 50. :
-                if jets[jetcount].puId < jetPUIdflag :
-                    continue
+            deltaR_lep1_jet = jets[jetcount].p4().DeltaR(lep1_4mom)
+            deltaR_lep2_jet = jets[jetcount].p4().DeltaR(lep2_4mom)
+
+            if deltaR_lep1_jet < 0.3 or deltaR_lep2_jet < 0.3 :
+                continue
+
+            if pt_of_jet < 50. and jets[jetcount].puId < jetPUIdflag :
+                continue
 
             if pt_of_jet > jetptmax :
                 jetptmax = pt_of_jet
