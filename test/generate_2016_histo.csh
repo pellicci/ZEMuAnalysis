@@ -4,14 +4,18 @@ mkdir histos/latest_production
 rm histos/latest_production/*2016*.root
 rm trees/*2016*.root
 
-python generate_histos.py 0 0 rootfiles/latest_production/MC/backgrounds/ZEMuAnalysis_DY50_SigRegion_2016.root histos/latest_production/ZEMuHistos_DY_2016.root
-python generate_histos.py 0 0 rootfiles/latest_production/MC/backgrounds/ZEMuAnalysis_SingleAntiToptW_SigRegion_2016.root histos/latest_production/ZEMuHistos_SingleAntiToptW_2016.root
+python generate_histos.py 0 0 rootfiles/latest_production/MC/backgrounds/ZEMuAnalysis_ttbarToHadronic_SigRegion_2016.root histos/latest_production/ZEMuHistos_ttbarHad_2016.root
+python generate_histos.py 0 0 rootfiles/latest_production/MC/backgrounds/ZEMuAnalysis_ttbarToSemiLeptonic_SigRegion_2016.root histos/latest_production/ZEMuHistos_ttbar_2016.root
+python generate_histos.py 0 0 rootfiles/latest_production/MC/backgrounds/ZEMuAnalysis_ttbarlnu_SigRegion_2016.root histos/latest_production/ZEMuHistos_ttbarlnu_2016.root
+python generate_histos.py 0 0 rootfiles/latest_production/MC/backgrounds/ZEMuAnalysis_ttbarWlnu_SigRegion_2016.root histos/latest_production/ZEMuHistos_ttbarWlnu_2016.root
 python generate_histos.py 0 0 rootfiles/latest_production/MC/backgrounds/ZEMuAnalysis_SingleToptW_SigRegion_2016.root histos/latest_production/ZEMuHistos_SingleToptW_2016.root
+python generate_histos.py 0 0 rootfiles/latest_production/MC/backgrounds/ZEMuAnalysis_SingleAntiToptW_SigRegion_2016.root histos/latest_production/ZEMuHistos_SingleAntiToptW_2016.root
+python generate_histos.py 0 0 rootfiles/latest_production/MC/backgrounds/ZEMuAnalysis_DY50_SigRegion_2016.root histos/latest_production/ZEMuHistos_DY_2016.root
 python generate_histos.py 0 0 rootfiles/latest_production/MC/backgrounds/ZEMuAnalysis_WW_SigRegion_2016.root histos/latest_production/ZEMuHistos_WW_2016.root
 python generate_histos.py 0 0 rootfiles/latest_production/MC/backgrounds/ZEMuAnalysis_WZ_SigRegion_2016.root histos/latest_production/ZEMuHistos_WZ_2016.root
-python generate_histos.py 0 0 rootfiles/latest_production/MC/backgrounds/ZEMuAnalysis_ttbarlnu_SigRegion_2016.root histos/latest_production/ZEMuHistos_ttbarlnu_2016.root
-python generate_histos.py 0 0 rootfiles/latest_production/MC/backgrounds/ZEMuAnalysis_ttbarToSemiLeptonic_SigRegion_2016.root histos/latest_production/ZEMuHistos_ttbar_2016.root
 python generate_histos.py 0 0 rootfiles/latest_production/MC/backgrounds/ZEMuAnalysis_Wlnu_SigRegion_2016.root histos/latest_production/ZEMuHistos_Wlnu_2016.root
+python generate_histos.py 0 0 rootfiles/latest_production/MC/backgrounds/ZEMuAnalysis_WWW_SigRegion_2016.root histos/latest_production/ZEMuHistos_WWW_2016.root
+python generate_histos.py 0 0 rootfiles/latest_production/MC/backgrounds/ZEMuAnalysis_ZZ_SigRegion_2016.root histos/latest_production/ZEMuHistos_ZZ_2016.root
 
 hadd -f trees/ZEMuAnalysis_Background_2016.root histos/latest_production/*2016*.root
 

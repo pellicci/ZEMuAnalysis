@@ -13,19 +13,16 @@ year = args.year_option
 
 #xsec lookup in pb
 secs_table = dict()
-secs_table["ttbarToHadronic"] = 377.96 
 secs_table["ttbarToSemiLeptonic"] = 365.34
 secs_table["ttbarlnu"] = 88.29 #NNLO-2018
-secs_table["ttbarWlnu"] = 0.2001
 secs_table["SingleToptW"] = 34.91
 secs_table["SingleAntiToptW"] = 34.97
-secs_table["DY50"] = 2075.14*3 #amcatnlo 2017
-secs_table["WW"] = 12.178
-secs_table["WWDPS"] = 0.1703
+secs_table["DY50"] = 6077.22
+secs_table["WW"] = 12.599
 secs_table["WZ"] = 27.6
 secs_table["Wlnu"] = 52850.0
 secs_table["WWW"] = 0.2086
-secs_table["Signal"] = 2075.14*0.000001/0.0337 #Assume BR of 10-6
+secs_table["Signal"] = 6077.2*0.000001/0.0337 #Assume BR of 10-6
 
 #######################################
 #                                     #
@@ -34,15 +31,12 @@ secs_table["Signal"] = 2075.14*0.000001/0.0337 #Assume BR of 10-6
 #######################################
 #fraction of negative-weighted events in NLO samples (2016)
 frac_table_2016 = dict()
-frac_table_2016["ttbarToHadronic"] = 0.
-frac_table_2016["ttbarToSemiLeptonic"] = 0. #0.003979
-frac_table_2016["ttbarlnu"] = 0. #0.00402
-frac_table_2016["ttbarWlnu"] = 0.2419
+frac_table_2016["ttbarToSemiLeptonic"] = 0. 
+frac_table_2016["ttbarlnu"] = 0.
 frac_table_2016["SingleToptW"] = 0.003708
 frac_table_2016["SingleAntiToptW"] = 0.00369
-frac_table_2016["DY50"] = 0.1661
+frac_table_2016["DY50"] = 0.
 frac_table_2016["WW"] = 0.
-frac_table_2016["WWDPS"] = 0.
 frac_table_2016["WZ"] = 0.
 frac_table_2016["Wlnu"] = 0.
 frac_table_2016["WWW"] = 0.06054
@@ -55,15 +49,12 @@ frac_table_2016["Signal"] = 0.
 #######################################
 #fraction of negative-weighted events in NLO samples (2017)
 frac_table_2017 = dict()
-frac_table_2017["ttbarToHadronic"] = 0.
 frac_table_2017["ttbarToSemiLeptonic"] = 0. #0.003957
 frac_table_2017["ttbarlnu"] = 0. #0.004373
 frac_table_2017["ttbarWlnu"] = 0.2268
-frac_table_2017["SingleToptW"] = 0.003758
 frac_table_2017["SingleAntiToptW"] = 0.0034
 frac_table_2017["DY50"] = 0.1624
-frac_table_2017["WW"] = 0.001928
-frac_table_2017["WWDPS"] = 0.
+frac_table_2017["WW"] = 0.
 frac_table_2017["WZ"] = 0.
 frac_table_2017["Wlnu"] = 0.0004079
 frac_table_2017["WWW"] = 0.06054
@@ -76,17 +67,12 @@ frac_table_2017["Signal"] = 0.
 #######################################
 #fraction of negative-weighted events in NLO samples (2018)
 frac_table_2018 = dict()
-frac_table_2018["ttbarToHadronic"] = 0.
 frac_table_2018["ttbarToSemiLeptonic"] = 0. #0.00412
 frac_table_2018["ttbarlnu"] = 0. #0.00396
-frac_table_2018["ttbarWlnu"] = 0.2268
-frac_table_2018["QCDPt30toInf"] = 0.
-frac_table_2018["QCDPt40toInf"] = 0.
 frac_table_2018["SingleToptW"] = 0.003758
 frac_table_2018["SingleAntiToptW"] = 0.0034
-frac_table_2018["DY50"] = 0.163
-frac_table_2018["WW"] = 0.001755
-frac_table_2018["WWDPS"] = 0.0
+frac_table_2018["DY50"] = 0.0004962 #0.163
+frac_table_2018["WW"] = 0. #0.001755
 frac_table_2018["WZ"] = 0.
 frac_table_2018["Wlnu"] = 0.0003866
 frac_table_2018["WWW"] = 0.06054

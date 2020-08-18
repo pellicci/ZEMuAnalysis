@@ -177,8 +177,6 @@ for jentry in xrange(nentries):
         lep1_eta = mytree.Muon_eta[0]
         lep1_phi = mytree.Muon_phi[0]
         lep1_mass = mytree.Muon_mass[0]
-        if mytree.Muon_pfRelIso03_all[0] > 0.15 :  #FIXME
-            continue
 
         lep2_pt = mytree.Electron_pt[0]
         lep2_eta = mytree.Electron_eta[0]
