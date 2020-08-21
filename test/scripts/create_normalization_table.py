@@ -17,11 +17,15 @@ secs_table["ttbarToSemiLeptonic"] = 365.34
 secs_table["ttbarlnu"] = 88.29 #NNLO-2018
 secs_table["SingleToptW"] = 34.91
 secs_table["SingleAntiToptW"] = 34.97
-secs_table["DY50"] = 6077.22
+secs_table["DY50"] = 6225. #6077.22
 secs_table["WW"] = 12.599
 secs_table["WZ"] = 27.6
-secs_table["Wlnu"] = 52850.0
+secs_table["Wlnu"] = 52850.
 secs_table["WWW"] = 0.2086
+secs_table["QCDDoubleEMEnrich30to40"] = 22180.
+secs_table["QCDDoubleEMEnrich30toInf"] = 247000.
+secs_table["QCDDoubleEMEnrich40toInf"] = 113100.
+secs_table["ZZ"] = 12.14
 secs_table["Signal"] = 6077.2*0.000001/0.0337 #Assume BR of 10-6
 
 #######################################
@@ -40,6 +44,10 @@ frac_table_2016["WW"] = 0.
 frac_table_2016["WZ"] = 0.
 frac_table_2016["Wlnu"] = 0.
 frac_table_2016["WWW"] = 0.06054
+frac_table_2016["QCDDoubleEMEnrich30to40"] = 0.
+frac_table_2016["QCDDoubleEMEnrich30toInf"] = 0.
+frac_table_2016["QCDDoubleEMEnrich40toInf"] = 0.
+frac_table_2016["ZZ"] = 0.
 frac_table_2016["Signal"] = 0.
 
 #######################################
@@ -52,12 +60,17 @@ frac_table_2017 = dict()
 frac_table_2017["ttbarToSemiLeptonic"] = 0. #0.003957
 frac_table_2017["ttbarlnu"] = 0. #0.004373
 frac_table_2017["ttbarWlnu"] = 0.2268
+frac_table_2017["SingleToptW"] = 0.003758
 frac_table_2017["SingleAntiToptW"] = 0.0034
 frac_table_2017["DY50"] = 0.1624
 frac_table_2017["WW"] = 0.
 frac_table_2017["WZ"] = 0.
 frac_table_2017["Wlnu"] = 0.0004079
 frac_table_2017["WWW"] = 0.06054
+frac_table_2017["QCDDoubleEMEnrich30to40"] = 0.
+frac_table_2017["QCDDoubleEMEnrich30toInf"] = 0.
+frac_table_2017["QCDDoubleEMEnrich40toInf"] = 0.
+frac_table_2017["ZZ"] = 0.
 frac_table_2017["Signal"] = 0.
 
 #######################################
@@ -76,6 +89,10 @@ frac_table_2018["WW"] = 0. #0.001755
 frac_table_2018["WZ"] = 0.
 frac_table_2018["Wlnu"] = 0.0003866
 frac_table_2018["WWW"] = 0.06054
+frac_table_2018["QCDDoubleEMEnrich30to40"] = 0.
+frac_table_2018["QCDDoubleEMEnrich30toInf"] = 0.
+frac_table_2018["QCDDoubleEMEnrich40toInf"] = 0.
+frac_table_2018["ZZ"] = 0.
 frac_table_2018["Signal"] = 0.
 
 frac_table = dict()

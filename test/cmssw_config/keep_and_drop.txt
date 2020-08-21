@@ -9,7 +9,8 @@ keep Muon_pt
 keep Muon_eta
 keep Muon_phi
 keep Muon_mass
-keep Muon_pfRelIso03_all
+keep Muon_pfRelIso04_all
+keep Muon_triggerIdLoose
 keep Jet_pt
 keep Jet_eta
 keep Jet_phi
@@ -24,4 +25,3 @@ keep HLT_Ele32_WPTight_Gsf*
 keep genWeight*
 keep PuppiMET*
 keep PV_npvs*
-

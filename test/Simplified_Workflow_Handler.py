@@ -177,7 +177,9 @@ class Simplified_Workflow_Handler:
 
     ###############################################################################################################################################
 
-    def get_ele_scale(self, lep_pt, lep_eta, runningEra):
+    def get_ele_scale(self, lep_pt, lep_eta, runningEra, isMuTrigger):
+
+        scale_factor_trigger = 1.
 
         if runningEra == 0: # Scale factors for 2016
 
@@ -198,7 +200,8 @@ class Simplified_Workflow_Handler:
 
             scale_factor_ID   = el_ID_scale_histo_2016.GetBinContent( el_ID_scale_histo_2016.GetXaxis().FindBin(local_lep_eta), el_ID_scale_histo_2016.GetYaxis().FindBin(local_lep_pt) )
             scale_factor_reco   = el_reco_scale_histo_2016.GetBinContent( el_reco_scale_histo_2016.GetXaxis().FindBin(local_lep_eta), el_reco_scale_histo_2016.GetYaxis().FindBin(local_lep_pt_4reco) )
-            scale_factor_trigger   = el_trigger_scale_histo_2016.GetBinContent( el_trigger_scale_histo_2016.GetXaxis().FindBin(local_lep_eta), el_trigger_scale_histo_2016.GetYaxis().FindBin(local_lep_pt_4reco) ) #trigger SFs have the same pT maximum of reco SFs
+            if not isMuTrigger:
+                scale_factor_trigger   = el_trigger_scale_histo_2016.GetBinContent( el_trigger_scale_histo_2016.GetXaxis().FindBin(local_lep_eta), el_trigger_scale_histo_2016.GetYaxis().FindBin(local_lep_pt_4reco) ) #trigger SFs have the same pT maximum of reco SFs
             
         if runningEra == 1: # Scale factors for 2017
 
@@ -214,7 +217,8 @@ class Simplified_Workflow_Handler:
 
             scale_factor_ID   = el_ID_scale_histo_2017.GetBinContent( el_ID_scale_histo_2017.GetXaxis().FindBin(local_lep_eta), el_ID_scale_histo_2017.GetYaxis().FindBin(local_lep_pt) )
             scale_factor_reco   = el_reco_scale_histo_2017.GetBinContent( el_reco_scale_histo_2017.GetXaxis().FindBin(local_lep_eta), el_reco_scale_histo_2017.GetYaxis().FindBin(local_lep_pt) )
-            scale_factor_trigger   = el_trigger_scale_histo_2017.GetBinContent( el_trigger_scale_histo_2017.GetXaxis().FindBin(local_lep_eta), el_trigger_scale_histo_2017.GetYaxis().FindBin(local_lep_pt) ) #trigger SFs have the same pT maximum of reco SFs
+            if not isMuTrigger: 
+                scale_factor_trigger   = el_trigger_scale_histo_2017.GetBinContent( el_trigger_scale_histo_2017.GetXaxis().FindBin(local_lep_eta), el_trigger_scale_histo_2017.GetYaxis().FindBin(local_lep_pt) ) #trigger SFs have the same pT maximum of reco SFs
 
         if runningEra == 2: # Scale factors for 2018
 
@@ -230,13 +234,15 @@ class Simplified_Workflow_Handler:
             
             scale_factor_ID   = el_ID_scale_histo_2018.GetBinContent( el_ID_scale_histo_2018.GetXaxis().FindBin(local_lep_eta), el_ID_scale_histo_2018.GetYaxis().FindBin(local_lep_pt) )
             scale_factor_reco   = el_reco_scale_histo_2018.GetBinContent( el_reco_scale_histo_2018.GetXaxis().FindBin(local_lep_eta), el_reco_scale_histo_2018.GetYaxis().FindBin(local_lep_pt) )
-            scale_factor_trigger   = el_trigger_scale_histo_2018.GetBinContent( el_trigger_scale_histo_2018.GetXaxis().FindBin(local_lep_eta), el_trigger_scale_histo_2018.GetYaxis().FindBin(local_lep_pt) ) #trigger SFs have the same pT maximum of reco SFs
+            if not isMuTrigger: 
+                scale_factor_trigger   = el_trigger_scale_histo_2018.GetBinContent( el_trigger_scale_histo_2018.GetXaxis().FindBin(local_lep_eta), el_trigger_scale_histo_2018.GetYaxis().FindBin(local_lep_pt) ) #trigger SFs have the same pT maximum of reco SFs
             
-        return 1. #scale_factor_ID * scale_factor_reco * scale_factor_trigger
+
+        return scale_factor_ID * scale_factor_reco * scale_factor_trigger
 
     ###############################################################################################################################################
 
-    def get_muon_scale(self, lep_pt, lep_eta, isSingleMuTrigger_LOW, runningEra):
+    def get_muon_scale(self, lep_pt, lep_eta, isSingleMuTrigger_LOW, runningEra, isMuTrigger):
 
         local_lep_pt = lep_pt
         if local_lep_pt >= 120.:  # This is because corrections go up to 120 GeV (excluded)
@@ -250,6 +256,7 @@ class Simplified_Workflow_Handler:
         if local_lep_eta <= -2.4:
             local_lep_eta = -2.39
 
+        scale_factor_Trigger = 1.
 
         ###############################################
         #                                             #
@@ -259,7 +266,7 @@ class Simplified_Workflow_Handler:
 
         if runningEra == 0:
 
-            luminosity_norm = 35.86
+            luminosity_norm = 35.92
             luminosity_BtoF = 19.72 #For 2016
             luminosity_GH   = 16.14 #For 2016
 
@@ -271,45 +278,46 @@ class Simplified_Workflow_Handler:
                 scale_factor_ID       = mu_ID_scale_histo_BCDEF_2016.GetBinContent( mu_ID_scale_histo_BCDEF_2016.GetXaxis().FindBin(math.fabs(local_lep_eta)), mu_ID_scale_histo_BCDEF_2016.GetYaxis().FindBin(local_lep_pt) )
                 scale_factor_Iso      = mu_Iso_scale_histo_BCDEF_2016.GetBinContent( mu_Iso_scale_histo_BCDEF_2016.GetXaxis().FindBin(math.fabs(local_lep_eta)), mu_Iso_scale_histo_BCDEF_2016.GetYaxis().FindBin(local_lep_pt) )
 
-                if isSingleMuTrigger_LOW: # Trigger SF go up to higher energies than 120 GeV, so no local_lep_pt is used for those
+                if isMuTrigger: 
+                    if isSingleMuTrigger_LOW: # Trigger SF go up to higher energies than 120 GeV, so no local_lep_pt is used for those
 
-                    local_lep_pt_forTrigger = lep_pt # Corrections related to this trigger start from 26 GeV
-                    if local_lep_pt_forTrigger < 26.:
-                        local_lep_pt_forTrigger = 26.
+                        local_lep_pt_forTrigger = lep_pt # Corrections related to this trigger start from 26 GeV
+                        if local_lep_pt_forTrigger < 26.:
+                            local_lep_pt_forTrigger = 26.
 
-                    scale_factor_Trigger = mu_Trigger_scale_histo_BCDEF_Mu24_2016.GetBinContent( mu_Trigger_scale_histo_BCDEF_Mu24_2016.GetXaxis().FindBin(math.fabs(local_lep_eta)), mu_Trigger_scale_histo_BCDEF_Mu24_2016.GetYaxis().FindBin(local_lep_pt_forTrigger) )
+                        scale_factor_Trigger = mu_Trigger_scale_histo_BCDEF_Mu24_2016.GetBinContent( mu_Trigger_scale_histo_BCDEF_Mu24_2016.GetXaxis().FindBin(math.fabs(local_lep_eta)), mu_Trigger_scale_histo_BCDEF_Mu24_2016.GetYaxis().FindBin(local_lep_pt_forTrigger) )
                     
-                else: # An event can have more than one trigger
+                    else: # An event can have more than one trigger
 
-                    local_lep_pt_forTrigger = lep_pt # Corrections related to this trigger start from 52 GeV
-                    if local_lep_pt_forTrigger < 52.:
-                        local_lep_pt_forTrigger = 52.
+                        local_lep_pt_forTrigger = lep_pt # Corrections related to this trigger start from 52 GeV
+                        if local_lep_pt_forTrigger < 52.:
+                            local_lep_pt_forTrigger = 52.
 
-                    scale_factor_Trigger = mu_Trigger_scale_histo_BCDEF_Mu50_2016.GetBinContent( mu_Trigger_scale_histo_BCDEF_Mu50_2016.GetXaxis().FindBin(math.fabs(lep_eta)), mu_Trigger_scale_histo_BCDEF_Mu50_2016.GetYaxis().FindBin(local_lep_pt_forTrigger) )
+                        scale_factor_Trigger = mu_Trigger_scale_histo_BCDEF_Mu50_2016.GetBinContent( mu_Trigger_scale_histo_BCDEF_Mu50_2016.GetXaxis().FindBin(math.fabs(lep_eta)), mu_Trigger_scale_histo_BCDEF_Mu50_2016.GetYaxis().FindBin(local_lep_pt_forTrigger) )
                     
             else: #Use GH SFs
 
                 scale_factor_ID       = mu_ID_scale_histo_GH_2016.GetBinContent( mu_ID_scale_histo_GH_2016.GetXaxis().FindBin(math.fabs(local_lep_eta)), mu_ID_scale_histo_GH_2016.GetYaxis().FindBin(local_lep_pt) )
                 scale_factor_Iso      = mu_Iso_scale_histo_GH_2016.GetBinContent( mu_Iso_scale_histo_GH_2016.GetXaxis().FindBin(math.fabs(local_lep_eta)), mu_Iso_scale_histo_GH_2016.GetYaxis().FindBin(local_lep_pt) )
 
-                if isSingleMuTrigger_LOW: # Trigger SF go up to higher energies than 120 GeV, so no local_lep_pt is used for those
+                if isMuTrigger:
+                    if isSingleMuTrigger_LOW: # Trigger SF go up to higher energies than 120 GeV, so no local_lep_pt is used for those
 
-                    local_lep_pt_forTrigger = lep_pt 
-                    if local_lep_pt_forTrigger < 26.:
-                        local_lep_pt_forTrigger = 26.
+                        local_lep_pt_forTrigger = lep_pt 
+                        if local_lep_pt_forTrigger < 26.:
+                            local_lep_pt_forTrigger = 26.
 
-                    scale_factor_Trigger = mu_Trigger_scale_histo_GH_Mu24_2016.GetBinContent( mu_Trigger_scale_histo_GH_Mu24_2016.GetXaxis().FindBin(math.fabs(local_lep_eta)), mu_Trigger_scale_histo_GH_Mu24_2016.GetYaxis().FindBin(local_lep_pt_forTrigger) )
+                        scale_factor_Trigger = mu_Trigger_scale_histo_GH_Mu24_2016.GetBinContent( mu_Trigger_scale_histo_GH_Mu24_2016.GetXaxis().FindBin(math.fabs(local_lep_eta)), mu_Trigger_scale_histo_GH_Mu24_2016.GetYaxis().FindBin(local_lep_pt_forTrigger) )
 
-                else: # An event can have more than one trigger
+                    else: # An event can have more than one trigger
 
-                    local_lep_pt_forTrigger = lep_pt 
-                    if local_lep_pt_forTrigger < 52.:
-                        local_lep_pt_forTrigger = 52.
+                        local_lep_pt_forTrigger = lep_pt 
+                        if local_lep_pt_forTrigger < 52.:
+                            local_lep_pt_forTrigger = 52.
 
-                    scale_factor_Trigger = mu_Trigger_scale_histo_GH_Mu50_2016.GetBinContent( mu_Trigger_scale_histo_GH_Mu50_2016.GetXaxis().FindBin(math.fabs(local_lep_eta)), mu_Trigger_scale_histo_GH_Mu50_2016.GetYaxis().FindBin(local_lep_pt_forTrigger) )
+                        scale_factor_Trigger = mu_Trigger_scale_histo_GH_Mu50_2016.GetBinContent( mu_Trigger_scale_histo_GH_Mu50_2016.GetXaxis().FindBin(math.fabs(local_lep_eta)), mu_Trigger_scale_histo_GH_Mu50_2016.GetYaxis().FindBin(local_lep_pt_forTrigger) )
 
-            scale_factor = 1. #scale_factor_ID * scale_factor_Iso * scale_factor_Trigger
-
+            scale_factor = scale_factor_ID * scale_factor_Trigger * scale_factor_Iso 
 
         ###############################################
         #                                             #
@@ -323,25 +331,24 @@ class Simplified_Workflow_Handler:
             scale_factor_ID       = mu_ID_scale_histo_2017.GetBinContent( mu_ID_scale_histo_2017.GetXaxis().FindBin(local_lep_pt), mu_ID_scale_histo_2017.GetYaxis().FindBin(math.fabs(local_lep_eta)) )
             scale_factor_Iso      = mu_Iso_scale_histo_2017.GetBinContent( mu_Iso_scale_histo_2017.GetXaxis().FindBin(local_lep_pt), mu_Iso_scale_histo_2017.GetYaxis().FindBin(math.fabs(local_lep_eta)) )
 
-            if isSingleMuTrigger_LOW: # Trigger SF go up to higher energies than 120 GeV, so no local_lep_pt is used for those
+            if isMuTrigger:
+                if isSingleMuTrigger_LOW: # Trigger SF go up to higher energies than 120 GeV, so no local_lep_pt is used for those
 
-                local_lep_pt_forTrigger = lep_pt 
-                if local_lep_pt_forTrigger < 29.:
-                    local_lep_pt_forTrigger = 29.
+                    local_lep_pt_forTrigger = lep_pt 
+                    if local_lep_pt_forTrigger < 29.:
+                        local_lep_pt_forTrigger = 29.
 
-                scale_factor_Trigger = mu_Trigger_scale_histo_2017_Mu27.GetBinContent( mu_Trigger_scale_histo_2017_Mu27.GetXaxis().FindBin(math.fabs(local_lep_eta)), mu_Trigger_scale_histo_2017_Mu27.GetYaxis().FindBin(local_lep_pt_forTrigger) )
+                    scale_factor_Trigger = mu_Trigger_scale_histo_2017_Mu27.GetBinContent( mu_Trigger_scale_histo_2017_Mu27.GetXaxis().FindBin(math.fabs(local_lep_eta)), mu_Trigger_scale_histo_2017_Mu27.GetYaxis().FindBin(local_lep_pt_forTrigger) )
 
-            else: # An event can have more than one trigger
+                else: # An event can have more than one trigger
 
-                local_lep_pt_forTrigger = lep_pt 
-                if local_lep_pt_forTrigger < 52.:
-                    local_lep_pt_forTrigger = 52.
+                    local_lep_pt_forTrigger = lep_pt 
+                    if local_lep_pt_forTrigger < 52.:
+                        local_lep_pt_forTrigger = 52.
 
-                scale_factor_Trigger = mu_Trigger_scale_histo_2017_Mu50.GetBinContent( mu_Trigger_scale_histo_2017_Mu50.GetXaxis().FindBin(math.fabs(local_lep_eta)), mu_Trigger_scale_histo_2017_Mu50.GetYaxis().FindBin(local_lep_pt_forTrigger) )
-                mu_Trigger_err       = mu_Trigger_scale_histo_2017_Mu50.GetBinError( mu_Trigger_scale_histo_2017_Mu50.GetXaxis().FindBin(math.fabs(local_lep_eta)), mu_Trigger_scale_histo_2017_Mu50.GetYaxis().FindBin(local_lep_pt_forTrigger) )
-
+                    scale_factor_Trigger = mu_Trigger_scale_histo_2017_Mu50.GetBinContent( mu_Trigger_scale_histo_2017_Mu50.GetXaxis().FindBin(math.fabs(local_lep_eta)), mu_Trigger_scale_histo_2017_Mu50.GetYaxis().FindBin(local_lep_pt_forTrigger) )
                 
-            scale_factor         = scale_factor_ID * scale_factor_Iso * scale_factor_Trigger
+            scale_factor  = scale_factor_ID * scale_factor_Trigger * scale_factor_Iso 
 
         ###############################################
         #                                             #
@@ -361,7 +368,7 @@ class Simplified_Workflow_Handler:
             scale_factor_ID       = mu_ID_scale_histo_2018.GetBinContent( mu_ID_scale_histo_2018.GetXaxis().FindBin(local_lep_pt), mu_ID_scale_histo_2018.GetYaxis().FindBin(math.fabs(local_lep_eta)) )
             scale_factor_Iso      = mu_Iso_scale_histo_2018.GetBinContent( mu_Iso_scale_histo_2018.GetXaxis().FindBin(local_lep_pt), mu_Iso_scale_histo_2018.GetYaxis().FindBin(math.fabs(local_lep_eta)) )
 
-            if Nrandom_for_SF <= (luminosity_BeforeHLTUpdate/luminosity_norm): # Access muon Trigger SF: Before HLT Update
+            if Nrandom_for_SF <= (luminosity_BeforeHLTUpdate/luminosity_norm) and isMuTrigger: # Access muon Trigger SF: Before HLT Update
 
                 if isSingleMuTrigger_LOW: # Trigger SF go up to higher energies than 120 GeV, so no local_lep_pt is used for those
 
@@ -379,7 +386,7 @@ class Simplified_Workflow_Handler:
                 
                     scale_factor_Trigger = mu_Trigger_scale_histo_BeforeHLTUpdate_2018_Mu50.GetBinContent( mu_Trigger_scale_histo_BeforeHLTUpdate_2018_Mu50.GetXaxis().FindBin(math.fabs(local_lep_eta)), mu_Trigger_scale_histo_BeforeHLTUpdate_2018_Mu50.GetYaxis().FindBin(local_lep_pt_forTrigger) )
 
-            else: # Access muon Trigger SF: After HLT Update
+            elif isMuTrigger: # Access muon Trigger SF: After HLT Update
 
                 if isSingleMuTrigger_LOW: # Trigger SF go up to higher energies than 120 GeV, so no local_lep_pt is used for those
 
@@ -397,6 +404,6 @@ class Simplified_Workflow_Handler:
                 
                     scale_factor_Trigger = mu_Trigger_scale_histo_AfterHLTUpdate_2018_Mu50.GetBinContent( mu_Trigger_scale_histo_AfterHLTUpdate_2018_Mu50.GetXaxis().FindBin(math.fabs(local_lep_eta)), mu_Trigger_scale_histo_AfterHLTUpdate_2018_Mu50.GetYaxis().FindBin(local_lep_pt_forTrigger) )
 
-            scale_factor = scale_factor_ID * scale_factor_Iso * scale_factor_Trigger
+            scale_factor = scale_factor_ID * scale_factor_Trigger * scale_factor_Iso 
 
         return scale_factor

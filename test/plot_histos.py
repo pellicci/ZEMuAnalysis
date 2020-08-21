@@ -34,15 +34,11 @@ for hname in list_histos:
 
 # Color mask must have the same number of entries as non-QCD backgrounds + 1 (that is the cumulative QCD background)
 colors_mask = dict()
-colors_mask["ttbarWlnu"]           = 12
-colors_mask["ttbarHad"]            = ROOT.kYellow-5
-colors_mask["ttbar"]               = ROOT.kYellow-8
-colors_mask["ttbarlnu"]            = ROOT.kAzure+7
+colors_mask["ttbar"]               = ROOT.kAzure+7
 colors_mask["DY"]                  = ROOT.kViolet-6
 colors_mask["STtW"]                = ROOT.kMagenta+1
 colors_mask["WZ"]                  = ROOT.kBlue-7
 colors_mask["WW"]                  = ROOT.kPink+1
-colors_mask["WWDPS"]               = ROOT.kPink+3
 colors_mask["WWW"]                 = ROOT.kPink+2
 colors_mask["Wlnu"]                = ROOT.kCyan-7
 colors_mask["GammaJets"]           = ROOT.kCyan-1
@@ -65,8 +61,6 @@ for filename in list_inputfiles:
     sample_name = filename.split("_")[2]
     for histo_name in list_histos:
         histo = fileIn.Get(histo_name)
-
-        print filename, sample_name, histo_name
 
         if histo_name == "h_Mmue" :
             histo.Rebin(2)

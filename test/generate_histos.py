@@ -236,27 +236,27 @@ for jentry in xrange(nentries):
 
     #Lepton scale factors
     if not isData :
+
+        isSingleMuTrigger_LOW = mytree.HLT_IsoMu24
+        if runningEra == 1:
+            isSingleMuTrigger_LOW = mytree.HLT_IsoMu27
+
+        isMuTrigger = isSingleMuTrigger_LOW or mytree.HLT_Mu50
+
         if mytree.nMuon == 2 : # Get muon scale factors, which are different for two groups of datasets, and weight them for the respective integrated lumi 
 
-            isSingleMuTrigger_LOW = mytree.HLT_IsoMu24
-            if runningEra == 1:
-                isSingleMuTrigger_LOW = mytree.HLT_IsoMu27
-
-            lep1_weight = myWF.get_muon_scale(lep1_pt,lep1_eta,isSingleMuTrigger_LOW,runningEra)
-            lep2_weight = myWF.get_muon_scale(lep2_pt,lep2_eta,isSingleMuTrigger_LOW,runningEra)
+            lep1_weight = myWF.get_muon_scale(lep1_pt,lep1_eta,isSingleMuTrigger_LOW,runningEra,isMuTrigger)
+            lep2_weight = myWF.get_muon_scale(lep2_pt,lep2_eta,isSingleMuTrigger_LOW,runningEra,isMuTrigger)
 
         ############### ELECTRON SFs ##############
         elif mytree.nElectron == 2 :
-            lep1_weight = myWF.get_ele_scale(lep1_pt, lep1_eta + mytree.Electron_deltaEtaSC[0],runningEra)
-            lep2_weight = myWF.get_ele_scale(lep2_pt, lep2_eta + mytree.Electron_deltaEtaSC[1],runningEra)
+            lep1_weight = myWF.get_ele_scale(lep1_pt, lep1_eta + mytree.Electron_deltaEtaSC[0],runningEra,False)
+            lep2_weight = myWF.get_ele_scale(lep2_pt, lep2_eta + mytree.Electron_deltaEtaSC[1],runningEra,False)
 
         elif mytree.nMuon == 1 :
-            isSingleMuTrigger_LOW = mytree.HLT_IsoMu24
-            if runningEra == 1:
-                isSingleMuTrigger_LOW = mytree.HLT_IsoMu27
 
-            lep1_weight = myWF.get_muon_scale(lep1_pt,lep1_eta,isSingleMuTrigger_LOW,runningEra)
-            lep2_weight = myWF.get_ele_scale(lep2_pt, lep2_eta + mytree.Electron_deltaEtaSC[0],runningEra)
+            lep1_weight = myWF.get_muon_scale(lep1_pt,lep1_eta,isSingleMuTrigger_LOW,runningEra,isMuTrigger)
+            lep2_weight = myWF.get_ele_scale(lep2_pt, lep2_eta + mytree.Electron_deltaEtaSC[0],runningEra, isMuTrigger)
 
         ############### Multiply weights and SFs for MC. Set weight to 1 for data ###############
         MC_Weight = mytree.genWeight

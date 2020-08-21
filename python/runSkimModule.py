@@ -65,7 +65,7 @@ class exampleProducer(Module):
                 return False
             if not muons[1].tightId :
                 return False
-            if muons[0].pfRelIso03_all > 0.15 or muons[1].pfRelIso03_all > 0.15 : #tight
+            if muons[0].pfRelIso04_all > 0.15 or muons[1].pfRelIso04_all > 0.15 : #tight
                 return False
             if muons[0].pt < minmupt or muons[1].pt < minmupt :
                 return False
@@ -99,7 +99,7 @@ class exampleProducer(Module):
                 return False
             if not muons[0].tightId :
                 return False
-            if muons[0].pfRelIso03_all > 0.15 : #tight
+            if muons[0].pfRelIso04_all > 0.15 : #tight
                 return False
             if not electrons[0].mvaFall17V2Iso_WP80 :
                 return False
