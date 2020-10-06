@@ -3,7 +3,7 @@ from WMCore.Configuration import Configuration
 from CRABClient.UserUtilities import config
 config = Configuration()
 
-runningEra = 0 # 0 = 2016, 1 = 2017, 2 = 2018
+runningEra = 2 # 0 = 2016, 1 = 2017, 2 = 2018
 
 config.section_('General')
 config.General.transferLogs = True
@@ -30,8 +30,8 @@ if runningEra == 2:
 
 config.section_('Data')
 config.Data.inputDBS = 'global'
-config.Data.splitting = 'FileBased'
-config.Data.unitsPerJob = 1
+config.Data.splitting = 'Automatic'
+#config.Data.unitsPerJob = 1
 config.Data.publication = False
 
 config.section_('Site')
@@ -261,7 +261,7 @@ if __name__ == '__main__':
         p.join()
         
         config.General.requestName = '2018_ZEMuAnalysis_DY50'
-        config.Data.inputDataset = '/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIAutumn18NanoAODv7-Nano02Apr2020_102X_upgrade2018_realistic_v21-v1/NANOAODSIM'
+        config.Data.inputDataset = '/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIIAutumn18NanoAODv7-Nano02Apr2020_102X_upgrade2018_realistic_v21_ext2-v1/NANOAODSIM'
         p = Process(target=submit, args=(config,))
         p.start()
         p.join()

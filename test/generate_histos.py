@@ -30,18 +30,15 @@ myWF = Simplified_Workflow_Handler(runningEra)
 #                                                                          #
 ############################################################################
 #Normalize to this luminsity, in fb-1
+jetIdflag = 1 #4
+jetPUIdflag = 4 #6
+
 if runningEra == 0:
     luminosity_norm = 35.92
-    jetIdflag = 7
-    jetPUIdflag = 6
 if runningEra == 1:
     luminosity_norm = 41.53
-    jetIdflag = 4
-    jetPUIdflag = 6
 if runningEra == 2:
     luminosity_norm = 59.74
-    jetIdflag = 4
-    jetPUIdflag = 6
 
 ############################################################################
 #                                                                          #

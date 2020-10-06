@@ -238,7 +238,7 @@ class Simplified_Workflow_Handler:
                 scale_factor_trigger   = el_trigger_scale_histo_2018.GetBinContent( el_trigger_scale_histo_2018.GetXaxis().FindBin(local_lep_eta), el_trigger_scale_histo_2018.GetYaxis().FindBin(local_lep_pt) ) #trigger SFs have the same pT maximum of reco SFs
             
 
-        return scale_factor_ID * scale_factor_reco * scale_factor_trigger
+        return 1. #scale_factor_ID * scale_factor_reco * scale_factor_trigger
 
     ###############################################################################################################################################
 
@@ -406,4 +406,4 @@ class Simplified_Workflow_Handler:
 
             scale_factor = scale_factor_ID * scale_factor_Trigger * scale_factor_Iso 
 
-        return scale_factor
+        return 1. #scale_factor

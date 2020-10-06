@@ -17,6 +17,7 @@ keep Jet_phi
 keep Jet_mass
 keep Jet_jetId
 keep Jet_puId
+keep Jet_btagDeepB
 keep HLT_IsoMu24
 keep HLT_IsoMu27
 keep HLT_Mu50

@@ -30,12 +30,16 @@ class exampleProducer(Module):
         PuppiMET = Object(event, "PuppiMET")
 
         minmupt = 28.
-        minelept = 33.
-        jetIdflag = 4
-        jetPUIdflag = 6
+        minelept = 35.
+        jetIdflag = 1 #medium 
+        jetPUIdflag = 4 #loose
+        btagcut = 0.7527 #tight
 
         if self.runningEra == 0 :
-            jetIdflag = 7
+            btagcut = 0.8953
+        elif self.runningEra == 1 :
+            btagcut = 0.8001
+
 
         if PuppiMET.pt > 50. :
             return False
@@ -133,7 +137,7 @@ class exampleProducer(Module):
 
             if pt_of_jet > jetptmax :
                 jetptmax = pt_of_jet
-            if pt_of_jet > 25. and jets[jetcount].btagDeepB > 0.4184 :   #medium
+            if pt_of_jet > 25. and jets[jetcount].btagDeepB > btagcut :
                 nbjets_25 = nbjets_25 + 1
         if nbjets_25 > 0 or jetptmax > 100.:
             return False

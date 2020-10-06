@@ -62,6 +62,7 @@ for filename in list_inputfiles:
     for histo_name in list_histos:
         histo = fileIn.Get(histo_name)
 
+        print sample_name
         if histo_name == "h_Mmue" :
             histo.Rebin(2)
 

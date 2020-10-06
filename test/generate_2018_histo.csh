@@ -13,8 +13,8 @@ python generate_histos.py 2 1 rootfiles/latest_production/MC/backgrounds/ZEMuAna
 python generate_histos.py 2 1 rootfiles/latest_production/MC/backgrounds/ZEMuAnalysis_WZ_SigRegion_2018.root histos/latest_production/ZEMuHistos_WZ_2018.root
 python generate_histos.py 2 1 rootfiles/latest_production/MC/backgrounds/ZEMuAnalysis_Wlnu_SigRegion_2018.root histos/latest_production/ZEMuHistos_Wlnu_2018.root
 python generate_histos.py 2 1 rootfiles/latest_production/MC/backgrounds/ZEMuAnalysis_WWW_SigRegion_2018.root histos/latest_production/ZEMuHistos_WWW_2018.root
-python generate_histos.py 0 1 rootfiles/latest_production/MC/backgrounds/ZEMuAnalysis_QCDDoubleEMEnrich30toInf_SigRegion_2018.root histos/latest_production/ZEMuHistos_QCDDoubleEMEnrich30toInf_2018.root
-python generate_histos.py 0 1 rootfiles/latest_production/MC/backgrounds/ZEMuAnalysis_QCDDoubleEMEnrich40toInf_SigRegion_2018.root histos/latest_production/ZEMuHistos_QCDDoubleEMEnrich40toInf_2018.root
+python generate_histos.py 2 1 rootfiles/latest_production/MC/backgrounds/ZEMuAnalysis_QCDDoubleEMEnrich30toInf_SigRegion_2018.root histos/latest_production/ZEMuHistos_QCDDoubleEMEnrich30toInf_2018.root
+python generate_histos.py 2 1 rootfiles/latest_production/MC/backgrounds/ZEMuAnalysis_QCDDoubleEMEnrich40toInf_SigRegion_2018.root histos/latest_production/ZEMuHistos_QCDDoubleEMEnrich40toInf_2018.root
 python generate_histos.py 2 1 rootfiles/latest_production/MC/backgrounds/ZEMuAnalysis_ZZ_SigRegion_2018.root histos/latest_production/ZEMuHistos_ZZ_2018.root
 
 hadd -f trees/ZEMuAnalysis_Background_2018.root histos/latest_production/*2018*.root
