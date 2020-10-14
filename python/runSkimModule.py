@@ -144,7 +144,7 @@ class exampleProducer(Module):
 
         #it it's the same flavor channel, just save the full selection to spare space and CPU
         if len(muons) == 2 or len(electrons) == 2 :
-            if jetptmax > 65. or PuppiMET.pt > 27. :
+            if jetptmax > 70. or PuppiMET.pt > 34. :
                 return False
 
 
