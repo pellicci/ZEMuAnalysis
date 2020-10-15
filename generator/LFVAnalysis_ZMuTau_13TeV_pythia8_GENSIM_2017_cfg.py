@@ -2,12 +2,12 @@
 # using: 
 # Revision: 1.19 
 # Source: /local/reps/CMSSW/CMSSW/Configuration/Applications/python/ConfigBuilder.py,v 
-# with command line options: ZEEMM_13TeV_TuneCUETP8M1_cfi.py --fileout file:ZEMuAnalysis_pythia8_GENSIM_2017.root --mc --eventcontent RAWSIM --datatier GEN-SIM --conditions 106X_mc2017_realistic_v6 --beamspot Realistic25ns13TeVEarly2017Collision --step GEN,SIM --nThreads 8 --geometry DB:Extended --era Run2_2017 --python_filename ZEMuAnalysis_13TeV_pythia8_GENSIM_2017_cfg.py --no_exec -n 10
+# with command line options: ZEEMM_13TeV_TuneCUETP8M1_cfi.py --fileout file:ZEMuAnalysis_pythia8_GENSIM_2017.root --mc --eventcontent RAWSIM --datatier GEN-SIM --conditions 93X_mc2017_realistic_v3 --beamspot Realistic25ns13TeVEarly2017Collision --step GEN,SIM --nThreads 8 --geometry DB:Extended --era Run2_2017 --python_filename ZEMuAnalysis_13TeV_pythia8_GENSIM_2017_LEGACY_cfg.py --no_exec -n 10
 import FWCore.ParameterSet.Config as cms
 
-from Configuration.Eras.Era_Run2_2017_cff import Run2_2017
+from Configuration.StandardSequences.Eras import eras
 
-process = cms.Process('SIM',Run2_2017)
+process = cms.Process('SIM',eras.Run2_2017)
 
 # import of standard configurations
 process.load('Configuration.StandardSequences.Services_cff')
@@ -50,7 +50,7 @@ process.RAWSIMoutput = cms.OutputModule("PoolOutputModule",
         SelectEvents = cms.vstring('generation_step')
     ),
     compressionAlgorithm = cms.untracked.string('LZMA'),
-    compressionLevel = cms.untracked.int32(1),
+    compressionLevel = cms.untracked.int32(9),
     dataset = cms.untracked.PSet(
         dataTier = cms.untracked.string('GEN-SIM'),
         filterName = cms.untracked.string('')
@@ -67,7 +67,7 @@ process.RAWSIMoutput = cms.OutputModule("PoolOutputModule",
 process.XMLFromDBSource.label = cms.string("Extended")
 process.genstepfilter.triggerConditions=cms.vstring("generation_step")
 from Configuration.AlCa.GlobalTag import GlobalTag
-process.GlobalTag = GlobalTag(process.GlobalTag, '106X_mc2017_realistic_v6', '')
+process.GlobalTag = GlobalTag(process.GlobalTag, '93X_mc2017_realistic_v3', '')
 
 process.generator = cms.EDFilter("Pythia8GeneratorFilter",
     PythiaParameters = cms.PSet(
@@ -78,11 +78,11 @@ process.generator = cms.EDFilter("Pythia8GeneratorFilter",
         ),
         processParameters = cms.vstring(
             'WeakSingleBoson:ffbar2gmZ = on', 
-            '23:addChannel 1 0.000001 100 13 -15',
-            '23:addChannel 1 0.000001 100 -13 15',
+            '23:addChannel 1 0.000001 100 11 -13',
+            '23:addChannel 1 0.000001 100 -11 13',
             '23:onMode = off', 
-            '23:onIfMatch = 13 15', 
-            'PhaseSpace:mHatMin = 50.'
+            '23:onIfMatch = 11 13', 
+            'PhaseSpace:mHatMin = 75.'
         ),
         pythia8CUEP8M1Settings = cms.vstring(
             'Tune:pp 14', 
@@ -125,10 +125,9 @@ associatePatAlgosToolsTask(process)
 #Setup FWK for multithreaded
 process.options.numberOfThreads=cms.untracked.uint32(8)
 process.options.numberOfStreams=cms.untracked.uint32(0)
-process.options.numberOfConcurrentLuminosityBlocks=cms.untracked.uint32(1)
 # filter all path with the production filter sequence
 for path in process.paths:
-	getattr(process,path).insert(0, process.generator)
+	getattr(process,path)._seq = process.generator * getattr(process,path)._seq 
 
 
 # Customisation from command line
