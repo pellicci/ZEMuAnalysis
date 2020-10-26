@@ -19,7 +19,7 @@ config.Data.splitting = 'FileBased'
 config.Data.unitsPerJob = 1
 config.Data.publication = True
 
-config.Data.outputDatasetTag = 'LFVAnalysis_DIGIL1_947V1'
+config.Data.outputDatasetTag = 'LFVAnalysis_DIGIL1_947V2'
 
 config.section_('Site')
 config.Site.storageSite = 'T2_IT_Bari'
@@ -40,43 +40,43 @@ if __name__ == '__main__':
             print "Failed submitting task: %s" % (cle)
 
 
-    config.General.requestName = 'LFVAnalysis_ZEMu_DIGIL1_2017_947V1'
-    config.Data.inputDataset = '/LFVAnalysis_ZEMu_2017_934V1/pellicci-LFVAnalysis_ZEMu_GENSIM_2017_934V1-5aa9fe4d49310aff7870397291f14924/USER'
+    config.General.requestName = 'LFVAnalysis_ZEMu_DIGIL1_2017_947V2'
+    config.Data.inputDataset = '/LFVAnalysis_ZEMu_2017_934V2/pellicci-LFVAnalysis_ZEMu_GENSIM_2017_934V2-5aa9fe4d49310aff7870397291f14924/USER'
 
     p = Process(target=submit, args=(config,))
     p.start()
     p.join()
 
-    config.General.requestName = 'LFVAnalysis_ZETau_DIGIL1_2017_947V1'
-    config.Data.inputDataset = '/LFVAnalysis_ZETau_2017_934V1/pellicci-LFVAnalysis_ZETau_GENSIM_2017_934V1-5aa9fe4d49310aff7870397291f14924/USER'
+    config.General.requestName = 'LFVAnalysis_ZETau_DIGIL1_2017_947V2'
+    config.Data.inputDataset = '/LFVAnalysis_ZETau_2017_934V2/pellicci-LFVAnalysis_ZETau_GENSIM_2017_934V2-3317719afd59f4d8f39a7e620d1f844c/USER'
 
     p = Process(target=submit, args=(config,))
     p.start()
     p.join()
 
-    config.General.requestName = 'LFVAnalysis_ZMuTau_DIGIL1_2017_947V1'
-    config.Data.inputDataset = '/LFVAnalysis_ZMuTau_2017_934V1/pellicci-LFVAnalysis_ZMuTau_GENSIM_2017_934V1-5aa9fe4d49310aff7870397291f14924/USER'
+    config.General.requestName = 'LFVAnalysis_ZMuTau_DIGIL1_2017_947V2'
+    config.Data.inputDataset = '/LFVAnalysis_ZMuTau_2017_934V2/pellicci-LFVAnalysis_ZMuTau_GENSIM_2017_934V2-29019737357bb43a3045af16e2458d8b/USER'
 
     p = Process(target=submit, args=(config,))
     p.start()
     p.join()
 
-    config.General.requestName = 'LFVAnalysis_HEMu_DIGIL1_2017_947V1'
-    config.Data.inputDataset = '/LFVAnalysis_HEMu_2017_934V1/pellicci-LFVAnalysis_HEMu_GENSIM_2017_934V1-5aa9fe4d49310aff7870397291f14924/USER'
+    config.General.requestName = 'LFVAnalysis_HEMu_DIGIL1_2017_947V2'
+    config.Data.inputDataset = '/LFVAnalysis_HEMu_2017_934V2/pellicci-LFVAnalysis_HEMu_GENSIM_2017_934V2-ad46334b1116a0a5f625b1630baccb6c/USER'
 
     p = Process(target=submit, args=(config,))
     p.start()
     p.join()
 
-    config.General.requestName = 'LFVAnalysis_HETau_DIGIL1_2017_947V1'
-    config.Data.inputDataset = '/LFVAnalysis_HETau_2017_934V1/pellicci-LFVAnalysis_HETau_GENSIM_2017_934V1-5aa9fe4d49310aff7870397291f14924/USER'
+    config.General.requestName = 'LFVAnalysis_HETau_DIGIL1_2017_947V2'
+    config.Data.inputDataset = '/LFVAnalysis_HETau_2017_934V2/pellicci-LFVAnalysis_HETau_GENSIM_2017_934V2-bc7c7b2b890c08161474567515a106f4/USER'
 
     p = Process(target=submit, args=(config,))
     p.start()
     p.join()
 
-    config.General.requestName = 'LFVAnalysis_HMuTau_DIGIL1_2017_947V1'
-    config.Data.inputDataset = '/LFVAnalysis_HMuTau_2017_934V1/pellicci-LFVAnalysis_HMuTau_GENSIM_2017_934V1-5aa9fe4d49310aff7870397291f14924/USER'
+    config.General.requestName = 'LFVAnalysis_HMuTau_DIGIL1_2017_947V2'
+    config.Data.inputDataset = '/LFVAnalysis_HMuTau_2017_934V2/pellicci-LFVAnalysis_HMuTau_GENSIM_2017_934V2-6963f2b84e44766023407599d8205d4b/USER'
 
     p = Process(target=submit, args=(config,))
     p.start()
