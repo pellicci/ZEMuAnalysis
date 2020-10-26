@@ -15,7 +15,7 @@ config.JobType.numCores = 8
 
 config.section_('Data')
 config.Data.splitting = 'EventBased'
-config.Data.unitsPerJob = 10
+config.Data.unitsPerJob = 20
 NJOBS = 4000 #Do not increase: maximum number of jobs per task is 10k
 config.Data.totalUnits = config.Data.unitsPerJob * NJOBS
 config.Data.publication = True
@@ -38,55 +38,55 @@ if __name__ == '__main__':
         except ClientException as cle:
             print "Failed submitting task: %s" % (cle)
 
-    config.General.requestName = 'LFVAnalysis_ZEMu_GENSIM_2017_934V1'
+    config.General.requestName = 'LFVAnalysis_ZEMu_GENSIM_2017_934V2'
     config.JobType.psetName = 'LFVAnalysis_ZEMu_13TeV_pythia8_GENSIM_2017_cfg.py'
-    config.Data.outputPrimaryDataset = 'LFVAnalysis_ZEMu_2017_934V1'
-    config.Data.outputDatasetTag = 'LFVAnalysis_ZEMu_GENSIM_2017_934V1'
+    config.Data.outputPrimaryDataset = 'LFVAnalysis_ZEMu_2017_934V2'
+    config.Data.outputDatasetTag = 'LFVAnalysis_ZEMu_GENSIM_2017_934V2'
 
     p = Process(target=submit, args=(config,))
     p.start()
     p.join()
 
-    config.General.requestName = 'LFVAnalysis_ZETau_GENSIM_2017_934V1'
+    config.General.requestName = 'LFVAnalysis_ZETau_GENSIM_2017_934V2'
     config.JobType.psetName = 'LFVAnalysis_ZETau_13TeV_pythia8_GENSIM_2017_cfg.py'
-    config.Data.outputPrimaryDataset = 'LFVAnalysis_ZETau_2017_934V1'
-    config.Data.outputDatasetTag = 'LFVAnalysis_ZETau_GENSIM_2017_934V1'
+    config.Data.outputPrimaryDataset = 'LFVAnalysis_ZETau_2017_934V2'
+    config.Data.outputDatasetTag = 'LFVAnalysis_ZETau_GENSIM_2017_934V2'
     
     p = Process(target=submit, args=(config,))
     p.start()
     p.join()
 
-    config.General.requestName = 'LFVAnalysis_ZMuTau_GENSIM_2017_934V1'
+    config.General.requestName = 'LFVAnalysis_ZMuTau_GENSIM_2017_934V2'
     config.JobType.psetName = 'LFVAnalysis_ZMuTau_13TeV_pythia8_GENSIM_2017_cfg.py'
-    config.Data.outputPrimaryDataset = 'LFVAnalysis_ZMuTau_2017_934V1'
-    config.Data.outputDatasetTag = 'LFVAnalysis_ZMuTau_GENSIM_2017_934V1'
+    config.Data.outputPrimaryDataset = 'LFVAnalysis_ZMuTau_2017_934V2'
+    config.Data.outputDatasetTag = 'LFVAnalysis_ZMuTau_GENSIM_2017_934V2'
 
     p = Process(target=submit, args=(config,))
     p.start()
     p.join()
 
-    config.General.requestName = 'LFVAnalysis_HEMu_GENSIM_2017_934V1'
+    config.General.requestName = 'LFVAnalysis_HEMu_GENSIM_2017_934V2'
     config.JobType.psetName = 'LFVAnalysis_HEMu_13TeV_pythia8_GENSIM_2017_cfg.py'
-    config.Data.outputPrimaryDataset = 'LFVAnalysis_HEMu_2017_934V1'
-    config.Data.outputDatasetTag = 'LFVAnalysis_HEMu_GENSIM_2017_934V1'
+    config.Data.outputPrimaryDataset = 'LFVAnalysis_HEMu_2017_934V2'
+    config.Data.outputDatasetTag = 'LFVAnalysis_HEMu_GENSIM_2017_934V2'
 
     p = Process(target=submit, args=(config,))
     p.start()
     p.join()
 
-    config.General.requestName = 'LFVAnalysis_HETau_GENSIM_2017_934V1'
+    config.General.requestName = 'LFVAnalysis_HETau_GENSIM_2017_934V2'
     config.JobType.psetName = 'LFVAnalysis_HETau_13TeV_pythia8_GENSIM_2017_cfg.py'
-    config.Data.outputPrimaryDataset = 'LFVAnalysis_HETau_2017_934V1'
-    config.Data.outputDatasetTag = 'LFVAnalysis_HETau_GENSIM_2017_934V1'
+    config.Data.outputPrimaryDataset = 'LFVAnalysis_HETau_2017_934V2'
+    config.Data.outputDatasetTag = 'LFVAnalysis_HETau_GENSIM_2017_934V2'
     
     p = Process(target=submit, args=(config,))
     p.start()
     p.join()
 
-    config.General.requestName = 'LFVAnalysis_HMuTau_GENSIM_2017_934V1'
+    config.General.requestName = 'LFVAnalysis_HMuTau_GENSIM_2017_934V2'
     config.JobType.psetName = 'LFVAnalysis_HMuTau_13TeV_pythia8_GENSIM_2017_cfg.py'
-    config.Data.outputPrimaryDataset = 'LFVAnalysis_HMuTau_2017_934V1'
-    config.Data.outputDatasetTag = 'LFVAnalysis_HMuTau_GENSIM_2017_934V1'
+    config.Data.outputPrimaryDataset = 'LFVAnalysis_HMuTau_2017_934V2'
+    config.Data.outputDatasetTag = 'LFVAnalysis_HMuTau_GENSIM_2017_934V2'
 
     p = Process(target=submit, args=(config,))
     p.start()

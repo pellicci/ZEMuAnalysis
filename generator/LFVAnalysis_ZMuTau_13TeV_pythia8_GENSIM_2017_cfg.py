@@ -78,10 +78,10 @@ process.generator = cms.EDFilter("Pythia8GeneratorFilter",
         ),
         processParameters = cms.vstring(
             'WeakSingleBoson:ffbar2gmZ = on', 
-            '23:addChannel 1 0.000001 100 11 -13',
-            '23:addChannel 1 0.000001 100 -11 13',
+            '23:addChannel 1 0.000001 100 13 -15',
+            '23:addChannel 1 0.000001 100 -13 15',
             '23:onMode = off', 
-            '23:onIfMatch = 11 13', 
+            '23:onIfMatch = 13 15', 
             'PhaseSpace:mHatMin = 75.'
         ),
         pythia8CUEP8M1Settings = cms.vstring(

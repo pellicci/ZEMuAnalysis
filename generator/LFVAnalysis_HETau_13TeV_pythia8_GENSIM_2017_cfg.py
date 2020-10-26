@@ -70,29 +70,12 @@ from Configuration.AlCa.GlobalTag import GlobalTag
 process.GlobalTag = GlobalTag(process.GlobalTag, '93X_mc2017_realistic_v3', '')
 
 process.generator = cms.EDFilter("Pythia8GeneratorFilter",
+    pythiaPylistVerbosity = cms.untracked.int32(1),
+    filterEfficiency = cms.untracked.double(1.0),
+    comEnergy = cms.double(13000.0),
+    maxEventsToPrint = cms.untracked.int32(1),
     PythiaParameters = cms.PSet(
-        parameterSets = cms.vstring(
-            'pythia8CommonSettings', 
-            'pythia8CUEP8M1Settings', 
-            'processParameters'
-        ),
-        processParameters = cms.vstring(
-            'WeakSingleBoson:ffbar2gmZ = on', 
-            '23:addChannel 1 0.000001 100 11 -13',
-            '23:addChannel 1 0.000001 100 -11 13',
-            '23:onMode = off', 
-            '23:onIfMatch = 11 13', 
-            'PhaseSpace:mHatMin = 75.'
-        ),
-        pythia8CUEP8M1Settings = cms.vstring(
-            'Tune:pp 14', 
-            'Tune:ee 7', 
-            'MultipartonInteractions:pT0Ref=2.4024', 
-            'MultipartonInteractions:ecmPow=0.25208', 
-            'MultipartonInteractions:expPow=1.6'
-        ),
-        pythia8CommonSettings = cms.vstring(
-            'Tune:preferLHAPDF = 2', 
+        pythia8CommonSettings = cms.vstring('Tune:preferLHAPDF = 2', 
             'Main:timesAllowErrors = 10000', 
             'Check:epTolErr = 0.01', 
             'Beams:setProductionScalesFromLHEF = off', 
@@ -100,14 +83,20 @@ process.generator = cms.EDFilter("Pythia8GeneratorFilter",
             'SLHA:minMassSM = 1000.', 
             'ParticleDecays:limitTau0 = on', 
             'ParticleDecays:tau0Max = 10', 
-            'ParticleDecays:allowPhotonRadiation = on'
-        )
-    ),
-    comEnergy = cms.double(13000.0),
-    filterEfficiency = cms.untracked.double(1.0),
-    maxEventsToPrint = cms.untracked.int32(0),
-    pythiaHepMCVerbosity = cms.untracked.bool(False),
-    pythiaPylistVerbosity = cms.untracked.int32(0)
+            'ParticleDecays:allowPhotonRadiation = on'),
+        pythia8CUEP8M1Settings = cms.vstring('Tune:pp 14', 
+            'Tune:ee 7', 
+            'MultipartonInteractions:pT0Ref=2.4024', 
+            'MultipartonInteractions:ecmPow=0.25208', 
+            'MultipartonInteractions:expPow=1.6'),
+        processParameters = cms.vstring('HiggsSM:all = on', 
+            '25:onMode = off', 
+            '25:addChannel = 1 0.0000000001 100 -11 15', 
+            '25:addChannel = 1 0.0000000001 100 11 -15'),
+        parameterSets = cms.vstring('pythia8CommonSettings', 
+            'pythia8CUEP8M1Settings', 
+            'processParameters')
+    )
 )
 
 # Path and EndPath definitions
