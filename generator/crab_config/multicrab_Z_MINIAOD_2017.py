@@ -19,7 +19,7 @@ config.Data.splitting = 'FileBased'
 config.Data.unitsPerJob = 2
 config.Data.publication = True
 
-config.Data.outputDatasetTag = 'LFVAnalysis_MINIAOD_947V1'
+config.Data.outputDatasetTag = 'LFVAnalysis_MINIAOD_947V2'
 
 config.section_('Site')
 config.Site.storageSite = 'T2_IT_Bari'
@@ -40,43 +40,43 @@ if __name__ == '__main__':
             print "Failed submitting task: %s" % (cle)
 
 
-    config.General.requestName = 'LFVAnalysis_ZEMu_MINIAOD_2017_947V1'
-    config.Data.inputDataset = '/LFVAnalysis_ZEMu_2017_934V1/pellicci-LFVAnalysis_RECO_947V1-fcfc615a65be9fb627e3afc83a7469ff/USER'
+    config.General.requestName = 'LFVAnalysis_ZEMu_MINIAOD_2017_947V2'
+    config.Data.inputDataset = '/LFVAnalysis_ZEMu_2017_934V2/pellicci-LFVAnalysis_RECO_947V2-fcfc615a65be9fb627e3afc83a7469ff/USER'
 
     p = Process(target=submit, args=(config,))
     p.start()
     p.join()
 
-    config.General.requestName = 'LFVAnalysis_ZETau_MINIAOD_2017_947V1'
-    config.Data.inputDataset = '/LFVAnalysis_ZETau_2017_934V1/pellicci-LFVAnalysis_RECO_947V1-fcfc615a65be9fb627e3afc83a7469ff/USER'
+    config.General.requestName = 'LFVAnalysis_ZETau_MINIAOD_2017_947V2'
+    config.Data.inputDataset = '/LFVAnalysis_ZETau_2017_934V2/pellicci-LFVAnalysis_RECO_947V2-fcfc615a65be9fb627e3afc83a7469ff/USER'
 
     p = Process(target=submit, args=(config,))
     p.start()
     p.join()
 
-    config.General.requestName = 'LFVAnalysis_ZMuTau_MINIAOD_2017_947V1'
-    config.Data.inputDataset = '/LFVAnalysis_ZMuTau_2017_934V1/pellicci-LFVAnalysis_RECO_947V1-fcfc615a65be9fb627e3afc83a7469ff/USER'
+    config.General.requestName = 'LFVAnalysis_ZMuTau_MINIAOD_2017_947V2'
+    config.Data.inputDataset = '/LFVAnalysis_ZMuTau_2017_934V2/pellicci-LFVAnalysis_RECO_947V2-fcfc615a65be9fb627e3afc83a7469ff/USER'
 
     p = Process(target=submit, args=(config,))
     p.start()
     p.join()
 
-    config.General.requestName = 'LFVAnalysis_HEMu_MINIAOD_2017_947V1'
-    config.Data.inputDataset = '/LFVAnalysis_HEMu_2017_934V1/pellicci-LFVAnalysis_RECO_947V1-fcfc615a65be9fb627e3afc83a7469ff/USER'
+    config.General.requestName = 'LFVAnalysis_HEMu_MINIAOD_2017_947V2'
+    config.Data.inputDataset = '/LFVAnalysis_HEMu_2017_934V2/pellicci-LFVAnalysis_RECO_947V2-fcfc615a65be9fb627e3afc83a7469ff/USER'
 
     p = Process(target=submit, args=(config,))
     p.start()
     p.join()
 
-    config.General.requestName = 'LFVAnalysis_HETau_MINIAOD_2017_947V1'
-    config.Data.inputDataset = '/LFVAnalysis_HETau_2017_934V1/pellicci-LFVAnalysis_RECO_947V1-fcfc615a65be9fb627e3afc83a7469ff/USER'
+    config.General.requestName = 'LFVAnalysis_HETau_MINIAOD_2017_947V2'
+    config.Data.inputDataset = '/LFVAnalysis_HETau_2017_934V2/pellicci-LFVAnalysis_RECO_947V2-fcfc615a65be9fb627e3afc83a7469ff/USER'
 
     p = Process(target=submit, args=(config,))
     p.start()
     p.join()
 
-    config.General.requestName = 'LFVAnalysis_HMuTau_MINIAOD_2017_947V1'
-    config.Data.inputDataset = '/LFVAnalysis_HMuTau_2017_934V1/pellicci-LFVAnalysis_RECO_947V1-fcfc615a65be9fb627e3afc83a7469ff/USER'
+    config.General.requestName = 'LFVAnalysis_HMuTau_MINIAOD_2017_947V2'
+    config.Data.inputDataset = '/LFVAnalysis_HMuTau_2017_934V2/pellicci-LFVAnalysis_RECO_947V2-fcfc615a65be9fb627e3afc83a7469ff/USER'
 
     p = Process(target=submit, args=(config,))
     p.start()
