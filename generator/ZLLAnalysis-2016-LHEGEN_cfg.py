@@ -2,7 +2,7 @@
 # using: 
 # Revision: 1.19 
 # Source: /local/reps/CMSSW/CMSSW/Configuration/Applications/python/ConfigBuilder.py,v 
-# with command line options: Configuration/GenProduction/python/LHE-GenFragment.py --python_filename ZLLAnalysis-2016-LHEGEN_cfg.py --eventcontent RAWSIM,LHE --datatier GEN,LHE --fileout file:ZLLAnalysis-2016-LHEGEN.root --conditions 106X_mcRun2_asymptotic_v3 --beamspot Realistic50ns13TeVCollision --step LHE,GEN --geometry DB:Extended --era Run2_2016 --no_exec --mc -n 30
+# with command line options: Configuration/GenProduction/python/LHE-GenFragment.py --python_filename ZLLAnalysis-2016-LHEGEN_cfg.py --eventcontent RAWSIM --datatier GEN --fileout file:ZLLAnalysis-2016-LHEGEN.root --conditions 106X_mcRun2_asymptotic_v3 --beamspot Realistic50ns13TeVCollision --step LHE,GEN --geometry DB:Extended --era Run2_2016 --no_exec --mc -n 20
 import FWCore.ParameterSet.Config as cms
 
 from Configuration.Eras.Era_Run2_2016_cff import Run2_2016
@@ -24,7 +24,7 @@ process.load('Configuration.StandardSequences.EndOfProcess_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(30)
+    input = cms.untracked.int32(20)
 )
 
 # Input source
@@ -36,7 +36,7 @@ process.options = cms.untracked.PSet(
 
 # Production Info
 process.configurationMetadata = cms.untracked.PSet(
-    annotation = cms.untracked.string('Configuration/GenProduction/python/LHE-GenFragment.py nevts:30'),
+    annotation = cms.untracked.string('Configuration/GenProduction/python/LHE-GenFragment.py nevts:20'),
     name = cms.untracked.string('Applications'),
     version = cms.untracked.string('$Revision: 1.19 $')
 )
@@ -59,16 +59,6 @@ process.RAWSIMoutput = cms.OutputModule("PoolOutputModule",
     splitLevel = cms.untracked.int32(0)
 )
 
-process.LHEoutput = cms.OutputModule("PoolOutputModule",
-    dataset = cms.untracked.PSet(
-        dataTier = cms.untracked.string('LHE'),
-        filterName = cms.untracked.string('')
-    ),
-    fileName = cms.untracked.string('file:ZLLAnalysis-2016-LHEGEN_inLHE.root'),
-    outputCommands = process.LHEEventContent.outputCommands,
-    splitLevel = cms.untracked.int32(0)
-)
-
 # Additional output definition
 
 # Other statements
@@ -82,7 +72,6 @@ process.generator = cms.EDFilter("Pythia8HadronizerFilter",
             'pythia8CommonSettings', 
             'pythia8CP5Settings', 
             'pythia8PSweightsSettings', 
-            'pythia8aMCatNLOSettings', 
             'processParameters'
         ),
         processParameters = cms.vstring(
@@ -90,14 +79,13 @@ process.generator = cms.EDFilter("Pythia8HadronizerFilter",
             'JetMatching:scheme = 1', 
             'JetMatching:merge = on', 
             'JetMatching:jetAlgorithm = 2', 
-            'JetMatching:etaJetMax = 999.', 
+            'JetMatching:etaJetMax = 5.', 
             'JetMatching:coneRadius = 1.', 
             'JetMatching:slowJetPower = 1', 
-            'JetMatching:qCut = 30.', 
-            'JetMatching:doFxFx = on', 
-            'JetMatching:qCutME = 10.', 
+            'JetMatching:qCut = 19.', 
             'JetMatching:nQmatch = 5', 
-            'JetMatching:nJetMax = 2', 
+            'JetMatching:nJetMax = 4', 
+            'JetMatching:doShowerKt = off', 
             'TimeShower:mMaxGamma = 4.0'
         ),
         pythia8CP5Settings = cms.vstring(
@@ -143,20 +131,6 @@ process.generator = cms.EDFilter("Pythia8HadronizerFilter",
             'UncertaintyBands:overSampleISR = 10.0', 
             'UncertaintyBands:FSRpTmin2Fac = 20', 
             'UncertaintyBands:ISRpTmin2Fac = 1'
-        ),
-        pythia8aMCatNLOSettings = cms.vstring(
-            'SpaceShower:pTmaxMatch = 1', 
-            'SpaceShower:pTmaxFudge = 1', 
-            'SpaceShower:MEcorrections = off', 
-            'TimeShower:pTmaxMatch = 1', 
-            'TimeShower:pTmaxFudge = 1', 
-            'TimeShower:MEcorrections = off', 
-            'TimeShower:globalRecoil = on', 
-            'TimeShower:limitPTmaxGlobal = on', 
-            'TimeShower:nMaxGlobalRecoil = 1', 
-            'TimeShower:globalRecoilMode = 2', 
-            'TimeShower:nMaxGlobalBranch = 1', 
-            'TimeShower:weightGluonToQuark = 1'
         )
     ),
     comEnergy = cms.double(13000.0),
@@ -168,8 +142,8 @@ process.generator = cms.EDFilter("Pythia8HadronizerFilter",
 
 
 process.externalLHEProducer = cms.EDProducer("ExternalLHEProducer",
-    args = cms.vstring('/cvmfs/cms.cern.ch/phys_generator/gridpacks/slc6_amd64_gcc630/13TeV/madgraph/V5_2.6.0/Zjets_ll_LFV/Zjets_ll_LFV_tarball.tar.xz'),
-    nEvents = cms.untracked.uint32(30),
+    args = cms.vstring('/cvmfs/cms.cern.ch/phys_generator/gridpacks/UL/13TeV/madgraph/V5_2.6.5/dyellell01234j_5f_LO_MLM_v2/DYJets_HT-incl_slc6_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz'),
+    nEvents = cms.untracked.uint32(20),
     numberOfParameters = cms.uint32(1),
     outputFile = cms.string('cmsgrid_final.lhe'),
     scriptName = cms.FileInPath('GeneratorInterface/LHEInterface/data/run_generic_tarball_cvmfs.sh')
@@ -182,10 +156,9 @@ process.generation_step = cms.Path(process.pgen)
 process.genfiltersummary_step = cms.EndPath(process.genFilterSummary)
 process.endjob_step = cms.EndPath(process.endOfProcess)
 process.RAWSIMoutput_step = cms.EndPath(process.RAWSIMoutput)
-process.LHEoutput_step = cms.EndPath(process.LHEoutput)
 
 # Schedule definition
-process.schedule = cms.Schedule(process.lhe_step,process.generation_step,process.genfiltersummary_step,process.endjob_step,process.RAWSIMoutput_step,process.LHEoutput_step)
+process.schedule = cms.Schedule(process.lhe_step,process.generation_step,process.genfiltersummary_step,process.endjob_step,process.RAWSIMoutput_step)
 from PhysicsTools.PatAlgos.tools.helpers import associatePatAlgosToolsTask
 associatePatAlgosToolsTask(process)
 # filter all path with the production filter sequence
