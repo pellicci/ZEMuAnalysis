@@ -17,7 +17,7 @@ output_dir = '/eos/user/p/pellicci/ZEMuAnalysis/EmbeddedSamples/'
 # -----------------------------
 samplesDict = {}
 
-nEvtPerJob = 0.1 # faster jobs, # in unit of 1e6 , 5-10 are good settings. 
+nEvtPerJob = 0.05 # faster jobs, # in unit of 1e6 , 5-10 are good settings. 
 
 #################################################
 #                                               #
@@ -26,8 +26,7 @@ nEvtPerJob = 0.1 # faster jobs, # in unit of 1e6 , 5-10 are good settings.
 #################################################
 # dataset, nEvtPerJobIn1e6, year, isData, suffix
 
-# Single Electron
-samplesDict['2016_ElMu'] = [ 
+"""
     bm.JobConfig( dataset='/EmbeddingRun2016B/ElMuFinalState-inputDoubleMu_94X_Legacy_miniAOD-v5/USER',
         nEvtPerJobIn1e6=nEvtPerJob, year="2016", isData=False, suffix='EmbeddedElMuB_2016',inputDBS="phys03"),
     bm.JobConfig( dataset='/EmbeddingRun2016C/ElMuFinalState-inputDoubleMu_94X_Legacy_miniAOD-v5/USER',
@@ -41,16 +40,40 @@ samplesDict['2016_ElMu'] = [
     bm.JobConfig( dataset='/EmbeddingRun2016G/ElMuFinalState-inputDoubleMu_94X_Legacy_miniAOD-v5/USER',
         nEvtPerJobIn1e6=nEvtPerJob, year="2016", isData=False, suffix='EmbeddedElMuG_2016',inputDBS="phys03"),
     bm.JobConfig( dataset='/EmbeddingRun2016H/ElMuFinalState-inputDoubleMu_94X_Legacy_miniAOD-v5/USER',
-        nEvtPerJobIn1e6=nEvtPerJob, year="2016", isData=False, suffix='EmbeddedElMuH_2016',inputDBS="phys03")
+        nEvtPerJobIn1e6=nEvtPerJob, year="2016", isData=False, suffix='EmbeddedElMuH_2016',inputDBS="phys03"),
+
+"""
+
+samplesDict['2016'] = [ 
+    bm.JobConfig( dataset='/EmbeddingRun2016B/ElTauFinalState-inputDoubleMu_94X_Legacy_miniAOD-v5/USER',
+        nEvtPerJobIn1e6=nEvtPerJob, year="2016", isData=False, suffix='EmbeddedElTauB_2016',inputDBS="phys03"),
+    bm.JobConfig( dataset='/EmbeddingRun2016C/ElTauFinalState-inputDoubleMu_94X_Legacy_miniAOD-v5/USER',
+        nEvtPerJobIn1e6=nEvtPerJob, year="2016", isData=False, suffix='EmbeddedElTauC_2016',inputDBS="phys03"),
+    bm.JobConfig( dataset='/EmbeddingRun2016D/ElTauFinalState-inputDoubleMu_94X_Legacy_miniAOD-v5/USER',
+        nEvtPerJobIn1e6=nEvtPerJob, year="2016", isData=False, suffix='EmbeddedElTauD_2016',inputDBS="phys03"),
+    bm.JobConfig( dataset='/EmbeddingRun2016E/ElTauFinalState-inputDoubleMu_94X_Legacy_miniAOD-v5/USER',
+        nEvtPerJobIn1e6=nEvtPerJob, year="2016", isData=False, suffix='EmbeddedElTauE_2016',inputDBS="phys03"),
+    bm.JobConfig( dataset='/EmbeddingRun2016F/ElTauFinalState-inputDoubleMu_94X_Legacy_miniAOD-v5/USER',
+        nEvtPerJobIn1e6=nEvtPerJob, year="2016", isData=False, suffix='EmbeddedElTauF_2016',inputDBS="phys03"),
+    bm.JobConfig( dataset='/EmbeddingRun2016G/ElTauFinalState-inputDoubleMu_94X_Legacy_miniAOD-v5/USER',
+        nEvtPerJobIn1e6=nEvtPerJob, year="2016", isData=False, suffix='EmbeddedElTauG_2016',inputDBS="phys03"),
+    bm.JobConfig( dataset='/EmbeddingRun2016H/ElTauFinalState-inputDoubleMu_94X_Legacy_miniAOD-v5/USER',
+        nEvtPerJobIn1e6=nEvtPerJob, year="2016", isData=False, suffix='EmbeddedElTauH_2016',inputDBS="phys03"),
+    bm.JobConfig( dataset='/EmbeddingRun2016B/MuTauFinalState-inputDoubleMu_94X_Legacy_miniAOD-v5/USER',
+        nEvtPerJobIn1e6=nEvtPerJob, year="2016", isData=False, suffix='EmbeddedMuTauB_2016',inputDBS="phys03"),
+    bm.JobConfig( dataset='/EmbeddingRun2016C/MuTauFinalState-inputDoubleMu_94X_Legacy_miniAOD-v5/USER',
+        nEvtPerJobIn1e6=nEvtPerJob, year="2016", isData=False, suffix='EmbeddedMuTauC_2016',inputDBS="phys03"),
+    bm.JobConfig( dataset='/EmbeddingRun2016D/MuTauFinalState-inputDoubleMu_94X_Legacy_miniAOD-v5/USER',
+        nEvtPerJobIn1e6=nEvtPerJob, year="2016", isData=False, suffix='EmbeddedMuTauD_2016',inputDBS="phys03"),
+    bm.JobConfig( dataset='/EmbeddingRun2016E/MuTauFinalState-inputDoubleMu_94X_Legacy_miniAOD-v5/USER',
+        nEvtPerJobIn1e6=nEvtPerJob, year="2016", isData=False, suffix='EmbeddedMuTauE_2016',inputDBS="phys03"),
+    bm.JobConfig( dataset='/EmbeddingRun2016F/MuTauFinalState-inputDoubleMu_94X_Legacy_miniAOD-v5/USER',
+        nEvtPerJobIn1e6=nEvtPerJob, year="2016", isData=False, suffix='EmbeddedMuTauF_2016',inputDBS="phys03"),
+    bm.JobConfig( dataset='/EmbeddingRun2016G/MuTauFinalState-inputDoubleMu_94X_Legacy_miniAOD-v5/USER',
+        nEvtPerJobIn1e6=nEvtPerJob, year="2016", isData=False, suffix='EmbeddedMuTauG_2016',inputDBS="phys03"),
+    bm.JobConfig( dataset='/EmbeddingRun2016H/MuTauFinalState-inputDoubleMu_94X_Legacy_miniAOD-v5/USER',
+        nEvtPerJobIn1e6=nEvtPerJob, year="2016", isData=False, suffix='EmbeddedMuTauH_2016',inputDBS="phys03")
     ]
-
-#samplesDict['2017_SingleElectron'] = [ 
-#    bm.JobConfig( '/SingleElectron/Run2017B-02Apr2020-v1/NANOAOD', nEvtPerJob, "2017", True, 'LFVAnalysis_SingleElectronRun2017B_2017'),
-#    bm.JobConfig( '/SingleElectron/Run2017C-02Apr2020-v1/NANOAOD', nEvtPerJob, "2017", True, 'LFVAnalysis_SingleElectronRun2017C_2017'),
-#    bm.JobConfig( '/SingleElectron/Run2017D-02Apr2020-v1/NANOAOD', nEvtPerJob, "2017", True, 'LFVAnalysis_SingleElectronRun2017D_2017'),
-#    bm.JobConfig( '/SingleElectron/Run2017E-02Apr2020-v1/NANOAOD', nEvtPerJob, "2017", True, 'LFVAnalysis_SingleElectronRun2017E_2017'),
-#    bm.JobConfig( '/SingleElectron/Run2017F-02Apr2020-v1/NANOAOD', nEvtPerJob, "2017", True, 'LFVAnalysis_SingleElectronRun2017F_2017')]
-
 
 # -----------------------------
 # submit to batch
