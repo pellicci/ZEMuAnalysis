@@ -8,12 +8,12 @@ config.General.workArea = 'crab_projects/GEN2016'
 
 config.section_('JobType')
 config.JobType.pluginName = 'PrivateMC'
-config.JobType.outputFiles = ['ZEMuAnalysis_pythia8_GENSIM_2016.root']
+config.JobType.outputFiles = ['ZEMuAnalysis_pythia8_GENSIM.root']
 config.JobType.allowUndistributedCMSSW = True
 
 config.section_('Data')
 config.Data.splitting = 'EventBased'
-config.Data.unitsPerJob = 5
+config.Data.unitsPerJob = 10
 NJOBS = 8000 #Do not increase: maximum number of jobs per task is 10k
 config.Data.totalUnits = config.Data.unitsPerJob * NJOBS
 config.Data.publication = True
@@ -63,29 +63,29 @@ if __name__ == '__main__':
     p.start()
     p.join()
 
-    config.General.requestName = 'LFVAnalysis_HEMu_GENSIM_2016_8028V1'
-    config.JobType.psetName = 'LFVAnalysis_HEMu_13TeV_pythia8_GENSIM_2016_cfg.py'
-    config.Data.outputPrimaryDataset = 'LFVAnalysis_HEMu_2016_8028V1'
-    config.Data.outputDatasetTag = 'LFVAnalysis_HEMu_GENSIM_2016_8028V1'
+    # config.General.requestName = 'LFVAnalysis_HEMu_GENSIM_2016_8028V1'
+    # config.JobType.psetName = 'LFVAnalysis_HEMu_13TeV_pythia8_GENSIM_2016_cfg.py'
+    # config.Data.outputPrimaryDataset = 'LFVAnalysis_HEMu_2016_8028V1'
+    # config.Data.outputDatasetTag = 'LFVAnalysis_HEMu_GENSIM_2016_8028V1'
 
-    p = Process(target=submit, args=(config,))
-    p.start()
-    p.join()
+    # p = Process(target=submit, args=(config,))
+    # p.start()
+    # p.join()
 
-    config.General.requestName = 'LFVAnalysis_HETau_GENSIM_2016_8028V1'
-    config.JobType.psetName = 'LFVAnalysis_HETau_13TeV_pythia8_GENSIM_2016_cfg.py'
-    config.Data.outputPrimaryDataset = 'LFVAnalysis_HETau_2016_8028V1'
-    config.Data.outputDatasetTag = 'LFVAnalysis_HETau_GENSIM_2016_8028V1'
+    # config.General.requestName = 'LFVAnalysis_HETau_GENSIM_2016_8028V1'
+    # config.JobType.psetName = 'LFVAnalysis_HETau_13TeV_pythia8_GENSIM_2016_cfg.py'
+    # config.Data.outputPrimaryDataset = 'LFVAnalysis_HETau_2016_8028V1'
+    # config.Data.outputDatasetTag = 'LFVAnalysis_HETau_GENSIM_2016_8028V1'
     
-    p = Process(target=submit, args=(config,))
-    p.start()
-    p.join()
+    # p = Process(target=submit, args=(config,))
+    # p.start()
+    # p.join()
 
-    config.General.requestName = 'LFVAnalysis_HMuTau_GENSIM_2016_8028V1'
-    config.JobType.psetName = 'LFVAnalysis_HMuTau_13TeV_pythia8_GENSIM_2016_cfg.py'
-    config.Data.outputPrimaryDataset = 'LFVAnalysis_HMuTau_2016_8028V1'
-    config.Data.outputDatasetTag = 'LFVAnalysis_HMuTau_GENSIM_2016_8028V1'
+    # config.General.requestName = 'LFVAnalysis_HMuTau_GENSIM_2016_8028V1'
+    # config.JobType.psetName = 'LFVAnalysis_HMuTau_13TeV_pythia8_GENSIM_2016_cfg.py'
+    # config.Data.outputPrimaryDataset = 'LFVAnalysis_HMuTau_2016_8028V1'
+    # config.Data.outputDatasetTag = 'LFVAnalysis_HMuTau_GENSIM_2016_8028V1'
 
-    p = Process(target=submit, args=(config,))
-    p.start()
-    p.join()
+    # p = Process(target=submit, args=(config,))
+    # p.start()
+    # p.join()
