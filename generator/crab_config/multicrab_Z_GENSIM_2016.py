@@ -1,3 +1,4 @@
+from CRABAPI.RawCommand import crabCommand
 from WMCore.Configuration import Configuration
 from CRABClient.UserUtilities import config
 config = Configuration()
@@ -10,6 +11,7 @@ config.section_('JobType')
 config.JobType.pluginName = 'PrivateMC'
 config.JobType.outputFiles = ['ZEMuAnalysis_pythia8_GENSIM.root']
 config.JobType.allowUndistributedCMSSW = True
+config.JobType.inputFiles = ['DY_5f_NLO_FXFX_slc7_amd64_gcc700_CMSSW_10_6_19_tarball.tar.xz' ]
 
 config.section_('Data')
 config.Data.splitting = 'EventBased'
