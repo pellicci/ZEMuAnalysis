@@ -1,3 +1,4 @@
+from CRABAPI.RawCommand import crabCommand
 from WMCore.Configuration import Configuration
 from CRABClient.UserUtilities import config
 config = Configuration()
@@ -17,7 +18,7 @@ config.Data.splitting = 'FileBased'
 config.Data.unitsPerJob = 5
 config.Data.publication = True
 
-config.Data.outputDatasetTag = 'LFVAnalysis_NANOAOD_949V1'
+config.Data.outputDatasetTag = 'LFVAnalysis_NANOAOD_949V2'
 
 config.section_('Site')
 config.Site.storageSite = 'T2_IT_Bari'
@@ -39,43 +40,43 @@ if __name__ == '__main__':
 
 
     config.General.requestName = 'LFVAnalysis_ZEMu_NANOAOD_2016_949V1'
-    config.Data.inputDataset = '/LFVAnalysis_ZEMu_2016_8028V1/pellicci-LFVAnalysis_RECO_8028V1-69ab4ab0f87b34f1d1a65fba636b0a8c/USER'
+    config.Data.inputDataset = '/LFVAnalysis_ZEMu_2016_8028V1/pellicci-LFVAnalysis_MINIAOD_949V2-53f8667ba4b240d5eafd36e71bf34742/USER'
 
     p = Process(target=submit, args=(config,))
     p.start()
     p.join()
 
     config.General.requestName = 'LFVAnalysis_ZETau_NANOAOD_2016_949V1'
-    config.Data.inputDataset = '/LFVAnalysis_ZETau_2016_8028V1/pellicci-LFVAnalysis_RECO_8028V1-69ab4ab0f87b34f1d1a65fba636b0a8c/USER'
+    config.Data.inputDataset = '/LFVAnalysis_ZETau_2016_8028V1/pellicci-LFVAnalysis_MINIAOD_949V2-53f8667ba4b240d5eafd36e71bf34742/USER'
 
     p = Process(target=submit, args=(config,))
     p.start()
     p.join()
 
     config.General.requestName = 'LFVAnalysis_ZMuTau_NANOAOD_2016_949V1'
-    config.Data.inputDataset = '/LFVAnalysis_ZMuTau_2016_8028V1/pellicci-LFVAnalysis_RECO_8028V1-69ab4ab0f87b34f1d1a65fba636b0a8c/USER'
+    config.Data.inputDataset = '/LFVAnalysis_ZMuTau_2016_8028V1/pellicci-LFVAnalysis_MINIAOD_949V2-53f8667ba4b240d5eafd36e71bf34742/USER'
 
     p = Process(target=submit, args=(config,))
     p.start()
     p.join()
 
-    config.General.requestName = 'LFVAnalysis_HEMu_NANOAOD_2016_949V1'
-    config.Data.inputDataset = '/LFVAnalysis_HEMu_2016_8028V1/pellicci-LFVAnalysis_RECO_8028V1-69ab4ab0f87b34f1d1a65fba636b0a8c/USER'
+    # config.General.requestName = 'LFVAnalysis_HEMu_NANOAOD_2016_949V1'
+    # config.Data.inputDataset = '/LFVAnalysis_HEMu_2016_8028V1/pellicci-LFVAnalysis_RECO_8028V1-69ab4ab0f87b34f1d1a65fba636b0a8c/USER'
 
-    p = Process(target=submit, args=(config,))
-    p.start()
-    p.join()
+    # p = Process(target=submit, args=(config,))
+    # p.start()
+    # p.join()
 
-    config.General.requestName = 'LFVAnalysis_HETau_NANOAOD_2016_949V1'
-    config.Data.inputDataset = '/LFVAnalysis_HETau_2016_8028V1/pellicci-LFVAnalysis_RECO_8028V1-69ab4ab0f87b34f1d1a65fba636b0a8c/USER'
+    # config.General.requestName = 'LFVAnalysis_HETau_NANOAOD_2016_949V1'
+    # config.Data.inputDataset = '/LFVAnalysis_HETau_2016_8028V1/pellicci-LFVAnalysis_RECO_8028V1-69ab4ab0f87b34f1d1a65fba636b0a8c/USER'
 
-    p = Process(target=submit, args=(config,))
-    p.start()
-    p.join()
+    # p = Process(target=submit, args=(config,))
+    # p.start()
+    # p.join()
 
-    config.General.requestName = 'LFVAnalysis_HMuTau_NANOAOD_2016_949V1'
-    config.Data.inputDataset = '/LFVAnalysis_HMuTau_2016_8028V1/pellicci-LFVAnalysis_RECO_8028V1-69ab4ab0f87b34f1d1a65fba636b0a8c/USER'
+    # config.General.requestName = 'LFVAnalysis_HMuTau_NANOAOD_2016_949V1'
+    # config.Data.inputDataset = '/LFVAnalysis_HMuTau_2016_8028V1/pellicci-LFVAnalysis_RECO_8028V1-69ab4ab0f87b34f1d1a65fba636b0a8c/USER'
 
-    p = Process(target=submit, args=(config,))
-    p.start()
-    p.join()
+    # p = Process(target=submit, args=(config,))
+    # p.start()
+    # p.join()
