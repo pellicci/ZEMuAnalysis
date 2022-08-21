@@ -18,7 +18,7 @@ config.Data.splitting = 'FileBased'
 config.Data.unitsPerJob = 5
 config.Data.publication = True
 
-config.Data.outputDatasetTag = 'LFVAnalysis_NANOAOD_949V2'
+config.Data.outputDatasetTag = 'LFVAnalysis_NANOAOD_10222V1'
 
 config.section_('Site')
 config.Site.storageSite = 'T2_IT_Bari'
@@ -39,21 +39,21 @@ if __name__ == '__main__':
             print "Failed submitting task: %s" % (cle)
 
 
-    config.General.requestName = 'LFVAnalysis_ZEMu_NANOAOD_2016_949V1'
+    config.General.requestName = 'LFVAnalysis_ZEMu_NANOAOD_2016_10222V1'
     config.Data.inputDataset = '/LFVAnalysis_ZEMu_2016_8028V1/pellicci-LFVAnalysis_MINIAOD_949V2-53f8667ba4b240d5eafd36e71bf34742/USER'
 
     p = Process(target=submit, args=(config,))
     p.start()
     p.join()
 
-    config.General.requestName = 'LFVAnalysis_ZETau_NANOAOD_2016_949V1'
+    config.General.requestName = 'LFVAnalysis_ZETau_NANOAOD_2016_10222V1'
     config.Data.inputDataset = '/LFVAnalysis_ZETau_2016_8028V1/pellicci-LFVAnalysis_MINIAOD_949V2-53f8667ba4b240d5eafd36e71bf34742/USER'
 
     p = Process(target=submit, args=(config,))
     p.start()
     p.join()
 
-    config.General.requestName = 'LFVAnalysis_ZMuTau_NANOAOD_2016_949V1'
+    config.General.requestName = 'LFVAnalysis_ZMuTau_NANOAOD_2016_10222V1'
     config.Data.inputDataset = '/LFVAnalysis_ZMuTau_2016_8028V1/pellicci-LFVAnalysis_MINIAOD_949V2-53f8667ba4b240d5eafd36e71bf34742/USER'
 
     p = Process(target=submit, args=(config,))
