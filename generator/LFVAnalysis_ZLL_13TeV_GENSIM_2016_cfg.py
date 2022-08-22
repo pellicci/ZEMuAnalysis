@@ -24,7 +24,7 @@ process.load('Configuration.StandardSequences.EndOfProcess_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 
 process.maxEvents = cms.untracked.PSet(
-        input = cms.untracked.int32(100)
+        input = cms.untracked.int32(30)
 )
 
 # Input source
@@ -91,12 +91,7 @@ process.generator = cms.EDFilter("Pythia8HadronizerFilter",
             'JetMatching:qCutME = 10.',#this must match the ptj cut in the lhe generation step
             'JetMatching:nQmatch = 5', #4 corresponds to 4-flavour scheme (no matching of b-quarks), 5 for 5-flavour scheme
             'JetMatching:nJetMax = 2', #number of partons in born matrix element for highest multiplicity
-            'TimeShower:mMaxGamma = 4.0',
-            '23:addChannel 1 0.000001 100 11 -13',
-            '23:addChannel 1 0.000001 100 -11 13',
-            '23:onMode = off', 
-            '23:onIfMatch = 11 13', 
-            'PhaseSpace:mHatMin = 50.'
+            'TimeShower:mMaxGamma = 4.0'
         ),
         parameterSets = cms.vstring('pythia8CommonSettings',
                                     'pythia8CUEP8M1Settings',
@@ -107,8 +102,8 @@ process.generator = cms.EDFilter("Pythia8HadronizerFilter",
 )
 
 process.externalLHEProducer = cms.EDProducer("ExternalLHEProducer",
-    args = cms.vstring('../DY_5f_NLO_FXFX_slc7_amd64_gcc700_CMSSW_10_6_19_tarball.tar.xz'),
-    nEvents = cms.untracked.uint32(100),
+    args = cms.vstring('/cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/madgraph/V5_2.6.1/LFV_ZtoLL/LFV_ZtoL+L-_slc7_amd64_gcc700_CMSSW_10_6_0_tarball.tar.xz'),
+    nEvents = cms.untracked.uint32(30),
     numberOfParameters = cms.uint32(1),
     outputFile = cms.string('cmsgrid_final.lhe'),
     scriptName = cms.FileInPath('GeneratorInterface/LHEInterface/data/run_generic_tarball_cvmfs.sh')
