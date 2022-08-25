@@ -32,8 +32,9 @@ process.maxEvents = cms.untracked.PSet(
 
 # Input source
 process.source = cms.Source("PoolSource",
-    fileNames = cms.untracked.vstring('file:ZEMuAnalysis_pythia8_GENSIM_2016.root'),
-    secondaryFileNames = cms.untracked.vstring()
+    fileNames = cms.untracked.vstring('file:ZEMuAnalysis_pythia8_SIM_2016.root'),
+    secondaryFileNames = cms.untracked.vstring(),
+    bypassVersionCheck = cms.untracked.bool(True)
 )
 
 process.options = cms.untracked.PSet(
