@@ -66,7 +66,7 @@ process.GlobalTag = GlobalTag(process.GlobalTag, '80X_mcRun2_asymptotic_2016_Tra
 
 from Configuration.Generator.Pythia8CommonSettings_cfi import *
 from Configuration.Generator.MCTunes2017.PythiaCP5Settings_cfi import *
-from Configuration.Generator.PSweightsPythia.PythiaPSweightsSettings_cfi import *
+#from Configuration.Generator.PSweightsPythia.PythiaPSweightsSettings_cfi import *
 
 process.generator = cms.EDFilter("Pythia8HadronizerFilter",
     maxEventsToPrint = cms.untracked.int32(1),
@@ -77,7 +77,7 @@ process.generator = cms.EDFilter("Pythia8HadronizerFilter",
     PythiaParameters = cms.PSet(
         pythia8CommonSettingsBlock,
         pythia8CP5SettingsBlock,
-        pythia8PSweightsSettingsBlock,
+        #pythia8PSweightsSettingsBlock,
         processParameters = cms.vstring(
             'JetMatching:setMad = off',
             'JetMatching:scheme = 1',
@@ -86,7 +86,7 @@ process.generator = cms.EDFilter("Pythia8HadronizerFilter",
             'JetMatching:etaJetMax = 5.',
             'JetMatching:coneRadius = 1.',
             'JetMatching:slowJetPower = 1',
-            'JetMatching:qCut = 19.', #this is the actual merging scale
+            'JetMatching:qCut = 20.', #this is the actual merging scale
             'JetMatching:nQmatch = 5', #5 for 5-flavour scheme (matching of b-quarks)
             'JetMatching:nJetMax = 4', #number of partons in born matrix element for highest multiplicity
             'JetMatching:doShowerKt = off', #off for MLM matching, turn on for shower-kT matching
@@ -94,7 +94,7 @@ process.generator = cms.EDFilter("Pythia8HadronizerFilter",
         ),
         parameterSets = cms.vstring('pythia8CommonSettings',
                                     'pythia8CP5Settings',
-                                    'pythia8PSweightsSettings',
+                                    #'pythia8PSweightsSettings',
                                     'processParameters',
                                     )
     )
