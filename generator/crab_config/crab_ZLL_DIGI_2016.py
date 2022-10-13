@@ -17,7 +17,7 @@ config.Data.inputDBS = 'phys03'
 config.Data.splitting = 'FileBased'
 config.Data.unitsPerJob = 1
 config.Data.publication = True
-config.Data.inputDataset = '/LFVAnalysis_ZLL_2016_8028V1_22prodV1/pellicci-LFVAnalysis_ZLL_GENSIM_2016_8028V1_22prodV1-d4fbf6bb88ea36444a4fe79d15bdc21b/USER'
+config.Data.inputDataset = '/LFVAnalysis_ZLL_2016_949V1_22prodV2/pellicci-LFVAnalysis_ZLL_SIM_2016_8028V1-be91215f6e6e7977dbd0b6218a0c9781/USER'
 config.Data.outputDatasetTag = 'LFVAnalysis_ZLL_DIGI_2016_8028V1'
 
 config.section_('Site')
