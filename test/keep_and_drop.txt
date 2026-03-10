@@ -1,0 +1,23 @@
+# this is a comment
+drop * # start with all
+keep Electron_*
+keep Muon_*
+keep Jet_pt
+keep Jet_eta
+keep Jet_phi
+keep Jet_mass
+keep Jet_jetId
+keep Jet_puId
+keep Jet_btagDeepB
+keep HLT_IsoMu*
+keep HLT_Mu*
+keep genWeight*
+keep Pileup_nPU
+keep Pileup_nTrueInt
+keep PuppiMET*
+keep PV_npvs*
+keep puWeight*
+keep IsoTrack_*
+keep run*
+keep luminosityBlock*
+keep L1PreFiringWeight_Nom

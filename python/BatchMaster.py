@@ -18,7 +18,6 @@ def inputFiles_from_txt(txt):
     inputFiles = [f.strip() for f in inputFiles]
     return inputFiles
 
-
 def cmdline(command):
     process = Popen(
         args=command,
@@ -26,7 +25,6 @@ def cmdline(command):
         shell=True
     )
     return process.communicate()[0]
-
 
 class JobConfig():
     '''Class for storing configuration for each dataset'''
@@ -40,7 +38,6 @@ class JobConfig():
         self._isData    = isData
         self._suffix    = suffix
 
-                
 
 class BatchMaster():
     '''A tool for submitting batch jobs'''
@@ -56,7 +53,7 @@ class BatchMaster():
     
     def split_jobs_for_cfg(self, cfg):
         # query the root files using das commandline tool
-        print "das query files"
+        print("das query files")
         dasQuery_outFile = 'dasQuery_{}.txt'.format(cfg._suffix)
         if cfg._inputDBS == "global" :
             dasQuery_command = 'das_client -query="file dataset={}" > {}'.format(cfg._dataset, dasQuery_outFile)
@@ -69,11 +66,11 @@ class BatchMaster():
         ftxt.close()
         nFiles = len(fileList)
         if nFiles <= 0:
-            print "ERROR! No sample files are found! Exiting..."
+            print("ERROR! No sample files are found! Exiting...")
             exit()
             
         # query number of events in the dataset
-        print "das query number of events"
+        print("das query number of events")
         if cfg._inputDBS == "global":
             output  = cmdline('das_client -query="dataset={} | grep dataset.nevents " '.format(cfg._dataset))
         else :
@@ -83,7 +80,7 @@ class BatchMaster():
             try: nEvents = int(l); break
             except: continue
         if nEvents < 0:
-            print "ERROR! Unable to get the number of events for the dataset! Will use file based..."
+            print("ERROR! Unable to get the number of events for the dataset! Will use file based...")
             nJobs = nFiles
         else :
             # Split files to requested number.  Cannot exceed the number of files being run over.
@@ -92,12 +89,12 @@ class BatchMaster():
         nFilesPerJob = int(math.ceil(float(nFiles)/float(nJobs)))
         sources = [ fileList[i:i+nFilesPerJob] for i in range(0, len(fileList), nFilesPerJob) ]
 
-        print "DAS for dataset: ", cfg._dataset
-        print "**************************************************"
-        print "*  dataset: ", cfg._suffix
-        print "*  {} events in {} files, raw_nJobs {}, nJobs {}".format(nEvents, nFiles, nJobs, len(sources))
-        print "**************************************************"        
-        print "save the DAS output to ", dasQuery_outFile
+        print("DAS for dataset: ", cfg._dataset)
+        print("**************************************************")
+        print("*  dataset: ", cfg._suffix)
+        print("*  {} events in {} files, raw_nJobs {}, nJobs {}".format(nEvents, nFiles, nJobs, len(sources)))
+        print("**************************************************")
+        print("save the DAS output to ", dasQuery_outFile)
 
         # return a list with len=nJobs, For the given dataset
         return sources
@@ -111,7 +108,7 @@ class BatchMaster():
         '''
 
         output_dir = self._output_dir
-        print output_dir
+        print(output_dir)
 
         ## Writing the batch config file
         batch_tmp = open('batchJob_{0}.jdl'.format(cfg._suffix), 'w')
@@ -148,24 +145,24 @@ class BatchMaster():
         for condor-based batch systems.
         '''
         #  set stage dir
-        print 'Setting up stage directory...'
+        print('Setting up stage directory...')
         self._stage_dir  = '{0}/{1}_{2}'.format(self._stage_dir, self._analyzer, get_current_time())
         make_directory(self._stage_dir, clear=False)
 
         # set output dir
-        print 'Setting up output directory...'
+        print('Setting up output directory...')
         self._output_dir  = '{0}/{1}_{2}'.format(self._output_dir, self._analyzer, get_current_time())
         make_directory(self._output_dir, clear=False)
 
         # tar cmssw 
-        print 'Creating tarball of current workspace in {0}'.format(self._stage_dir)
+        print('Creating tarball of current workspace in {0}'.format(self._stage_dir))
         if os.getenv('CMSSW_BASE') == '':
-            print 'You must source the CMSSW environment you are working in...'
+            print('You must source the CMSSW environment you are working in...')
             exit()
         else:
             cmssw_version = os.getenv('CMSSW_BASE').split('/')[-1]
             if doSubmit:
-                os.system('tar czf {0}/source.tar.gz --exclude=\'*.root\' -C $CMSSW_BASE/.. {1}'.format(self._stage_dir, cmssw_version))
+                os.system('tar czf {0}/source.tar.gz --exclude-from=exclusion_list.txt -C $CMSSW_BASE/.. {1}'.format(self._stage_dir, cmssw_version))
 
         subprocess.call('cp {0} {1}'.format(self._executable, self._stage_dir), shell=True)
         os.chdir(self._stage_dir)
@@ -173,7 +170,7 @@ class BatchMaster():
     
         # submit
         for cfg in self._config_list:
-            print "\n\n", cfg._suffix
+            print("\n\n", cfg._suffix)
             self.make_batch(cfg)
             if doSubmit:
                 subprocess.call('condor_submit batchJob_{0}.jdl'.format(cfg._suffix), shell=True)

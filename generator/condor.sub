@@ -1,0 +1,11 @@
+executable              = testScript_queue.sh
+arguments               = $(ProcId)
+output                  = outputs/run_ZEMuAnalysis_$(ProcId).out 
+error                   = logs/run_ZEMuAnalysis_$(ProcId).err 
+log                     = logs/run_ZEMuAnalysis_$(ProcID).log 
++JobFlavour             = "workday"
+periodic_remove         = JobStatus == 5  
+WhenToTransferOutput    = ON_EXIT_OR_EVICT 
+MY.WantOS 				= "el8"
+
+Queue 100
