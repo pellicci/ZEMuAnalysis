@@ -23,9 +23,8 @@ fi
 ### Transfer files, prepare directory ###
 TOPDIR=$PWD
 
-# lpc
-export SCRAM_ARCH=slc7_amd64_gcc700
-export CMSSW_VERSION=CMSSW_10_2_22
+export SCRAM_ARCH=el9_amd64_gcc12
+export CMSSW_VERSION=CMSSW_15_0_2
 source /cvmfs/cms.cern.ch/cmsset_default.sh
 
 # temporary fix
@@ -37,8 +36,7 @@ cd $CMSSW_VERSION/src
 eval `scram runtime -sh`
 
 cmsenv
-scramv1 b -j8 #ProjectRename
-# cd BLT/BLTAnalysis/scripts
+scramv1 b -j8
 INPUT_TXT_FILENAME=input_${SUFFIX}_${COUNT}.txt
 cp $TOPDIR/${INPUT_TXT_FILENAME} ${INPUT_TXT_FILENAME}
 
@@ -49,12 +47,12 @@ echo $PATH
 echo "Starting working dir: "
 pwd
 cd StandardModel/ZEMuAnalysis
+cp test/keep_and_drop.txt .
 echo "Working dir: "
 pwd
 mv ../../input_${SUFFIX}_${COUNT}.txt ./
 echo "Input file list: "
 cat $INPUT_TXT_FILENAME
-
 
 [ ! -d outDir ] && mkdir outDir
 
@@ -74,8 +72,9 @@ do
         exit $XRDEXIT
     fi
 
-    cmsRun generator/${ANALYZER} #isData=${ISDATA} runningEra=${YEAR}
-    mv process.root outDir/tree_${COUNTER}.root
+    python3 test/${ANALYZER} ${ISDATA} runningEra=${YEAR} temp.root
+    ls
+    mv temp_Skim.root outDir/tree_${COUNTER}.root
     rm *.root
     COUNTER=$((COUNTER+1))
 
@@ -86,7 +85,7 @@ ls outDir/
 
 ### Copy output and cleanup ###
 FILE=output_${SUFFIX}_${COUNT}.root
-scripts/haddnano.py ${FILE} outDir/*root
+python3 scripts/haddnano.py ${FILE} outDir/*root
 
 xrdcp -f ${FILE} ${OUTDIR}/${FILE} 2>&1
 XRDEXIT=$?
