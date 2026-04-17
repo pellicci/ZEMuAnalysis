@@ -29,6 +29,9 @@ source /cvmfs/cms.cern.ch/cmsset_default.sh
 
 # temporary fix
 tar -xzf source.tar.gz
+
+ls
+
 mv $CMSSW_VERSION tmp_source
 scram project CMSSW $CMSSW_VERSION
 cp -r tmp_source/src/* $CMSSW_VERSION/src

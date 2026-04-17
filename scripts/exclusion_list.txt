@@ -1,0 +1,6 @@
+ZEM*.root
+*train*.root
+*.weights.xml
+*.pdf
+*.tgz
+*.pack
