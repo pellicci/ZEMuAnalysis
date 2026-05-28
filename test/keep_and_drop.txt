@@ -11,6 +11,7 @@ keep Jet_puId
 keep Jet_btagDeepB
 keep HLT_IsoMu*
 keep HLT_Mu*
+keep HLT_Ele30*
 keep genWeight*
 keep Pileup_nPU
 keep Pileup_nTrueInt

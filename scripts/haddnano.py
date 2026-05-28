@@ -60,7 +60,8 @@ for e in fileHandles[0].GetListOfKeys():
             obj = obj.CloneTree(-1, "fast" if goFast else "")
             branchNames = set([x.GetName() for x in obj.GetListOfBranches()])
             continue
-        otherObj = fh.GetListOfKeys().FindObject(name).ReadObj()
+        otherObj = fh.Get(name)
+        #otherObj = fh.GetListOfKeys().FindObject(name).ReadObj()
         if isTree and obj.GetName() == 'Events' and otherObj.GetEntries() == 0 :
             # Zero-events file; skip
             print(" 'Events' tree contains no events; skipping")
