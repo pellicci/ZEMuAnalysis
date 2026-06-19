@@ -11,6 +11,16 @@ from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
 from StandardModel.ZEMuAnalysis.preselector import Preselector
 from StandardModel.ZEMuAnalysis.puWeightProducer import *
 
+"""
+import correctionlib
+cset = correctionlib.CorrectionSet.from_file("/cvmfs/cms.cern.ch/rsync/cms-nanoAOD/jsonpog-integration/POG/BTV/2024_Summer24/btagging.json.gz")
+wp_L = cset["particleNet_wp_values"].evaluate("L")
+wp_M = cset["particleNet_wp_values"].evaluate("M")
+wp_T = cset["particleNet_wp_values"].evaluate("T")
+
+print(wp_L, wp_M, wp_T)
+"""
+
 inputfile = []
 if len(sys.argv) > 3 :
     inputfile = [sys.argv[3]]

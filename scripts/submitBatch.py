@@ -32,7 +32,9 @@ samplesDict['2024_MC'] = [
     bm.JobConfig( dataset='/DYto2E_Bin-MLL-50to120_TuneCP5_13p6TeV_powheg-pythia8/RunIII2024Summer24NanoAODv15-150X_mcRun3_2024_realistic_v2-v2/NANOAODSIM',
             nEvtPerJobIn1e6=nEvtPerJob, year="2024", isData=False, suffix='2024_DYJetsToEE50_120'),
     bm.JobConfig( dataset='/DYto2Tau_Bin-MLL-50to120_TuneCP5_13p6TeV_powheg-pythia8/RunIII2024Summer24NanoAODv15-150X_mcRun3_2024_realistic_v2-v2/NANOAODSIM',
-            nEvtPerJobIn1e6=nEvtPerJob, year="2024", isData=False, suffix='2024_DYJetsToTauTau50_120')
+            nEvtPerJobIn1e6=nEvtPerJob, year="2024", isData=False, suffix='2024_DYJetsToTauTau50_120'),
+    bm.JobConfig( dataset='/WWto2L2Nu_TuneCP5_13p6TeV_powheg-pythia8/RunIII2024Summer24NanoAODv15-150X_mcRun3_2024_realistic_v2-v2/NANOAODSIM',
+            nEvtPerJobIn1e6=nEvtPerJob, year="2024", isData=False, suffix='2024_WWto2L2Nu')
 ]
 
 samplesDict['2024_Data'] = [

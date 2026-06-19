@@ -8,7 +8,8 @@ keep Jet_phi
 keep Jet_mass
 keep Jet_jetId
 keep Jet_puId
-keep Jet_btagDeepB
+keep Jet_btagPNetB*
+keep Jet_btagUParTAK4B*
 keep HLT_IsoMu*
 keep HLT_Mu*
 keep HLT_Ele30*
